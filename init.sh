@@ -26,4 +26,4 @@ cd ctags
 make
 make install
 
-/tmp/run-emacs.sh --kill
+/tmp/run-emacs.sh --batch --kill
