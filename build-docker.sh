@@ -1,3 +1,5 @@
 #!/bin/bash
 
-docker build -t ubuntu-emacs-test .
+source config.sh
+
+docker build -t $image_name .

@@ -1,3 +1,7 @@
 #!/bin/bash
 
-emacs -q --load "/tmp/.emacs" $1
+source config.sh
+
+cd $mount_point
+
+emacs -q --load "$through/$emacs_config"

@@ -5,3 +5,5 @@ COPY . /tmp
 RUN chmod -R 777 /tmp
 
 RUN /tmp/init.sh
+
+CMD /tmp/run-emacs.sh

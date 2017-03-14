@@ -12,7 +12,10 @@
 	ac-js2
 	projectile
 	neotree
-	magit))
+	magit
+	scss-mode
+	flycheck
+	ac-etags))
 
 (require 'package)
 
@@ -52,7 +55,11 @@
 (setq web-mode-css-indent-offset 2)
 (setq web-mode-code-indent-offset 2)
 
-;; highlight brackets
+(require 'scss-mode)
+
+(add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
+
+; highlight brackets
 (show-paren-mode 1)
 
 (require 'neotree)
@@ -60,6 +67,20 @@
 (require 'magit)
 
 (require 'projectile)
+
+(setq neo-smart-open t)
+; colors for neotree configuration
+(custom-set-faces
+; '(col-highlight ((t (:background "color-233"))))
+; '(hl-line ((t (:background "color-233"))))
+; '(lazy-highlight ((t (:background "black" :foreground "white" :underline t))))
+; '(neo-dir-link-face ((t (:foreground "cyan"))))
+ '(neo-file-link-face ((t (:foreground "white")))))
+(custom-set-variables)
+
+(projectile-global-mode)
+
+(setq projectile-switch-project-action 'neotree-projectile-action)
 
 (defun neotree-project-dir ()
   "Open NeoTree using the git root."
@@ -74,5 +95,6 @@
       (message "Could not find git project root."))))
 
 (global-set-key [f8] 'neotree-project-dir)
+;(global-set-key [f8] 'neotree-toggle)
 
 (setq show-paren-style 'mixed) ; highlight brackets if visible, else entire expression
