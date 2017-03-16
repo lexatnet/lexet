@@ -13,6 +13,7 @@
 	projectile
 	neotree
 	magit
+	git-gutter
 	scss-mode
 	flycheck
 	ac-etags))

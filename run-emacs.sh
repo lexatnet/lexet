@@ -1,7 +1,7 @@
 #!/bin/bash
 
-source config.sh
+source /tmp/config.sh
 
 cd $mount_point
 
-emacs -q --load "$through/$emacs_config"
+emacs -q --load "$through_point/$emacs_config"
