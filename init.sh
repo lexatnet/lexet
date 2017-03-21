@@ -1,6 +1,7 @@
 #!/bin/bash
 
-source /tmp/config.sh
+dir="$(cd "$(dirname "$0")" && pwd)"
+source $dir/config.sh
 
 install_utils(){
   apt-get update

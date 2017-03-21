@@ -20,6 +20,9 @@
 
 (require 'package)
 
+;(add-to-list 'package-archives
+;             '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+
 (setq package-archives
         '(("melpa" . "https://melpa.org/packages/")) )
 
@@ -67,15 +70,17 @@
 
 (require 'magit)
 
+(require 'git-gutter)
+
 (require 'projectile)
 
 (setq neo-smart-open t)
 ; colors for neotree configuration
 (custom-set-faces
-; '(col-highlight ((t (:background "color-233"))))
-; '(hl-line ((t (:background "color-233"))))
-; '(lazy-highlight ((t (:background "black" :foreground "white" :underline t))))
-; '(neo-dir-link-face ((t (:foreground "cyan"))))
+ '(col-highlight ((t (:background "color-233"))))
+ '(hl-line ((t (:background "color-233"))))
+ '(lazy-highlight ((t (:background "black" :foreground "white" :underline t))))
+ '(neo-dir-link-face ((t (:foreground "cyan"))))
  '(neo-file-link-face ((t (:foreground "white")))))
 (custom-set-variables)
 
@@ -99,3 +104,22 @@
 ;(global-set-key [f8] 'neotree-toggle)
 
 (setq show-paren-style 'mixed) ; highlight brackets if visible, else entire expression
+
+(global-git-gutter-mode t)
+
+(global-set-key (kbd "C-x g") 'magit-status)
+
+(global-set-key (kbd "C-x C-g") 'git-gutter)
+
+(global-set-key "\C-x\C-b" 'buffer-menu)
+
+(setq path-to-ctags "/usr/bin/ctags") ;; <- your ctags path here
+
+(defun create-tags (dir-name)
+    "Create tags file."
+    (interactive "DDirectory: ")
+    (shell-command
+     (format "%s -f TAGS -e -R --exclude=.git/* --exclude=node_modules/* %s" path-to-ctags (directory-file-name dir-name)))
+  )
+
+(global-auto-complete-mode t)
