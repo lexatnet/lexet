@@ -16,7 +16,9 @@
 	git-gutter
 	scss-mode
 	flycheck
-	ac-etags))
+	ac-etags
+	el-get
+	undo-tree))
 
 (require 'package)
 
@@ -37,6 +39,8 @@
 (dolist (package package-list)
   (unless (package-installed-p package)
     (package-install package)))
+
+(require 'el-get)
 
 (require 'auto-highlight-symbol)
 (global-auto-highlight-symbol-mode t)
@@ -84,6 +88,9 @@
  '(neo-file-link-face ((t (:foreground "white")))))
 (custom-set-variables)
 
+(setq neo-window-width 40)
+(setq neo-window-fixed-size nil)
+
 (projectile-global-mode)
 
 (setq projectile-switch-project-action 'neotree-projectile-action)
@@ -123,3 +130,85 @@
   )
 
 (global-auto-complete-mode t)
+
+(setq-default indent-tabs-mode nil)
+(setq tab-width 2)
+;(setq js2-basic-offse 2)
+(setq js-indent-level 2)
+(require 'whitespace)
+
+(global-whitespace-mode t)
+
+(setq whitespace-style
+  '(
+    face
+    tab-mark
+    newline
+    newline-mark
+))
+
+(set-face-attribute 'whitespace-space nil :background "default" :foreground "white")
+(set-face-attribute 'whitespace-newline nil :background "default" :foreground "white")
+(set-face-attribute 'whitespace-tab nil :background "default" :foreground "white")
+
+;;; taken from http://www.emacswiki.org/emacs/MoveLineRegion
+;;; requires code from http://www.emacswiki.org/emacs/MoveLine;;; and http://www.emacswiki.org/emacs/MoveRegion
+(defun move-line (n)
+  "Move the current line up or down by N lines."
+  (interactive "p")
+  (setq col (current-column))
+  (beginning-of-line) (setq start (point))
+  (end-of-line) (forward-char) (setq end (point))
+  (let ((line-text (delete-and-extract-region start end)))
+    (forward-line n)
+    (insert line-text)
+    ;; restore point to original column in moved line
+    (forward-line -1)
+    (forward-char col)))
+
+(defun move-line-up (n)
+  "Move the current line up by N lines."
+  (interactive "p")
+  (move-line (if (null n) -1 (- n))))
+
+(defun move-line-down (n)
+  "Move the current line down by N lines."
+  (interactive "p")
+  (move-line (if (null n) 1 n)))
+
+(defun move-region (start end n)
+  "Move the current region up or down by N lines."
+  (interactive "r\np")
+  (let ((line-text (delete-and-extract-region start end)))
+    (forward-line n)
+    (let ((start (point)))
+      (insert line-text)
+      (setq deactivate-mark nil)
+      (set-mark start))))
+
+(defun move-region-up (start end n)
+  "Move the current line up by N lines."
+  (interactive "r\np")
+  (move-region start end (if (null n) -1 (- n))))
+
+(defun move-region-down (start end n)
+  "Move the current line down by N lines."
+  (interactive "r\np")
+  (move-region start end (if (null n) 1 n)))
+
+(defun move-line-region-up (start end n)
+  (interactive "r\np")
+  (if (region-active-p) (move-region-up start end n) (move-line-up n)))
+
+(defun move-line-region-down (start end n)
+  (interactive "r\np")
+  (if (region-active-p) (move-region-down start end n) (move-line-down n)))
+
+(global-set-key (kbd "M-<up>") 'move-line-region-up)
+(global-set-key (kbd "M-<down>") 'move-line-region-down)
+
+
+;; make ctrl-z undo
+(global-set-key (kbd "C-z") 'undo)
+
+(global-undo-tree-mode)

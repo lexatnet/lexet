@@ -1,6 +1,6 @@
 #!/bin/bash
 
-dir="$(cd "$(dirname "$0")" && pwd)"
+dir="$(cd "$(dirname "$(readlink -f  "$0")")" && pwd)"
 source $dir/config.sh
 
 install_utils(){
@@ -31,7 +31,7 @@ install_emacs(){
 install_ctags(){
   #install ctags from sources
 
-  cd /tmp
+  cd $dist_point
   git clone https://github.com/universal-ctags/ctags.git
   cd ctags
   ./autogen.sh
@@ -40,8 +40,21 @@ install_ctags(){
   make install
 }
 
+install_hunspell(){
+
+  cd $dist_point
+  git clone https://github.com/hunspell/hunspell.git
+  cd hunspell
+
+  autoreconf -vfi
+  ./configure
+  make
+  make install    #if neccesary prefix with sudo
+  ldconfig        #not needed on windows, on linux sudo may be needed
+}
+
 install_php_utils(){
-  cd /tmp
+  cd $dist_point
   curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar
   php phpcs.phar -h
 
@@ -69,16 +82,26 @@ install_node(){
 }
 
 install_emacs_packages(){
-  emacs -q --load "/tmp/.emacs" --batch --kill
+  emacs -q --load "$dist_point/$emacs_config" --batch --kill
+}
+
+create_ide_shortcut(){
+  ln -s "$dist_point/run-emacs.sh" /usr/bin/ide
+}
+
+set_locale(){
+ echo "LANG=en_US.utf8" /etc/default/locale
 }
 
 main(){
+  set_locale
   install_utils
   install_emacs
   install_ctags
   install_php_utils
   install_node
-#  install_emacs_packages
+  install_emacs_packages
+  create_ide_shortcut
 }
 
 main
