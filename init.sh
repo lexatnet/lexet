@@ -90,7 +90,14 @@ create_ide_shortcut(){
 }
 
 set_locale(){
- echo "LANG=en_US.utf8" /etc/default/locale
+  echo "LANG=en_US.utf8" /etc/default/locale
+  echo "export LANG=en_US.UTF-8" ~/.bashrc
+  #export LANG=en_US.UTF-8
+}
+
+install_eslint(){
+  npm install -g eslint
+  eslint --init
 }
 
 main(){
@@ -100,6 +107,7 @@ main(){
   install_ctags
   install_php_utils
   install_node
+  install_eslint
   install_emacs_packages
   create_ide_shortcut
 }

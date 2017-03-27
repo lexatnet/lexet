@@ -1,4 +1,4 @@
-(add-to-list 'load-path "/tmp/emacs-packeges/")
+ (add-to-list 'load-path "/tmp/emacs-packeges/")
 
 ; list the packages you want
 (setq package-list '(
@@ -133,7 +133,6 @@
 
 (setq-default indent-tabs-mode nil)
 (setq tab-width 2)
-;(setq js2-basic-offse 2)
 (setq js-indent-level 2)
 (require 'whitespace)
 
