@@ -11,3 +11,5 @@ dist_point='/tmp'
 emacs_config='.emacs'
 
 through_point='/ide'
+
+env_config='env-config.sh'
