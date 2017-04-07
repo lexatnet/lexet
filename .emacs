@@ -120,13 +120,18 @@
 
 (global-set-key "\C-x\C-b" 'buffer-menu)
 
-(setq path-to-ctags "/usr/bin/ctags") ;; <- your ctags path here
+(setq path-to-ctags "ctags") ;; <- your ctags path here
 
 (defun create-tags (dir-name)
     "Create tags file."
     (interactive "DDirectory: ")
-    (shell-command
-     (format "%s -f TAGS -e -R --exclude=.git/* --exclude=node_modules/* %s" path-to-ctags (directory-file-name dir-name)))
+    (setq ctags-exclude-config-path (getenv "ctags_exclude_config_path"))
+    (setq ctags-command
+          (format "%s -e -f TAGS --recurse --exclude=@%s %s"
+                  path-to-ctags
+                  ctags-exclude-config-path
+                  (directory-file-name dir-name)))
+    (shell-command ctags-command)
   )
 
 (global-auto-complete-mode t)
@@ -211,3 +216,12 @@
 (global-set-key (kbd "C-z") 'undo)
 
 (global-undo-tree-mode)
+
+(require 'ac-etags)
+(eval-after-load "etags"
+  '(progn
+      (ac-etags-setup)))
+
+(require 'flycheck)
+;; turn on flychecking globally
+(add-hook 'after-init-hook #'global-flycheck-mode)

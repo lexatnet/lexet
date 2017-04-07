@@ -1,9 +1,15 @@
 FROM ubuntu:16.04
 
-COPY . /tmp
+ARG build_root=/build
+ARG build_script=$build_root/init.sh
+ARG entrypoint_script=ide
 
-RUN chmod -R 777 /tmp
+COPY . $build_root
 
-RUN /tmp/init.sh
+RUN chmod -R 777 $build_root
 
-#CMD /tmp/run-emacs.sh
+RUN $build_script
+
+ENV ENTRYPOINT_SCRIPT=${entrypoint_script}
+
+ENTRYPOINT ["bash", "-c", "${ENTRYPOINT_SCRIPT}"]

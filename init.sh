@@ -38,6 +38,10 @@ install_ctags(){
   ./configure
   make
   make install
+
+  # clear
+  cd $dist_point
+  rm --recursive ctags
 }
 
 install_hunspell(){
@@ -51,34 +55,40 @@ install_hunspell(){
   make
   make install    #if neccesary prefix with sudo
   ldconfig        #not needed on windows, on linux sudo may be needed
+
+  # clear
+  cd $dist_point
+  rm --recursive hunspell
 }
 
 install_php_utils(){
   cd $dist_point
   curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar
   php phpcs.phar -h
-
+  
   curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar
   php phpcbf.phar -h
+
+  # clear
+  rm phpcs.phar
+  rm phpcbf.phar
 }
 
 install_node(){
-  git clone https://github.com/creationix/nvm.git /opt/nvm
-  cd /opt/nvm
+  git clone https://github.com/creationix/nvm.git $nvm_root
+  cd $nvm_root
   git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" origin`
-  mkdir /usr/local/nvm
-  echo 'export NVM_DIR=/usr/local/nvm' >>  /etc/profile.d/nvm.sh
-  echo 'source /opt/nvm/nvm.sh' >>  /etc/profile.d/nvm.sh
-  echo 'NODE_PATH=$(nvm which default)'>>  /etc/profile.d/nvm.sh
-  echo 'NODE_DIR=$(dirname "${NODE_PATH}")'>>  /etc/profile.d/nvm.sh
-  echo 'export PATH="$PATH:$NODE_DIR"' >>  /etc/profile.d/nvm.sh
-  source /opt/nvm/nvm.sh
+  echo "export NVM_DIR=${nvm_root}" >>  /etc/profile.d/nvm.sh
+  echo "source ${nvm_root}/nvm.sh" >>  /etc/profile.d/nvm.sh
+  #echo 'NODE_PATH=$(nvm which default)'>>  /etc/profile.d/nvm.sh
+  #echo 'NODE_DIR=$(dirname "${NODE_PATH}")'>>  /etc/profile.d/nvm.sh
+  #echo 'export PATH="$PATH:$NODE_DIR"' >>  /etc/profile.d/nvm.sh
+  echo 'source /etc/profile.d/nvm.sh' >> ~/.bashrc
+  source $nvm_root/nvm.sh
   nvm ls-remote
-  source /opt/nvm/nvm.sh
+  source $nvm_root/nvm.sh
   nvm install node
   source /etc/profile.d/nvm.sh
-  npm install -g bower
-  npm install -g gulp
 }
 
 install_emacs_packages(){
@@ -89,10 +99,12 @@ create_ide_shortcut(){
   ln -s "$dist_point/run-emacs.sh" /usr/bin/ide
 }
 
-set_locale(){
-  echo "LANG=en_US.utf8" /etc/default/locale
-  echo "export LANG=en_US.UTF-8" ~/.bashrc
-  #export LANG=en_US.UTF-8
+install_bower(){
+  npm install -g bower
+}
+
+install_gulp(){
+  npm install -g gulp
 }
 
 install_eslint(){
@@ -101,12 +113,14 @@ install_eslint(){
 }
 
 main(){
-  set_locale
   install_utils
   install_emacs
   install_ctags
+  install_hunspell
   install_php_utils
   install_node
+  install_bower
+  install_gulp
   install_eslint
   install_emacs_packages
   create_ide_shortcut
