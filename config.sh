@@ -2,7 +2,7 @@
 
 #Global
 root="$(cd "$(dirname "$(readlink -f  "$0")")" && pwd)"
-image_name='ubuntu-emacs-test'
+image_name='ubuntu-emacs-ide'
 
 #Docker Run
 mount_point='/volume'
@@ -15,9 +15,8 @@ ctags_exclude_config='ctags-exclude.list'
 docker_file="$root/Dockerfile"
 build_root='/build'
 build_script="$build_root/init.sh"
-entrypoint_script="ide"
+entrypoint_script="$build_root/entrypoint.sh"
 dist_point="$build_root"
-
 
 nvm_root='/opt/nvm'
 
