@@ -52,7 +52,13 @@
 (require 'php-mode)
 
 (require 'json-mode)
+
 (require 'js2-mode)
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+(add-to-list 'interpreter-mode-alist '("node" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx\\'" . js2-jsx-mode))
+(add-to-list 'interpreter-mode-alist '("node" . js2-jsx-mode))
+
 (require 'ac-js2)
 
 (require 'web-mode)
@@ -226,11 +232,12 @@
 
 (require 'flycheck)
 ;; turn on flychecking globally
-(add-hook 'after-init-hook #'global-flycheck-mode)
+(global-flycheck-mode)
+(setq flycheck-check-syntax-automatically '(mode-enabled save))
 ;; disable jshint since we prefer eslint checking
-(setq-default flycheck-disabled-checkers
-  (append flycheck-disabled-checkers
-          '(javascript-jshint)))
+;; (setq-default flycheck-disabled-checkers
+;;   (append flycheck-disabled-checkers
+;;           '(javascript-jshint)))
 
 ;; use local eslint from node_modules before global
 ;; http://emacs.stackexchange.com/questions/21205/flycheck-with-file-relative-eslint-executable

@@ -20,19 +20,23 @@ execute:
 run-ide.sh <path-to-project>
 ```
 
+
 # Shortcuts
 
 | Action title      | Shortcut |
 | ----------------- |:--------:|
 | close emacs       | C-x C-c  |
 
+
 ## Copy-Paste operations
+
 | Action title      | Shortcut |
 | ----------------- |:--------:|
 | copy              | M-w      |
 | cut               | C-w      |
 | paste             | C-y      |
 | paste next        | M-y      |
+
 
 ## Work with windows
 
@@ -43,11 +47,13 @@ run-ide.sh <path-to-project>
 | split window vertically  | C-x 3    |
 | focus next window        | C-x o    |
 
+
 ## Working with buffers
 
 | Action title      | Shortcut |
 | ----------------- |:--------:|
 | show buffers list |          |
+
 
 ## working with history
 
@@ -55,6 +61,7 @@ run-ide.sh <path-to-project>
 | ------------------ |:--------:|
 | undo               | C-z      |
 | show history tree  | C-x u    |
+
 
 ### Working with history tree
 
@@ -64,11 +71,14 @@ run-ide.sh <path-to-project>
 | prewious change    | up       |
 | next change        | down     |
 
+
 ## Working with selection
+
 | Action title       | Shortcut |
 | ------------------ |:--------:|
 | set selection mark | C-Space  |
 | select word        | C-s C-w   
+
 
 ##
 
@@ -77,12 +87,14 @@ run-ide.sh <path-to-project>
 | move selected up   | M-up     |
 | move selected down | M-down   |
 
+
 ## Work with file browsing 
 
 | Action title        | Shortcut |
 | ------------------- |:--------:|
 | toggle file tree    | F8       |
 | open file browser   | C-x d    |
+
 
 ### Work with file tree
 | Action title        | Shortcut |
@@ -100,3 +112,10 @@ run-ide.sh <path-to-project>
 
 | Action title      | Shortcut |
 | ----------------- |:--------:|
+
+
+## Checking
+
+| Action title      | Shortcut |
+| ----------------- |:--------:|
+

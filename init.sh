@@ -112,6 +112,14 @@ install_eslint(){
   eslint --init
 }
 
+install_jshint(){
+  npm install -g jshint
+}
+
+install_jscs(){
+  npm install -g jscs
+}
+
 main(){
   install_utils
   install_emacs
@@ -122,6 +130,8 @@ main(){
   install_bower
   install_gulp
   install_eslint
+  install_jshint
+  install_jscs
   install_emacs_packages
   create_ide_shortcut
 }
