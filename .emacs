@@ -1,24 +1,28 @@
- (add-to-list 'load-path "/tmp/emacs-packeges/")
+;;; package --- Summary
+;;; Commentary:
+;;; Code:
+(add-to-list 'load-path "/tmp/emacs-packeges/")
 
 ; list the packages you want
-(setq package-list '(
-	auto-highlight-symbol
-	auto-complete 
-	php-mode
-	web-mode
-	ac-php
-	json-mode
-	js2-mode
-	ac-js2
-	projectile
-	neotree
-	magit
-	git-gutter
-	scss-mode
-	flycheck
-	ac-etags
-	el-get
-	undo-tree
+(setq package-list
+      '(
+        auto-highlight-symbol
+        auto-complete
+        php-mode
+        web-mode
+        ac-php
+        json-mode
+        js2-mode
+        ac-js2
+        projectile
+        neotree
+        magit
+        git-gutter
+        scss-mode
+        flycheck
+        ac-etags
+        el-get
+        undo-tree
         multiple-cursors))
 
 (require 'package)
@@ -31,7 +35,7 @@
 
 (package-initialize)
 
-; fetch the list of packages available 
+; fetch the list of packages available
 (unless package-archive-contents
   (package-refresh-contents))
 
@@ -45,9 +49,14 @@
 
 (require 'auto-highlight-symbol)
 (global-auto-highlight-symbol-mode t)
+(add-to-list 'ahs-modes 'js2-mode)
+(add-to-list 'ahs-modes 'web-mode)
+(add-to-list 'ahs-modes 'js2-jsx-mode)
+(add-to-list 'ahs-modes 'json-mode)
 
 (require 'auto-complete)
 (require 'auto-complete-config)
+(global-auto-complete-mode t)
 
 (require 'php-mode)
 
@@ -66,11 +75,6 @@
 (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.hbs\\'" . web-mode))
 
-; indent configuration
-(setq web-mode-markup-indent-offset 2)
-(setq web-mode-css-indent-offset 2)
-(setq web-mode-code-indent-offset 2)
-
 (require 'scss-mode)
 
 (add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
@@ -79,29 +83,31 @@
 (show-paren-mode 1)
 
 (require 'neotree)
+(setq neo-window-width 40)
+(setq neo-window-fixed-size nil)
+(setq neo-smart-open t)
 
 (require 'magit)
 
+;; make ctrl-z undo
+(global-undo-tree-mode)
+(global-set-key (kbd "C-z") 'undo)
+
 (require 'git-gutter)
+(global-git-gutter-mode t)
 
 (require 'projectile)
+(projectile-global-mode)
+(setq projectile-switch-project-action 'neotree-projectile-action)
 
-(setq neo-smart-open t)
 ; colors for neotree configuration
 (custom-set-faces
  '(col-highlight ((t (:background "color-233"))))
  '(hl-line ((t (:background "color-233"))))
  '(lazy-highlight ((t (:background "black" :foreground "white" :underline t))))
  '(neo-dir-link-face ((t (:foreground "cyan"))))
- '(neo-file-link-face ((t (:foreground "white")))))
+'(neo-file-link-face ((t (:foreground "white")))))
 (custom-set-variables)
-
-(setq neo-window-width 40)
-(setq neo-window-fixed-size nil)
-
-(projectile-global-mode)
-
-(setq projectile-switch-project-action 'neotree-projectile-action)
 
 (defun neotree-project-dir ()
   "Open NeoTree using the git root."
@@ -120,13 +126,12 @@
 
 (setq show-paren-style 'mixed) ; highlight brackets if visible, else entire expression
 
-(global-git-gutter-mode t)
 
 (global-set-key (kbd "C-x g") 'magit-status)
 
 (global-set-key (kbd "C-x C-g") 'git-gutter)
 
-(global-set-key "\C-x\C-b" 'buffer-menu)
+(global-set-key (kbd "C-x C-b") 'buffer-menu)
 
 (setq path-to-ctags "ctags") ;; <- your ctags path here
 
@@ -142,15 +147,19 @@
     (shell-command ctags-command)
   )
 
-(global-auto-complete-mode t)
 
+; indent configuration
 (setq-default indent-tabs-mode nil)
 (setq tab-width 2)
 (setq js-indent-level 2)
+(setq web-mode-markup-indent-offset 2)
+(setq web-mode-css-indent-offset 2)
+(setq web-mode-code-indent-offset 2)
+(setq sh-basic-offset 2
+      sh-indentation 2)
+
 (require 'whitespace)
-
 (global-whitespace-mode t)
-
 (setq whitespace-style
   '(
     face
@@ -220,10 +229,6 @@
 (global-set-key (kbd "M-<down>") 'move-line-region-down)
 
 
-;; make ctrl-z undo
-(global-set-key (kbd "C-z") 'undo)
-
-(global-undo-tree-mode)
 
 (require 'ac-etags)
 (eval-after-load "etags"
@@ -241,19 +246,21 @@
 
 ;; use local eslint from node_modules before global
 ;; http://emacs.stackexchange.com/questions/21205/flycheck-with-file-relative-eslint-executable
-(defun my/use-eslint-from-node-modules ()
-  (let* ((root (locate-dominating-file
-                (or (buffer-file-name) default-directory)
-                "node_modules"))
-         (eslint (and root
-                      (expand-file-name "node_modules/eslint/bin/eslint.js"
-                                        root))))
-    (when (and eslint (file-executable-p eslint))
-      (setq-local flycheck-javascript-eslint-executable eslint))))
-(add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
+;; (defun my/use-eslint-from-node-modules ()
+;;   (let* ((root (locate-dominating-file
+;;                 (or (buffer-file-name) default-directory)
+;;                 "node_modules"))
+;;          (eslint (and root
+;;                       (expand-file-name "node_modules/eslint/bin/eslint.js"
+;;                                         root))))
+;;     (when (and eslint (file-executable-p eslint))
+;;       (setq-local flycheck-javascript-eslint-executable eslint))))
+;; (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
 
 (require 'multiple-cursors)
+(global-set-key (kbd "C-m C-n") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-m C-p") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-m C-a") 'mc/mark-all-like-this)
 
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+(provide '.emacs)
+;;; .emacs ends here
