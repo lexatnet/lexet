@@ -258,9 +258,9 @@
 ;; (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
 
 (require 'multiple-cursors)
-(global-set-key (kbd "C-m C-n") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-m C-p") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-m C-a") 'mc/mark-all-like-this)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-?") 'mc/mark-all-like-this)
 
 (provide '.emacs)
 ;;; .emacs ends here

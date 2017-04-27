@@ -28,6 +28,16 @@ run-ide.sh <path-to-project>
 | close emacs       | C-x C-c  |
 
 
+## File
+
+| Action title      | Shortcut |
+| ----------------- |:--------:|
+| open file         | C-x C-f  |
+| save              | C-x C-s  |
+| save as           | C-x C-w  |
+| save all          | C-x s    |
+
+
 ## Copy-Paste operations
 
 | Action title      | Shortcut |
@@ -119,3 +129,18 @@ run-ide.sh <path-to-project>
 | Action title      | Shortcut |
 | ----------------- |:--------:|
 
+
+## Work with Magit
+| Action title      | Shortcut |
+| ----------------- |:--------:|
+| open status       | C-x g    |
+
+
+## Formatting
+| Action title           | Shortcut |
+| ---------------------- |:--------:|
+| uppercase word         | M-u      |
+| lowercase word         | M-l      |
+| capitalize word        | M-c      |
+| uppercase selection    | C-x C-u  |
+| lowercase selection    | C-x C-l  |
