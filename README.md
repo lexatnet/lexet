@@ -23,9 +23,16 @@ run-ide.sh <path-to-project>
 
 # Shortcuts
 
-| Action title      | Shortcut |
-| ----------------- |:--------:|
-| close emacs       | C-x C-c  |
+| Action title                 | Shortcut |
+| ---------------------------- |:--------:|
+| close emacs                  | C-x C-c  |
+| Search in buffer             | C-s      |
+| Seach backward               | C-r      |
+| Replace in buffer            | M-%      |
+| Replace by regexp            | C-M-%    |
+| Toggle case sensivity search | M-c      |
+| Toggle regexp search         | M-r      |
+| Edit search string           | M-e      |
 
 
 ## File

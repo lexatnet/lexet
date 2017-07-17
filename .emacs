@@ -129,8 +129,6 @@
 
 (global-set-key (kbd "C-x g") 'magit-status)
 
-(global-set-key (kbd "C-x C-g") 'git-gutter)
-
 (global-set-key (kbd "C-x C-b") 'buffer-menu)
 
 (setq path-to-ctags "ctags") ;; <- your ctags path here
@@ -258,9 +256,9 @@
 ;; (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
 
 (require 'multiple-cursors)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-?") 'mc/mark-all-like-this)
+(global-set-key (kbd "C-x C-m n") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-x C-m p") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-x C-m a") 'mc/mark-all-like-this)
 
 (provide '.emacs)
 ;;; .emacs ends here
