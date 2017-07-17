@@ -76,7 +76,6 @@ run-ide.sh <path-to-project>
 
 | Action title       | Shortcut |
 | ------------------ |:--------:|
-| undo               | C-z      |
 | show history tree  | C-x u    |
 
 
@@ -94,7 +93,7 @@ run-ide.sh <path-to-project>
 | Action title       | Shortcut |
 | ------------------ |:--------:|
 | set selection mark | C-Space  |
-| select word        | C-s C-w   
+| select word        | C-s C-w  |
 
 
 ##
@@ -104,6 +103,20 @@ run-ide.sh <path-to-project>
 | move selected up   | M-up     |
 | move selected down | M-down   |
 
+
+## Dired Mod
+
+| Action title       | Shortcut |
+| ------------------ |:--------:|
+| open dired browser | C-x d    |
+| help               | ?        |
+| move up            | up       |
+| move down          | down     |
+| open file/dir      | return   |
+| refresh            | g        |
+| create dir         | +        |
+| copy               | C        |
+| rename             | R        |
 
 ## Work with file browsing 
 

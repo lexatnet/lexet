@@ -91,7 +91,7 @@
 
 ;; make ctrl-z undo
 (global-undo-tree-mode)
-(global-set-key (kbd "C-z") 'undo)
+;;(global-set-key (kbd "C-z") 'undo)
 
 (require 'git-gutter)
 (global-git-gutter-mode t)
@@ -147,14 +147,15 @@
 
 
 ; indent configuration
+(setq ide-indent 4)
 (setq-default indent-tabs-mode nil)
-(setq tab-width 2)
-(setq js-indent-level 2)
-(setq web-mode-markup-indent-offset 2)
-(setq web-mode-css-indent-offset 2)
-(setq web-mode-code-indent-offset 2)
-(setq sh-basic-offset 2
-      sh-indentation 2)
+(setq tab-width ide-indent)
+(setq js-indent-level ide-indent)
+(setq web-mode-markup-indent-offset ide-indent)
+(setq web-mode-css-indent-offset ide-indent)
+(setq web-mode-code-indent-offset ide-indent)
+(setq sh-basic-offset ide-indent
+      sh-indentation ide-indent)
 
 (require 'whitespace)
 (global-whitespace-mode t)
@@ -238,9 +239,15 @@
 (global-flycheck-mode)
 (setq flycheck-check-syntax-automatically '(mode-enabled save))
 ;; disable jshint since we prefer eslint checking
-;; (setq-default flycheck-disabled-checkers
-;;   (append flycheck-disabled-checkers
-;;           '(javascript-jshint)))
+(setq-default flycheck-disabled-checkers
+   (append flycheck-disabled-checkers
+           '(javascript-jshint)))
+
+;; disable jscs since we prefer eslint checking
+(setq-default flycheck-disabled-checkers
+   (append flycheck-disabled-checkers
+           '(javascript-jscs)))
+
 
 ;; use local eslint from node_modules before global
 ;; http://emacs.stackexchange.com/questions/21205/flycheck-with-file-relative-eslint-executable
@@ -256,11 +263,18 @@
 ;; (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
 
 (require 'multiple-cursors)
-(global-set-key (kbd "C-x C-m n") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-x C-m p") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-x C-m a") 'mc/mark-all-like-this)
+(global-set-key (kbd "C-c m n") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-c m p") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c m a") 'mc/mark-all-like-this);
 
 (delete-selection-mode t)
+(electric-pair-mode t)
+
+(defun back-to-indentation-or-beginning () (interactive)
+   (if (= (point) (progn (back-to-indentation) (point)))
+       (beginning-of-line)))
+
+(global-set-key (kbd "<home>") 'back-to-indentation-or-beginning)
 
 (provide '.emacs)
 ;;; .emacs ends here
