@@ -260,5 +260,7 @@
 (global-set-key (kbd "C-x C-m p") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-x C-m a") 'mc/mark-all-like-this)
 
+(delete-selection-mode t)
+
 (provide '.emacs)
 ;;; .emacs ends here
