@@ -276,5 +276,12 @@
 
 (global-set-key (kbd "<home>") 'back-to-indentation-or-beginning)
 
+(setq ide-temporary-directory (getenv "ide_tmp_dir"))
+
+(setq backup-directory-alist
+      `((".*" . ,ide-temporary-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,ide-temporary-directory t)))
+
 (provide '.emacs)
 ;;; .emacs ends here
