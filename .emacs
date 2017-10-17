@@ -23,7 +23,9 @@
         ac-etags
         el-get
         undo-tree
-        multiple-cursors))
+        multiple-cursors
+        highlight-indent-guides
+        yaml-mode))
 
 (require 'package)
 
@@ -67,6 +69,7 @@
 (add-to-list 'interpreter-mode-alist '("node" . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.jsx\\'" . js2-jsx-mode))
 (add-to-list 'interpreter-mode-alist '("node" . js2-jsx-mode))
+(setq js2-indent-switch-body t)
 
 (require 'ac-js2)
 
@@ -78,6 +81,17 @@
 (require 'scss-mode)
 
 (add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
+
+(require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
+
+(require 'highlight-indent-guides)
+(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+;(setq highlight-indent-guides-auto-enabled nil)
+(set-face-background 'highlight-indent-guides-odd-face "#080808")
+(set-face-background 'highlight-indent-guides-even-face "#1c1c1c")
+(set-face-foreground 'highlight-indent-guides-character-face "#ffffff")
+
 
 ; highlight brackets
 (show-paren-mode 1)
@@ -147,7 +161,7 @@
 
 
 ; indent configuration
-(setq ide-indent 4)
+(setq ide-indent 2)
 (setq-default indent-tabs-mode nil)
 (setq tab-width ide-indent)
 (setq js-indent-level ide-indent)
@@ -282,6 +296,18 @@
       `((".*" . ,ide-temporary-directory)))
 (setq auto-save-file-name-transforms
       `((".*" ,ide-temporary-directory t)))
+
+
+(add-hook 'c-mode-common-hook   'hs-minor-mode)
+(add-hook 'emacs-lisp-mode-hook 'hs-minor-mode)
+(add-hook 'java-mode-hook       'hs-minor-mode)
+(add-hook 'lisp-mode-hook       'hs-minor-mode)
+(add-hook 'perl-mode-hook       'hs-minor-mode)
+(add-hook 'sh-mode-hook         'hs-minor-mode)
+(add-hook 'js-mode-hook 'hs-minor-mode)
+(add-hook 'json-mode-hook       'hs-minor-mode)
+
+
 
 (provide '.emacs)
 ;;; .emacs ends here
