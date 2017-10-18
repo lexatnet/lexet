@@ -87,10 +87,9 @@
 
 (require 'highlight-indent-guides)
 (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
-;(setq highlight-indent-guides-auto-enabled nil)
-(set-face-background 'highlight-indent-guides-odd-face "#080808")
-(set-face-background 'highlight-indent-guides-even-face "#1c1c1c")
-(set-face-foreground 'highlight-indent-guides-character-face "#ffffff")
+(set-face-background 'highlight-indent-guides-odd-face "#000000")
+(set-face-background 'highlight-indent-guides-even-face "#262626")
+(set-face-foreground 'highlight-indent-guides-character-face "#585858")
 
 
 ; highlight brackets
@@ -116,9 +115,9 @@
 
 ; colors for neotree configuration
 (custom-set-faces
- '(col-highlight ((t (:background "color-233"))))
- '(hl-line ((t (:background "color-233"))))
- '(lazy-highlight ((t (:background "black" :foreground "white" :underline t))))
+ '(col-highlight ((t (:background "#262626"))))
+ '(hl-line ((t (:background "#262626"))))
+ '(lazy-highlight ((t (:background "#000000" :foreground "white" :underline t))))
  '(neo-dir-link-face ((t (:foreground "cyan"))))
 '(neo-file-link-face ((t (:foreground "white")))))
 (custom-set-variables)
