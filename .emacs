@@ -6,7 +6,9 @@
 ; list the packages you want
 (setq package-list
       '(
-        auto-highlight-symbol
+        highlight
+        zones
+        highlight-symbol
         auto-complete
         php-mode
         web-mode
@@ -25,7 +27,9 @@
         undo-tree
         multiple-cursors
         highlight-indent-guides
-        yaml-mode))
+        yaml-mode
+        expand-region
+        markdown-mode))
 
 (require 'package)
 
@@ -47,36 +51,93 @@
   (unless (package-installed-p package)
     (package-install package)))
 
+
+
 (require 'el-get)
 
-(require 'auto-highlight-symbol)
-(global-auto-highlight-symbol-mode t)
-(add-to-list 'ahs-modes 'js2-mode)
-(add-to-list 'ahs-modes 'web-mode)
-(add-to-list 'ahs-modes 'js2-jsx-mode)
-(add-to-list 'ahs-modes 'json-mode)
+
+
+
+(require 'highlight-symbol)
+(add-hook 'prog-mode-hook 'highlight-symbol-mode)
+(add-hook 'text-mode-hook 'highlight-symbol-mode)
+(global-set-key (kbd "M-<right>") 'highlight-symbol-next)
+(global-set-key (kbd "M-<left>") 'highlight-symbol-prev)
+
+
+
+
+(require 'zones)
+
+
+
+(require 'highlight)
+(global-set-key (kbd "C-x C-a") 'hlt-unhighlight-all-prop)
+(global-set-key (kbd "C-x C-h") 'highlight-region-in-buffer)
+
+(defun get-selected-string (beg end)
+  "Return selected string or \"empty string\" if none selected."
+  (interactive (if (use-region-p)
+                   (list (region-beginning) (region-end))
+                 (list (point-min) (point-min))))
+  (let ((selection (buffer-substring-no-properties beg end)))
+    (if (= (length selection) 0)
+        (message "empty string")
+      (progn
+        (message selection)
+        selection))))
+
+(defun highlight-region-in-buffer (beg end)
+  "Highlight all regions mached selected in current buffer."
+  (interactive (if (use-region-p)
+                   (list (region-beginning) (region-end))
+                 (list (point-min) (point-min))))
+  (let  ((selection (get-selected-string beg end)))
+    (progn
+      (message selection)
+      (hlt-highlight-regexp-region (point-min) (point-max) selection))))
+
+
+
 
 (require 'auto-complete)
 (require 'auto-complete-config)
 (global-auto-complete-mode t)
 
+
+
+
+
 (require 'php-mode)
 
+
+
+
 (require 'json-mode)
+
 
 (require 'js2-mode)
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 (add-to-list 'interpreter-mode-alist '("node" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-jsx-mode))
 (add-to-list 'auto-mode-alist '("\\.jsx\\'" . js2-jsx-mode))
 (add-to-list 'interpreter-mode-alist '("node" . js2-jsx-mode))
 (setq js2-indent-switch-body t)
 
+
+
+
 (require 'ac-js2)
+
+
+
 
 (require 'web-mode)
 (add-to-list 'auto-mode-alist '("\\.tpl\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.hbs\\'" . web-mode))
+;(add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
+;(setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'")))
 
 (require 'scss-mode)
 
@@ -85,33 +146,63 @@
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
 
+
+
+
+
 (require 'highlight-indent-guides)
-(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+(setq highlight-indent-guides-auto-enabled nil)
 (set-face-background 'highlight-indent-guides-odd-face "#000000")
 (set-face-background 'highlight-indent-guides-even-face "#262626")
 (set-face-foreground 'highlight-indent-guides-character-face "#585858")
+(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
 
 
 ; highlight brackets
 (show-paren-mode 1)
+
+
+
 
 (require 'neotree)
 (setq neo-window-width 40)
 (setq neo-window-fixed-size nil)
 (setq neo-smart-open t)
 
+
+
+
 (require 'magit)
 
-;; make ctrl-z undo
+
+
+
 (global-undo-tree-mode)
-;;(global-set-key (kbd "C-z") 'undo)
+;(global-set-key (kbd "C-<") 'undo)
+;(global-set-key (kbd "C-<") 'redo)
+
+
+
+
 
 (require 'git-gutter)
 (global-git-gutter-mode t)
 
+
+
+
 (require 'projectile)
 (projectile-global-mode)
 (setq projectile-switch-project-action 'neotree-projectile-action)
+
+
+
+
+(require 'expand-region)
+(global-set-key (kbd "C-^") 'er/expand-region)
+
+
+
 
 ; colors for neotree configuration
 (custom-set-faces
@@ -140,9 +231,20 @@
 (setq show-paren-style 'mixed) ; highlight brackets if visible, else entire expression
 
 
+
+
+
+
 (global-set-key (kbd "C-x g") 'magit-status)
 
+
+
+
 (global-set-key (kbd "C-x C-b") 'buffer-menu)
+
+
+
+
 
 (setq path-to-ctags "ctags") ;; <- your ctags path here
 
@@ -159,6 +261,8 @@
   )
 
 
+
+
 ; indent configuration
 (setq ide-indent 2)
 (setq-default indent-tabs-mode nil)
@@ -167,22 +271,26 @@
 (setq web-mode-markup-indent-offset ide-indent)
 (setq web-mode-css-indent-offset ide-indent)
 (setq web-mode-code-indent-offset ide-indent)
-(setq sh-basic-offset ide-indent
-      sh-indentation ide-indent)
+(setq sh-basic-offset ide-indent)
+(setq sh-indentation ide-indent)
+
+
+
 
 (require 'whitespace)
 (global-whitespace-mode t)
 (setq whitespace-style
   '(
     face
-    tab-mark
-    newline
-    newline-mark
-))
+    trailing
+    tabs
+    ))
 
-(set-face-attribute 'whitespace-space nil :background "default" :foreground "white")
-(set-face-attribute 'whitespace-newline nil :background "default" :foreground "white")
-(set-face-attribute 'whitespace-tab nil :background "default" :foreground "white")
+(setq non-printable-colors "#262626")
+
+(set-face-attribute 'whitespace-space nil :background "default" :foreground non-printable-colors)
+(set-face-attribute 'whitespace-newline nil :background "default" :foreground non-printable-colors)
+(set-face-attribute 'whitespace-tab nil :background "default" :foreground non-printable-colors)
 
 ;;; taken from http://www.emacswiki.org/emacs/MoveLineRegion
 ;;; requires code from http://www.emacswiki.org/emacs/MoveLine;;; and http://www.emacswiki.org/emacs/MoveRegion
@@ -245,7 +353,11 @@
 (require 'ac-etags)
 (eval-after-load "etags"
   '(progn
-      (ac-etags-setup)))
+     (ac-etags-setup)))
+
+
+
+
 
 (require 'flycheck)
 ;; turn on flychecking globally
@@ -253,27 +365,93 @@
 (setq flycheck-check-syntax-automatically '(mode-enabled save))
 ;; disable jshint since we prefer eslint checking
 (setq-default flycheck-disabled-checkers
-   (append flycheck-disabled-checkers
-           '(javascript-jshint)))
+              (append flycheck-disabled-checkers
+                      '(javascript-jshint)))
 
 ;; disable jscs since we prefer eslint checking
 (setq-default flycheck-disabled-checkers
-   (append flycheck-disabled-checkers
-           '(javascript-jscs)))
+              (append flycheck-disabled-checkers
+                      '(javascript-jscs)))
 
 
-;; use local eslint from node_modules before global
-;; http://emacs.stackexchange.com/questions/21205/flycheck-with-file-relative-eslint-executable
-;; (defun my/use-eslint-from-node-modules ()
-;;   (let* ((root (locate-dominating-file
-;;                 (or (buffer-file-name) default-directory)
-;;                 "node_modules"))
-;;          (eslint (and root
-;;                       (expand-file-name "node_modules/eslint/bin/eslint.js"
-;;                                         root))))
-;;     (when (and eslint (file-executable-p eslint))
-;;       (setq-local flycheck-javascript-eslint-executable eslint))))
-;; (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
+
+
+
+
+(defun toggle-window-split ()
+  (interactive)
+  (if (= (count-windows) 2)
+      (let* ((this-win-buffer (window-buffer))
+	     (next-win-buffer (window-buffer (next-window)))
+	     (this-win-edges (window-edges (selected-window)))
+	     (next-win-edges (window-edges (next-window)))
+	     (this-win-2nd (not (and (<= (car this-win-edges)
+					 (car next-win-edges))
+				     (<= (cadr this-win-edges)
+					 (cadr next-win-edges)))))
+	     (splitter
+	      (if (= (car this-win-edges)
+		     (car (window-edges (next-window))))
+		  'split-window-horizontally
+		'split-window-vertically)))
+	(delete-other-windows)
+	(let ((first-win (selected-window)))
+	  (funcall splitter)
+	  (if this-win-2nd (other-window 1))
+	  (set-window-buffer (selected-window) this-win-buffer)
+	  (set-window-buffer (next-window) next-win-buffer)
+	  (select-window first-win)
+	  (if this-win-2nd (other-window 1))))))
+
+(global-set-key (kbd "C-x |") 'toggle-window-split)
+
+
+
+
+
+
+
+
+;; (defun search-eslint-rc ()
+;;   "search eslint configurations in parent dirs and set it for flycheck"
+;;   (let (
+;;         (files-names
+;;          '(
+;;            ".eslintrc"
+;;            ".eslintrc.json"))
+;;         (eslintrc)
+;;         (eslintrc-dir))
+;;     (dolist (file-name files-names)
+;;       (message "search %s" file-name)
+;;       (setq eslintrc-dir (locate-dominating-file (buffer-file-name) file-name))
+;;       (if eslintrc-dir
+;;           (progn
+;;             (setq eslintrc (concat eslintrc-dir file-name))
+;;             (return)))
+;;       )
+;;     (if eslintrc
+;;         (progn
+;;           (message "eslintrc->%s" eslintrc)
+;;           (setq flycheck-eslintrc eslintrc)))))
+
+;; (add-hook 'flycheck-mode-hook 'search-eslint-rc)
+
+
+
+
+
+(defun my/use-eslint-from-node-modules ()
+  "use local eslint from node_modules before global"
+  (let* ((root (locate-dominating-file
+                (or (buffer-file-name) default-directory)
+                "node_modules"))
+         (eslint (and root
+                      (expand-file-name "node_modules/eslint/bin/eslint.js"
+                                        root))))
+    (when (and eslint (file-executable-p eslint))
+      (setq-local flycheck-javascript-eslint-executable eslint))))
+
+(add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
 
 (require 'multiple-cursors)
 (global-set-key (kbd "C-c m n") 'mc/mark-next-like-this)
@@ -306,6 +484,15 @@
 (add-hook 'js-mode-hook 'hs-minor-mode)
 (add-hook 'json-mode-hook       'hs-minor-mode)
 
+
+(autoload 'markdown-mode "markdown-mode"
+   "Major mode for editing Markdown files" t)
+(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+
+(autoload 'gfm-mode "markdown-mode"
+   "Major mode for editing GitHub Flavored Markdown files" t)
+(add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
 
 
 (provide '.emacs)

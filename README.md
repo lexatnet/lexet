@@ -35,6 +35,20 @@ run-ide.sh <path-to-project>
 | Edit search string           | M-e      |
 
 
+# highlighted symbols
+| Action title                 | Shortcut   |
+| ---------------------------- |:----------:|
+| next highlighted symbol      | M-<rigth>  |
+| previous highlighted symbol  | M-<left>   |
+
+
+# highlight
+| Action title                      | Shortcut   |
+| --------------------------------- |:----------:|
+| highlight regions match selected  | C-x C-h    |
+| unhighlight all                   | C-x C-a    |
+
+
 ## File
 
 | Action title      | Shortcut |
@@ -69,13 +83,15 @@ run-ide.sh <path-to-project>
 
 | Action title      | Shortcut |
 | ----------------- |:--------:|
-| show buffers list |          |
+| show buffers list | C-x C-b  |
 
 
 ## working with history
 
 | Action title       | Shortcut |
 | ------------------ |:--------:|
+| undo               | C-<      |
+| redo               | C->      |
 | show history tree  | C-x u    |
 
 
@@ -117,8 +133,9 @@ run-ide.sh <path-to-project>
 | create dir         | +        |
 | copy               | C        |
 | rename             | R        |
+| delete             | d        |
 
-## Work with file browsing 
+## Work with file browsing
 
 | Action title        | Shortcut |
 | ------------------- |:--------:|
@@ -157,10 +174,11 @@ run-ide.sh <path-to-project>
 
 
 ## Formatting
-| Action title           | Shortcut |
-| ---------------------- |:--------:|
-| uppercase word         | M-u      |
-| lowercase word         | M-l      |
-| capitalize word        | M-c      |
-| uppercase selection    | C-x C-u  |
-| lowercase selection    | C-x C-l  |
+| Action title              | Shortcut |
+| ------------------------- |:--------:|
+| uppercase word            | M-u      |
+| lowercase word            | M-l      |
+| capitalize word           | M-c      |
+| uppercase selection       | C-x C-u  |
+| lowercase selection       | C-x C-l  |
+| join string with previous | M-^      |
