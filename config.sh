@@ -11,13 +11,21 @@ through_point='/ide'
 env_config='env-config.sh'
 ctags_exclude_config='ctags-exclude.list'
 ide_tmp_dir='/ide-tmp'
+storage='/storage'
+workdir=$mount_point
+label=${image_name}
 
 #Docker Build
 docker_file="$root/Dockerfile"
 build_root='/build'
-build_script="$build_root/init.sh"
-entrypoint_script="$build_root/entrypoint.sh"
-dist_point="$build_root"
+build_script="${build_root}/init.sh"
+entrypoint_script="${build_root}/entrypoint.sh"
+dist_point="${build_root}"
+volume="${image_name}-volume"
 
 nvm_root='/opt/nvm'
 
+#install
+install_name='ide'
+install_dir='/usr/local/bin'
+install_point=${install_dir}/${install_name}

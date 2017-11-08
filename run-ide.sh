@@ -7,11 +7,15 @@ project_dir=${1:-''}
 tmp_files_dir=${2:-'/tmp'}
 
 docker run \
-	-v $project_dir:$mount_point \
-	-v $dir/$emacs_config:$through_point/$emacs_config \
-	-v $dir/$ctags_exclude_config:$through_point/$ctags_exclude_config \
-        -v $tmp_files_dir:$through_point/$ide_tmp_dir \
-	--env-file $root/$env_config \
-	--interactive \
-	--tty \
-	$image_name
+       --label "label=${label}" \
+       --volume $project_dir:$mount_point \
+       --volume $dir/$emacs_config:$through_point/$emacs_config \
+       --volume $dir/$ctags_exclude_config:$through_point/$ctags_exclude_config \
+       --volume $tmp_files_dir:$through_point/$ide_tmp_dir \
+       --volume $volume:$storage \
+       --env-file $root/$env_config \
+       --workdir $workdir \
+       --interactive \
+       --tty \
+       --rm \
+       $image_name

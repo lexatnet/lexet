@@ -5,12 +5,26 @@ Emacs build with useful utils configured for speed and confortable writing code 
 # Dependences
 
 - docker
+- make
 
 # Build
 
 execute:
 ```
-build-docker.sh
+make build
+```
+or
+
+```
+./build-docker.sh
+```
+
+
+# Install
+
+execute:
+```
+make install
 ```
 
 # Run
@@ -18,6 +32,10 @@ build-docker.sh
 execute:
 ```
 run-ide.sh <path-to-project>
+```
+or if you installed emacs-ide
+```
+ide <path-to-project>
 ```
 
 
