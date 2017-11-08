@@ -442,13 +442,21 @@
 
 (defun my/use-eslint-from-node-modules ()
   "use local eslint from node_modules before global"
-  (let* ((root (locate-dominating-file
+  (let* (
+         (node-path (getenv "NODE_PATH"))
+         (node-paths (split-string (if node-path (node-path) "") ":"))
+         (root (locate-dominating-file
                 (or (buffer-file-name) default-directory)
                 "node_modules"))
          (eslint (and root
-                      (expand-file-name "node_modules/eslint/bin/eslint.js"
-                                        root))))
+                      (expand-file-name "node_modules/.bin/eslint" root))))
     (when (and eslint (file-executable-p eslint))
+      (message "NODE_PATH->%s" (getenv "NODE_PATH"))
+      (when (not ((member root node-paths)))
+            (add-to-list node-paths root)
+            (setenv "NODE_PATH" (mapconcat 'identity node-paths ":"))
+            (message "NODE_PATH->%s" (getenv "NODE_PATH"))
+            (message (mapconcat 'identity node-paths ":")))
       (setq-local flycheck-javascript-eslint-executable eslint))))
 
 (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
@@ -456,7 +464,7 @@
 (require 'multiple-cursors)
 (global-set-key (kbd "C-c m n") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-c m p") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c m a") 'mc/mark-all-like-this);
+(global-set-key (kbd "C-c m a") 'mc/mark-all-like-this)
 
 (delete-selection-mode t)
 (electric-pair-mode t)

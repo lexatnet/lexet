@@ -109,6 +109,7 @@ install_gulp(){
 
 install_eslint(){
   npm install -g eslint
+  npm install -g babel-eslint
   eslint --init
 }
 
