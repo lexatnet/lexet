@@ -3,8 +3,11 @@
 dir="$(cd "$(dirname "$(readlink -f  "$0")")" && pwd)"
 source $dir/config.sh
 
-project_dir=${1:-''}
+
+project_dir=${1:-$(pwd)}
 tmp_files_dir=${2:-'/tmp'}
+
+echo "project =${project_dir}"
 
 docker run \
        --label "label=${label}" \

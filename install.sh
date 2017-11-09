@@ -3,4 +3,4 @@
 dir="$(cd "$(dirname "$(readlink -f  "$0")")" && pwd)"
 source $dir/config.sh
 
-ln -s ./run-ide.sh ${install_point}
+ln -s ${root}/run-ide.sh ${install_point}
