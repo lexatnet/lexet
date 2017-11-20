@@ -9,12 +9,12 @@ install_utils(){
   apt-get install -y software-properties-common
   apt-get install -y mc
 
-  apt-get install -y git 
+  apt-get install -y git
   apt-get install -y make
   apt-get install -y autoconf
   apt-get install -y pkg-config
 
-  apt-get install -y php-cli 
+  apt-get install -y php-cli
   apt-get install -y cscope
 
   apt-get install -y curl
