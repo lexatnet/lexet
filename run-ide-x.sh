@@ -12,13 +12,14 @@ docker run \
        --volume $tmp_files_dir:$through_point/$ide_tmp_dir \
        --volume $volume:$storage \
        --env-file $root/$env_config \
+       -e ctags_exclude_config_path=$through_point/$ctags_exclude_config \
+       -e DISPLAY=$DISPLAY \
        -e HOME=$ide_home \
        -e ide_home=$ide_home \
        -e ide_server_dir=$ide_server_dir \
-       -p 5000:5000 \
+       -e ide_tmp_dir=$through_point/$ide_tmp_dir \
+       -v /tmp/.X11-unix:/tmp/.X11-unix \
        --workdir $workdir \
-       --interactive \
-       --tty \
        --rm \
        --user $user_id:$group_id \
        $image_name

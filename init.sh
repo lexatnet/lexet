@@ -18,6 +18,8 @@ install_utils(){
   apt-get install -y cscope
 
   apt-get install -y curl
+
+  apt-get install -y language-pack-en-base
 }
 
 install_emacs(){

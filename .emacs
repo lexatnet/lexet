@@ -2,6 +2,13 @@
 ;;; Commentary:
 ;;; Code:
 (add-to-list 'load-path "/tmp/emacs-packeges/")
+(add-to-list 'load-path "/root/.emacs.d/")
+
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(setq inhibit-startup-screen t)
+
+(load-theme 'tango-dark)
 
 ; list the packages you want
 (setq package-list
@@ -55,6 +62,13 @@
 
 (require 'el-get)
 
+
+(require 'server)
+(setq server-use-tcp t)
+(setq server-host "localhost")
+(setq server-port "5000")
+(setq  server-auth-dir (getenv "ide_server_dir"))
+(server-start)
 
 
 
@@ -205,13 +219,13 @@
 
 
 ; colors for neotree configuration
-(custom-set-faces
- '(col-highlight ((t (:background "#262626"))))
- '(hl-line ((t (:background "#262626"))))
- '(lazy-highlight ((t (:background "#000000" :foreground "white" :underline t))))
- '(neo-dir-link-face ((t (:foreground "cyan"))))
-'(neo-file-link-face ((t (:foreground "white")))))
-(custom-set-variables)
+;(custom-set-faces
+; '(col-highlight ((t (:background "#262626"))))
+; '(hl-line ((t (:background "#262626"))))
+; '(lazy-highlight ((t (:background "#000000" :foreground "white" :underline t))))
+; '(neo-dir-link-face ((t (:foreground "cyan"))))
+;'(neo-file-link-face ((t (:foreground "white")))))
+;(custom-set-variables)
 
 (defun neotree-project-dir ()
   "Open NeoTree using the git root."
