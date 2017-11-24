@@ -1,6 +1,6 @@
 #!/bin/bash
 
-dir="$(cd "$(dirname "$(readlink -f  "$0")")" && pwd)"
+dir=$(cd $(dirname $(readlink -f  $0)) && pwd)
 source $dir/config.sh
 
 install_utils(){
@@ -135,7 +135,6 @@ main(){
   install_eslint
   install_jshint
   install_jscs
-  install_emacs_packages
   create_ide_shortcut
 }
 
