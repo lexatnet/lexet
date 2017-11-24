@@ -25,7 +25,6 @@ install_utils(){
 install_emacs(){
   apt-add-repository ppa:ubuntu-elisp/ppa
   apt-get update
-  apt-get install -y
   apt-get install -y emacs-snapshot
 }
 
