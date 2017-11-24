@@ -6,20 +6,22 @@ source $dir/init-project.sh
 
 docker run \
        --label "label=${label}" \
-       --volume $project_dir:$mount_point \
+       --volume $project_external_dir:$mount_point \
+       --volume $ide_project_external_dir:$ide_project_dir \
        --volume $dir/$emacs_config:$through_point/$emacs_config \
        --volume $dir/$ctags_exclude_config:$through_point/$ctags_exclude_config \
-       --volume $tmp_files_dir:$through_point/$ide_tmp_dir \
-       --volume $volume:$storage \
+       --volume $ide_tmp_external_dir:$ide_tmp_dir \
+       --volume $ide_packages_external_dir:$ide_packages_dir \
        --env-file $root/$env_config \
+       -e USER=$USER \
        -e HOME=$ide_home \
        -e ide_home=$ide_home \
        -e ide_server_dir=$ide_server_dir \
-       -e ide_tmp_dir=$through_point/$ide_tmp_dir \
+       -e ide_tmp_dir=$ide_tmp_dir \
+       -e ide_packages_dir=$ide_packages_dir \
        -e mount_point=$mount_point \
        -e through_point=$through_point \
        -e emacs_config=$emacs_config \
-       -p 5000:5000 \
        --workdir $workdir \
        --interactive \
        --tty \

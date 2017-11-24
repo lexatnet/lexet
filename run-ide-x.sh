@@ -11,7 +11,7 @@ docker run \
        --volume $dir/$emacs_config:$through_point/$emacs_config \
        --volume $dir/$ctags_exclude_config:$through_point/$ctags_exclude_config \
        --volume $ide_tmp_external_dir:$ide_tmp_dir \
-       --volume $volume:$storage \
+       --volume $ide_packages_external_dir:$ide_packages_dir \
        --volume /tmp/.X11-unix:/tmp/.X11-unix \
        --env-file $root/$env_config \
        -e DISPLAY=$DISPLAY \

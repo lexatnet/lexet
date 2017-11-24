@@ -18,10 +18,11 @@ ide_tmp_dir=$through_point/${ide_tmp_dir_name%${ide_tmp_dir_name##*[!/]}}/
 storage=/storage
 workdir=$mount_point
 label=${image_name}
-ide_external_projects_dirs_root=~/.ide
+ide_external_root=~/.ide
+ide_home_dir_name=home
+ide_server_dir_name=server
 ide_project_dir_name=.project
 ide_packages_dir_name=ide-packages
-ide_packages_dir=$storage/${ide_packages_dir_name%${ide_packages_dir_name##*[!/]}}/
 
 
 #Docker Build

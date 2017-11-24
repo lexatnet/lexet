@@ -64,14 +64,6 @@
 (require 'el-get)
 
 
-(require 'server)
-(setq server-use-tcp t)
-(setq server-host "localhost")
-(setq server-port "5000")
-(setq  server-auth-dir (getenv "ide_server_dir"))
-(server-start)
-
-
 
 (require 'highlight-symbol)
 (add-hook 'prog-mode-hook 'highlight-symbol-mode)
