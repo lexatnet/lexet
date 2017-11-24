@@ -67,7 +67,7 @@ install_php_utils(){
   cd $dist_point
   curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar
   php phpcs.phar -h
-  
+
   curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar
   php phpcbf.phar -h
 

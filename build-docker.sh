@@ -8,7 +8,6 @@ echo $docker_file
 
 docker volume create $volume
 
-
 docker build \
        --build-arg build_root=$build_root \
        --build-arg build_script=$build_script \

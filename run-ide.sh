@@ -15,6 +15,10 @@ docker run \
        -e HOME=$ide_home \
        -e ide_home=$ide_home \
        -e ide_server_dir=$ide_server_dir \
+       -e ide_tmp_dir=$through_point/$ide_tmp_dir \
+       -e mount_point=$mount_point \
+       -e through_point=$through_point \
+       -e emacs_config=$emacs_config \
        -p 5000:5000 \
        --workdir $workdir \
        --interactive \

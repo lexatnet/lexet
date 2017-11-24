@@ -1,12 +1,13 @@
 ;;; package --- Summary
 ;;; Commentary:
 ;;; Code:
-(add-to-list 'load-path "/tmp/emacs-packeges/")
-(add-to-list 'load-path "/root/.emacs.d/")
+(setq package-user-dir (getenv "ide_packages_dir"))
 
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (setq inhibit-startup-screen t)
+
+(setq-default frame-title-format '("ide@%f"))
 
 (load-theme 'tango-dark)
 
