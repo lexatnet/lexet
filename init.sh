@@ -22,6 +22,11 @@ install_utils(){
   apt-get install -y language-pack-en-base
 }
 
+install_ssh(){
+  apt-get install -y openssh-server
+  mkdir -vp /var/run/sshd
+}
+
 install_emacs(){
   apt-add-repository ppa:ubuntu-elisp/ppa
   apt-get update
@@ -122,6 +127,12 @@ install_jscs(){
   npm install -g jscs
 }
 
+configure_ssh(){
+  #sed -i '/<pattern>/s/^#//g' /etc/ssh/ssh_config
+  echo 'X11Forwarding yes' >> /etc/ssh/ssh_config
+  #echo 'X11UseForwarding yes' >> /etc/ssh/ssh_config
+}
+
 main(){
   install_utils
   install_emacs
@@ -135,6 +146,7 @@ main(){
   install_jshint
   install_jscs
   create_ide_shortcut
+  configure_ssh
 }
 
 main

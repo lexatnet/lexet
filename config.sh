@@ -23,6 +23,10 @@ ide_home_dir_name=home
 ide_server_dir_name=server
 ide_project_dir_name=.project
 ide_packages_dir_name=ide-packages
+ide_key_name=key
+sshd_config=sshd_config
+through_script=through-script.sh
+
 
 
 #Docker Build

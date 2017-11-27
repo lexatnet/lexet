@@ -10,6 +10,8 @@ RUN chmod -R 777 $build_root
 
 RUN $build_script
 
+EXPOSE 2222
+
 ENV ENTRYPOINT_SCRIPT=${entrypoint_script}
 
 ENTRYPOINT ["bash", "-c", "${ENTRYPOINT_SCRIPT}"]
