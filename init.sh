@@ -127,14 +127,15 @@ install_jscs(){
   npm install -g jscs
 }
 
-configure_ssh(){
+#configure_ssh(){
   #sed -i '/<pattern>/s/^#//g' /etc/ssh/ssh_config
-  echo 'X11Forwarding yes' >> /etc/ssh/ssh_config
+  #echo 'X11Forwarding yes' >> /etc/ssh/ssh_config
   #echo 'X11UseForwarding yes' >> /etc/ssh/ssh_config
-}
+#}
 
 main(){
   install_utils
+  install_ssh
   install_emacs
   install_ctags
   install_hunspell
@@ -146,7 +147,7 @@ main(){
   install_jshint
   install_jscs
   create_ide_shortcut
-  configure_ssh
+  #configure_ssh
 }
 
 main

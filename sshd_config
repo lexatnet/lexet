@@ -5,6 +5,9 @@ HostKey /ide/.project/.ssh/ssh_host_rsa_key
 HostKey /ide/.project/.ssh/ssh_host_dsa_key
 HostKey /ide/.project/.ssh/ssh_host_ecdsa_key
 PasswordAuthentication no
+UsePAM no
+PermitRootLogin no
+PermitEmptyPasswords no
 RSAAuthentication yes
 PubkeyAuthentication yes
 X11Forwarding yes
