@@ -15,6 +15,7 @@ docker run \
        --volume /tmp/.X11-unix:/tmp/.X11-unix \
        --env-file $root/$env_config \
        -e DISPLAY=$DISPLAY \
+       -e NO_AT_BRIDGE=1 \
        -e USER=$USER \
        -e HOME=$ide_home \
        -e ide_home=$ide_home \

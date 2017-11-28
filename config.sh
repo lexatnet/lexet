@@ -40,6 +40,8 @@ volume=${image_name}-volume
 nvm_root=/opt/nvm
 
 #install
-install_name=ide
+install_ide_name=ide
+install_idex_name=idex
 install_dir=/usr/local/bin
-install_point=${install_dir}/${install_name}
+install_point_ide=${install_dir}/${install_ide_name}
+install_point_idex=${install_dir}/${install_idex_name}
