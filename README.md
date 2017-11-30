@@ -211,3 +211,12 @@ ide <path-to-project>
 | mark next like selected      | C-c m n    |
 | mark previous like selected  | C-c m p    |
 | mark all like selected       | C-c m a    |
+
+## Work with Projectile
+
+| Action title                          | Shortcut   |
+| ------------------------------------- | :--------: |
+| Find file                             | C-c p f    |
+| Run grep on the files in the project. | C-c p s g  |
+
+[here](https://projectile.readthedocs.io/en/latest/usage/) detailed map key bindings
