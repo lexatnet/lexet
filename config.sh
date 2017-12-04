@@ -2,6 +2,11 @@
 
 #Global
 root=$(cd $(dirname $(readlink -f  $0)) && pwd)
+lib_dir=$root/scripts/lib
+source $lib_dir/index.sh
+
+echo 'check'
+trim -s '///d df////d f/g/ d/f/g/df/ ////    '
 image_name=ubuntu-emacs-ide
 user_id=$UID
 group_id=$user_id

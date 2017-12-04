@@ -1,7 +1,16 @@
 #!bin/bash
 
+generate_project_name(){
+  local data=$1
+  local project_name=$(trim -s ${data//\//\.}  -c ' /.')
+  echo $project_name
+}
+
 project_external_dir=${1:-$(pwd)}
-ide_tmp_external_dir=${2:-/tmp/ide/${project_external_dir//\//\.}}
+project_name=$(generate_project_name $project_external_dir)
+echo "project name \"$project_name\""
+ide_tmp_external_dir_default=/tmp/ide/$project_name
+ide_tmp_external_dir=${2:-$ide_tmp_external_dir_default}
 
 echo "project=${project_external_dir}"
 echo "tmp=${ide_tmp_external_dir}"
