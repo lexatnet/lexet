@@ -4,9 +4,6 @@
 root=$(cd $(dirname $(readlink -f  $0)) && pwd)
 lib_dir=$root/scripts/lib
 source $lib_dir/index.sh
-
-echo 'check'
-trim -s '///d df////d f/g/ d/f/g/df/ ////    '
 image_name=ubuntu-emacs-ide
 user_id=$UID
 group_id=$user_id
@@ -19,7 +16,7 @@ through_point=/ide
 env_config=env-config.sh
 ctags_exclude_config=ctags-exclude.list
 ide_tmp_dir_name=ide-tmp
-ide_tmp_dir=$through_point/${ide_tmp_dir_name%${ide_tmp_dir_name##*[!/]}}/
+ide_tmp_dir=$through_point/$(trim -s $ide_tmp_dir_name)/
 storage=/storage
 workdir=$mount_point
 label=${image_name}
