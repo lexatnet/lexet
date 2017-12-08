@@ -23,7 +23,7 @@ then
   ide_project_external_dir=$project_external_dir/${ide_project_dir_name}/data
   ide_packages_external_dir=$project_external_dir/${ide_project_dir_name}/$ide_packages_dir_name
 else
-  ide_project_external_dir=$ide_external_root/projects/${project_external_dir//\//\.}
+  ide_project_external_dir=$ide_external_root/projects/$project_name
   ide_packages_external_dir=$ide_external_root/$ide_packages_dir_name
 fi
 

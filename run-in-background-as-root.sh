@@ -3,6 +3,7 @@ dir=$(cd $(dirname $(readlink -f  $0)) && pwd)
 source $dir/config.sh
 source $dir/init-project.sh
 
+
 # TODO: Save container id in project
 # TODO: capture port dinamicaly to allow run multiple innstances
 # TODO: add automatic user name detection for ssh_config

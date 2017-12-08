@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 useraddOptions="--no-create-home --no-user-group --shell /bin/bash --home-dir ${ide_home}"
 
 user=$USER
