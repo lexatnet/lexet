@@ -25,7 +25,14 @@ ide_home_dir_name=home
 ide_server_dir_name=server
 ide_project_dir_name=.project
 ide_packages_dir_name=ide-packages
+
+
+# ssh
 ide_key_name=key
+ide_ssh_host_rsa_key_name=ssh_host_rsa_key
+ide_ssh_host_dsa_key_name=ssh_host_dsa_key
+ide_ssh_host_ecdsa_key_name=ssh_host_ecdsa_key
+
 sshd_config=sshd_config
 through_script=through-script.sh
 
@@ -33,6 +40,7 @@ through_script=through-script.sh
 
 #Docker Build
 docker_file=$root/Dockerfile
+sshd_port=2222
 build_root=/build
 build_script=${build_root}/init.sh
 entrypoint_script=${build_root}/entrypoint.sh
@@ -44,6 +52,8 @@ nvm_root=/opt/nvm
 #install
 install_ide_name=ide
 install_idex_name=idex
+install_idex_ssh_name=idexs
 install_dir=/usr/local/bin
 install_point_ide=${install_dir}/${install_ide_name}
 install_point_idex=${install_dir}/${install_idex_name}
+install_point_idex_ssh=${install_dir}/${install_idex_ssh_name}

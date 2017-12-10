@@ -5,3 +5,4 @@ source $dir/config.sh
 
 rm ${install_point_ide}
 rm ${install_point_idex}
+rm ${install_point_idex_ssh}

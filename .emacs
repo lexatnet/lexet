@@ -379,6 +379,7 @@
                       '(javascript-jscs)))
 
 
+;(add-hook 'sh-mode-hook 'flycheck-mode)
 
 
 

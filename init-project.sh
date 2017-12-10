@@ -47,14 +47,15 @@ ide_server_dir=${ide_project_dir}/$ide_server_dir_name
 
 echo "Checking ssh keys dir ${ide_key_external_dir}"
 
+
 if [ ! -d $ide_key_external_dir ]
 then
   echo "Creating ssh keys"
   mkdir --parent --verbose $ide_key_external_dir
   ssh-keygen -b 2048 -t rsa -N "" -C "ide-host-key" -f $ide_key_external_dir/$ide_key_name
-  ssh-keygen -t rsa -N "" -C "ide-host-rsa-key" -f $ide_key_external_dir/ssh_host_rsa_key
-  ssh-keygen -t dsa -N ""  -C "ide-host-dsa-key" -f $ide_key_external_dir/ssh_host_dsa_key
-  ssh-keygen -t ecdsa -N "" -C "ide-host-ecdsa-key" -f $ide_key_external_dir/ssh_host_ecdsa_key
+  ssh-keygen -t rsa -N "" -C "ide-host-rsa-key" -f $ide_key_external_dir/$ide_ssh_host_rsa_key_name
+  ssh-keygen -t dsa -N ""  -C "ide-host-dsa-key" -f $ide_key_external_dir/$ide_ssh_host_dsa_key_name
+  ssh-keygen -t ecdsa -N "" -C "ide-host-ecdsa-key" -f $ide_key_external_dir/$ide_ssh_host_ecdsa_key_name
   ide_home_ssh_external_dir=$ide_home_external_dir/.ssh
   [ -d $ide_home_ssh_external_dir ] || mkdir --parent --verbose $ide_home_ssh_external_dir
   ln -s $ide_key_external_pub $ide_home_ssh_external_dir/authorized_keys

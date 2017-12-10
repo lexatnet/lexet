@@ -32,6 +32,4 @@ docker run \
        --entrypoint bash \
        -d \
        -p 2222:2222 \
-       $image_name \
-
-
+       $image_name

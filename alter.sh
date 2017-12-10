@@ -22,5 +22,4 @@ useradd $useraddOptions $user
 
 su --command "/usr/sbin/sshd -D -e -f $through_point/$sshd_config" $user
 
-
-
+bash

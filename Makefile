@@ -13,9 +13,6 @@ run-bush:
 run-in-background:
 	./run-in-background.sh
 
-run-in-background-as-root:
-	./run-in-background-as-root.sh
-
 connect-bash:
 	./connect-bash.sh
 

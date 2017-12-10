@@ -33,6 +33,13 @@ install_emacs(){
   apt-get install -y emacs-snapshot
 }
 
+install_pylint(){
+  apt-get install -y pylint3
+}
+
+install_shellcheck(){
+  apt-get install shellcheck
+}
 
 install_ctags(){
   #install ctags from sources
@@ -139,6 +146,8 @@ main(){
   install_emacs
   install_ctags
   install_hunspell
+  install_pylint
+  install_shellcheck
   install_php_utils
   install_node
   install_bower
