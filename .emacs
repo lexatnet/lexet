@@ -380,6 +380,7 @@
 
 
 ;(add-hook 'sh-mode-hook 'flycheck-mode)
+(setq flycheck-shellcheck-follow-sources nil)
 
 
 

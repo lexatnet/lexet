@@ -4,6 +4,7 @@ dir=$(cd $(dirname $(readlink -f  $0)) && pwd)
 source $dir/config.sh
 source $dir/init-project.sh
 
+# TODO: fix nvm for ssh session
 # TODO: capture port dinamicaly to allow run multiple innstances
 # TODO: add automatic user name detection for ssh_config
 # TODO: connect to existing project container if already runned
@@ -81,6 +82,8 @@ echo $run_idex_through_ssh
 try run_idex_through_ssh 5
 
 docker stop $project_name
+
+ssh-keygen -f "/home/$USER/.ssh/known_hosts" -R [localhost]:$ssh_external_port
 
 #docker rm $project_name
 
