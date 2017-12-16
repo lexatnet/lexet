@@ -381,7 +381,7 @@
 
 ;(add-hook 'sh-mode-hook 'flycheck-mode)
 (setq flycheck-shellcheck-follow-sources nil)
-
+(setq flycheck-python-pylint-executable "pylint3")
 
 
 
