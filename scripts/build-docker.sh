@@ -1,5 +1,4 @@
 #!/bin/bash
-
 get_script_dir () {
      SOURCE="${BASH_SOURCE[0]}"
      # While $SOURCE is a symlink, resolve it
@@ -12,20 +11,21 @@ get_script_dir () {
      echo "$DIR"
 }
 
-lib_index() {
+
+build_ide_image() {
   local dir=$(get_script_dir)
+  source $dir/../config/config.sh
 
-  echo "Library directory \"$dir\""
-  echo 'Libs loading.......'
+  echo $root
+  echo $docker_file
 
-  source $dir/try.sh
-  source $dir/trim.sh
-  source $dir/generate_sshd_config.sh
-  source $dir/generate_ide_user_profile.sh
-  source $dir/normalize_path.sh
-  source $dir/get_script_dir.sh
-
-  echo 'Libs loaded.'
+  docker build \
+         --build-arg build_root=$build_root \
+         --build-arg build_script=$build_script \
+         --build-arg entrypoint_script=$entrypoint_script \
+         --tag $image_name \
+         --file $docker_file \
+         $root/docker
 }
 
-lib_index
+build_ide_image

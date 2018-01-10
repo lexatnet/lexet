@@ -1,20 +1,20 @@
 build:
-	./build-docker.sh
+	./scripts/build-docker.sh
 
 install:
-	./install.sh
+	./scripts/install.sh
 
 uninstall:
-	./uninstall.sh
+	./scripts/uninstall.sh
 
 run-bush:
 	./run-bash.sh
 
 run-in-background:
-	./run-in-background.sh
+	./scripts/run-in-background.sh
 
 connect-bash:
-	./connect-bash.sh
+	./scripts/connect-bash.sh
 
 connect-to-root-sshd:
 	docker exec --interactive --tty ide-root-sshd bash

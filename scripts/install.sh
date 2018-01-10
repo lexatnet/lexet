@@ -1,5 +1,4 @@
 #!/bin/bash
-
 get_script_dir () {
      SOURCE="${BASH_SOURCE[0]}"
      # While $SOURCE is a symlink, resolve it
@@ -12,20 +11,13 @@ get_script_dir () {
      echo "$DIR"
 }
 
-lib_index() {
+install_ide() {
   local dir=$(get_script_dir)
+  source $dir/../config/config.sh
 
-  echo "Library directory \"$dir\""
-  echo 'Libs loading.......'
-
-  source $dir/try.sh
-  source $dir/trim.sh
-  source $dir/generate_sshd_config.sh
-  source $dir/generate_ide_user_profile.sh
-  source $dir/normalize_path.sh
-  source $dir/get_script_dir.sh
-
-  echo 'Libs loaded.'
+  ln -s ${root}/scripts/run-ide.sh ${install_point_ide}
+  ln -s ${root}/scripts/run-ide-x.sh ${install_point_idex}
+  ln -s ${root}/scripts/run-ide-x-ssh.sh ${install_point_idex_ssh}
 }
 
-lib_index
+install_ide

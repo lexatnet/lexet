@@ -15,9 +15,6 @@ ide_tmp_external_dir=${2:-$ide_tmp_external_dir_default}
 echo "project=${project_external_dir}"
 echo "tmp=${ide_tmp_external_dir}"
 
-# TODO: fix project directory trailing slash
-# TODO: Add project name to emacs environment to display in window title
-
 if [ -z $ide_external_root ]
 then
   ide_project_external_dir=$project_external_dir/${ide_project_dir_name}/data

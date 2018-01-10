@@ -11,21 +11,3 @@ get_script_dir () {
      DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
      echo "$DIR"
 }
-
-lib_index() {
-  local dir=$(get_script_dir)
-
-  echo "Library directory \"$dir\""
-  echo 'Libs loading.......'
-
-  source $dir/try.sh
-  source $dir/trim.sh
-  source $dir/generate_sshd_config.sh
-  source $dir/generate_ide_user_profile.sh
-  source $dir/normalize_path.sh
-  source $dir/get_script_dir.sh
-
-  echo 'Libs loaded.'
-}
-
-lib_index
