@@ -16,9 +16,6 @@ build_ide_image() {
   local dir=$(get_script_dir)
   source $dir/../config/config.sh
 
-  echo $root
-  echo $docker_file
-
   docker build \
          --build-arg build_root=$build_root \
          --build-arg build_script=$build_script \

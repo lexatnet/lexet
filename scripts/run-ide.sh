@@ -21,11 +21,11 @@ run_ide() {
          --label "label=${label}" \
          --volume $project_external_dir:$mount_point \
          --volume $ide_project_external_dir:$ide_project_dir \
-         --volume $dir/$emacs_config:$through_point/$emacs_config \
-         --volume $dir/$ctags_exclude_config:$through_point/$ctags_exclude_config \
+         --volume $root/config/$emacs_config:$through_point/$emacs_config \
+         --volume $root/config/$ctags_exclude_config:$through_point/$ctags_exclude_config \
          --volume $ide_tmp_external_dir:$ide_tmp_dir \
          --volume $ide_packages_external_dir:$ide_packages_dir \
-         --env-file $root/$env_config \
+         --env-file $env_config \
          -e USER=$USER \
          -e HOME=$ide_home \
          -e ide_home=$ide_home \
