@@ -42,7 +42,7 @@ run_idex() {
          --workdir $workdir \
          --rm \
          --user $user_id:$group_id \
-         $image_name
+         $image_tag
 
 }
 

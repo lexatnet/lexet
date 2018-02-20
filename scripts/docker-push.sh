@@ -1,4 +1,5 @@
 #!/bin/bash
+
 get_script_dir () {
      SOURCE="${BASH_SOURCE[0]}"
      # While $SOURCE is a symlink, resolve it
@@ -11,18 +12,7 @@ get_script_dir () {
      echo "$DIR"
 }
 
+dir=$(get_script_dir)
+source $dir/config.sh
 
-build_ide_image() {
-  local dir=$(get_script_dir)
-  source $dir/../config/config.sh
-
-  docker build \
-         --build-arg build_root=$build_root \
-         --build-arg build_script=$build_script \
-         --build-arg entrypoint_script=$entrypoint_script \
-         --tag $image_tag \
-         --file $docker_file \
-         $root
-}
-
-build_ide_image
+docker push $image_tag

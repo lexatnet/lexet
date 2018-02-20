@@ -4,7 +4,9 @@ ARG build_root=/build
 ARG build_script=$build_root/init.sh
 ARG entrypoint_script=ide
 
-COPY . $build_root
+COPY ./docker $build_root/docker
+COPY ./config/config.sh $build_root/config/config.sh
+COPY ./scripts/lib $build_root/scripts/lib
 
 RUN chmod -R 777 $build_root
 

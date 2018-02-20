@@ -18,7 +18,7 @@ config_ide_environment() {
 
   #Global
   root=$(normalize_path "$dir/..")
-  image_name=ubuntu-emacs-ide
+  image_tag=lexatnet/ide
   user_id=$UID
   group_id=$user_id
 
@@ -33,7 +33,7 @@ config_ide_environment() {
   ide_tmp_dir=$through_point/$(trim -s $ide_tmp_dir_name)/
   storage=/storage
   workdir=$mount_point
-  label=${image_name}
+  label=${image_tag}
   ide_external_root=~/.ide
   ide_home_dir_name=home
   ide_server_dir_name=server
@@ -59,7 +59,7 @@ config_ide_environment() {
   build_script=${build_root}/docker/init.sh
   entrypoint_script=${build_root}/docker/entrypoint.sh
   dist_point=${build_root}
-  volume=${image_name}-volume
+  volume=${image_tag}-volume
 
   nvm_root=/opt/nvm
 

@@ -1,14 +1,20 @@
 build:
 	./scripts/build-docker.sh
 
+docker-tag:
+	./scripts/docker-tag.sh
+
+docker-push:
+	./scripts/docker-push.sh
+
 install:
 	./scripts/install.sh
 
 uninstall:
 	./scripts/uninstall.sh
 
-run-bush:
-	./run-bash.sh
+run-bash:
+	./scripts/run-bash.sh
 
 run-in-background:
 	./scripts/run-in-background.sh

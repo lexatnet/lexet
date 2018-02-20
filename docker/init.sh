@@ -121,7 +121,7 @@ install_emacs_packages(){
 }
 
 create_ide_shortcut(){
-  ln -s "$dist_point/run-emacs.sh" /usr/bin/ide
+  ln -s "$dist_point/docker/run-emacs.sh" /usr/bin/ide
 }
 
 install_bower(){

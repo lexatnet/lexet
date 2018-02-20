@@ -18,5 +18,5 @@ source $dir/config.sh
 docker exec \
        --interactive \
        --tty \
-       $image_name \
+       $image_tag \
        bash

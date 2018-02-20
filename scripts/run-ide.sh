@@ -40,7 +40,7 @@ run_ide() {
          --tty \
          --rm \
          --user $user_id:$group_id \
-         $image_name
+         $image_tag
 }
 
 run_ide
