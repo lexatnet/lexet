@@ -13,6 +13,6 @@ get_script_dir () {
 }
 
 dir=$(get_script_dir)
-source $dir/config.sh
+source $dir/../config/config.sh
 
 docker push $image_tag
