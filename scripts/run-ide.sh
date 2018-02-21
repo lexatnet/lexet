@@ -43,4 +43,4 @@ run_ide() {
          $image_tag
 }
 
-run_ide
+run_ide "$@"
