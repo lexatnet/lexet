@@ -34,6 +34,15 @@ install_utils(){
   apt-get install -y language-pack-en-base
 }
 
+install_ruby(){
+  gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3
+  curl -L https://get.rvm.io | /bin/bash -s stable
+  echo 'source /etc/profile.d/rvm.sh' >> /etc/profile
+  rvm requirements
+  rvm install ruby --latest
+  gem install bundler
+}
+
 install_ssh(){
   apt-get install -y openssh-server
   mkdir -vp /var/run/sshd
@@ -105,9 +114,6 @@ install_node(){
   git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" origin`
   echo "export NVM_DIR=${nvm_root}" >>  /etc/profile.d/nvm.sh
   echo "source ${nvm_root}/nvm.sh" >>  /etc/profile.d/nvm.sh
-  #echo 'NODE_PATH=$(nvm which default)'>>  /etc/profile.d/nvm.sh
-  #echo 'NODE_DIR=$(dirname "${NODE_PATH}")'>>  /etc/profile.d/nvm.sh
-  #echo 'export PATH="$PATH:$NODE_DIR"' >>  /etc/profile.d/nvm.sh
   echo 'source /etc/profile.d/nvm.sh' >> ~/.bashrc
   source $nvm_root/nvm.sh
   nvm ls-remote
@@ -167,7 +173,9 @@ main(){
   install_eslint
   install_jshint
   install_jscs
+  install_ruby
   create_ide_shortcut
+  
   #configure_ssh
 }
 

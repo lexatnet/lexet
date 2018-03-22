@@ -447,6 +447,17 @@
 
 
 
+(autoload 'ruby-mode "ruby-mode" "Major mode for ruby files" t)
+(add-to-list 'auto-mode-alist
+               '("\\.\\(?:cap\\|gemspec\\|irbrc\\|gemrc\\|rake\\|rb\\|ru\\|thor\\)\\'" . ruby-mode))
+(add-to-list 'auto-mode-alist
+               '("\\(?:Brewfile\\|Capfile\\|Gemfile\\(?:\\.[a-zA-Z0-9._-]+\\)?\\|[rR]akefile\\)\\'" . ruby-mode))
+(add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
+
+
+
+
+
 (defun my/use-eslint-from-node-modules ()
   "use local eslint from node_modules before global"
   (let* (
@@ -504,6 +515,7 @@
 (add-hook 'sh-mode-hook         'hs-minor-mode)
 (add-hook 'js-mode-hook 'hs-minor-mode)
 (add-hook 'json-mode-hook       'hs-minor-mode)
+(add-hook 'ruby-mode-hook       'hs-minor-mode)
 
 
 (autoload 'markdown-mode "markdown-mode"
