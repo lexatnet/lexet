@@ -35,11 +35,21 @@ install_utils(){
 }
 
 install_ruby(){
-  gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3
-  curl -L https://get.rvm.io | /bin/bash -s stable
-  echo 'source /etc/profile.d/rvm.sh' >> /etc/profile
-  rvm requirements
-  rvm install ruby --latest
+  
+  #gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3
+  #curl -L https://get.rvm.io | /bin/bash -s stable
+  #echo 'source /etc/profile.d/rvm.sh' >> /etc/profile
+  #rvm requirements
+  #rvm install ruby --latest
+
+  git clone https://github.com/sstephenson/rbenv.git /root/.rbenv
+  git clone https://github.com/sstephenson/ruby-build.git /root/.rbenv/plugins/ruby-build
+  /root/.rbenv/plugins/ruby-build/install.sh
+  PATH /root/.rbenv/bin:$PATH
+  echo 'eval "$(rbenv init -)"' >> /etc/profile.d/rbenv.sh # or /etc/profile
+  echo 'eval "$(rbenv init -)"' >> .bashrc
+  rbenv install -l | sed -n '/^[[:space:]]*[0-9]\{1,\}\.[0-9]\{1,\}\.[0-9]\{1,\}[[:space:]]*$/ h;${g;p;}'
+
   gem install bundler
 }
 
