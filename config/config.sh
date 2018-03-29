@@ -62,6 +62,7 @@ config_ide_environment() {
   volume=${image_tag}-volume
 
   nvm_root=/opt/nvm
+  rbenv_root=/opt/rbenv
 
   #install
   install_ide_name=ide

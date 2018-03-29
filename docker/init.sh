@@ -35,21 +35,20 @@ install_utils(){
 }
 
 install_ruby(){
-  
-  #gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3
-  #curl -L https://get.rvm.io | /bin/bash -s stable
-  #echo 'source /etc/profile.d/rvm.sh' >> /etc/profile
-  #rvm requirements
-  #rvm install ruby --latest
+  apt-get update
+  apt-get install -y libssl-dev libreadline-dev zlib1g-dev
 
-  git clone https://github.com/sstephenson/rbenv.git /root/.rbenv
-  git clone https://github.com/sstephenson/ruby-build.git /root/.rbenv/plugins/ruby-build
-  /root/.rbenv/plugins/ruby-build/install.sh
-  PATH /root/.rbenv/bin:$PATH
+  git clone https://github.com/sstephenson/rbenv.git $rbenv_root
+  git clone https://github.com/sstephenson/ruby-build.git $rbenv_root/plugins/ruby-build
+  $rbenv_root/plugins/ruby-build/install.sh
+  echo '# rbenv setup' > /etc/profile.d/rbenv.sh
+  echo "export RBENV_ROOT=${rbenv_root}" >> /etc/profile.d/rbenv.sh
+  echo 'export PATH="$RBENV_ROOT/bin:$PATH"' >> /etc/profile.d/rbenv.sh
   echo 'eval "$(rbenv init -)"' >> /etc/profile.d/rbenv.sh # or /etc/profile
-  echo 'eval "$(rbenv init -)"' >> .bashrc
-  rbenv install -l | sed -n '/^[[:space:]]*[0-9]\{1,\}\.[0-9]\{1,\}\.[0-9]\{1,\}[[:space:]]*$/ h;${g;p;}'
-
+  source /etc/profile.d/rbenv.sh
+  RUBY_VERSION=$(rbenv install -l | sed -n '/^[[:space:]]*[0-9]\{1,\}\.[0-9]\{1,\}\.[0-9]\{1,\}[[:space:]]*$/ h;${g;p;}')
+  rbenv install $RUBY_VERSION
+  rbenv global $RUBY_VERSION
   gem install bundler
 }
 

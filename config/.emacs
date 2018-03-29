@@ -15,7 +15,6 @@
 (setq package-list
       '(
         highlight
-        zones
         highlight-symbol
         auto-complete
         php-mode
@@ -74,7 +73,7 @@
 
 
 
-(require 'zones)
+;(require 'zones)
 
 
 
@@ -232,7 +231,7 @@
               (neotree-find file-name)))
       (message "Could not find git project root."))))
 
-(global-set-key [f8] 'neotree-project-dir)
+;(global-set-key [f8] 'neotree-project-dir)
 ;(global-set-key [f8] 'neotree-toggle)
 
 (setq show-paren-style 'mixed) ; highlight brackets if visible, else entire expression
@@ -552,6 +551,8 @@
       (activate-input-method current))))
 
 (cfg:reverse-input-method 'russian-computer)
+
+(global-auto-revert-mode t)
 
 (provide '.emacs)
 ;;; .emacs ends here

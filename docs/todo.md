@@ -5,3 +5,4 @@
 # TODO: do not run more then one container for project
 # TODO: add needed environment variables in ssh environment when external user connecting
 # TODO: Add project name to emacs environment to display in window title
+# TODO: add properly spellcheck configuration
