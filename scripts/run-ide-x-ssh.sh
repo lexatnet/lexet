@@ -95,4 +95,4 @@ run_ide_x_ssh() {
   #
 }
 
-run_ide_x_ssh
+run_ide_x_ssh "$@"
