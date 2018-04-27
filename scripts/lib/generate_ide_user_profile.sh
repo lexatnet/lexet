@@ -13,5 +13,15 @@ export through_point=$through_point
 export sshd_config=$sshd_config
 export emacs_config=$emacs_config
 export group_id=$group_id
+
+if [ -d $through_point/init ]; then
+  for i in $through_point/init/*.sh; do
+    if [ -r \$i ]; then
+      . \$i
+    fi
+  done
+  unset i
+fi
+
 EOL
 }

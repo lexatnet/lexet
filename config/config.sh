@@ -31,6 +31,7 @@ config_ide_environment() {
   ctags_exclude_config=ctags-exclude.list
   ide_tmp_dir_name=ide-tmp
   ide_tmp_dir=$through_point/$(trim -s $ide_tmp_dir_name)/
+  
   storage=/storage
   workdir=$mount_point
   label=${image_tag}
@@ -39,6 +40,9 @@ config_ide_environment() {
   ide_server_dir_name=server
   ide_project_dir_name=.project
   ide_packages_dir_name=ide-packages
+  ide_utils_dir_name=ide-utils
+  entrypoint_sshd=entrypoint-run-sshd.sh
+  entrypoint_init=entrypoint-init-ide.sh
 
 
   # ssh
@@ -61,8 +65,8 @@ config_ide_environment() {
   dist_point=${build_root}
   volume=${image_tag}-volume
 
-  nvm_root=/opt/nvm
-  rbenv_root=/opt/rbenv
+  nvm_root=$through_point/env/nvm
+  rbenv_root=$through_point/env/rbenv
 
   #install
   install_ide_name=ide

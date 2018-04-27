@@ -32,6 +32,7 @@ ide_server_external_dir=$ide_project_external_dir/$ide_server_dir_name
 
 ide_project_dir=${through_point}/${ide_project_dir_name}
 ide_packages_dir=${through_point}/$ide_packages_dir_name
+ide_utils_dir=${through_point}/$ide_utils_dir_name
 ide_home=${ide_project_dir}/$ide_home_dir_name
 ide_server_dir=${ide_project_dir}/$ide_server_dir_name
 

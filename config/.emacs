@@ -40,11 +40,13 @@
 
 (require 'package)
 
-;(add-to-list 'package-archives
-;             '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+;(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") )
 
-(setq package-archives
-        '(("melpa" . "https://melpa.org/packages/")) )
+(add-to-list  'package-archives '("melpa" . "https://melpa.org/packages/") )
+
+(add-to-list  'package-archives '("gnu" . "https://elpa.gnu.org/packages/") )
+
+;(add-to-list  'package-archives '("marmalade" . "https://marmalade-repo.org/packages/") )
 
 (package-initialize)
 
@@ -381,6 +383,11 @@
 ;(add-hook 'sh-mode-hook 'flycheck-mode)
 (setq flycheck-shellcheck-follow-sources nil)
 (setq flycheck-python-pylint-executable "pylint3")
+
+(setq-default flycheck-disabled-checkers
+              (append flycheck-disabled-checkers
+                      '(ruby-rubylint)))
+
 
 
 

@@ -10,6 +10,9 @@ docker-push:
 install:
 	./scripts/install.sh
 
+init:
+	./scripts/init-ide.sh
+
 uninstall:
 	./scripts/uninstall.sh
 

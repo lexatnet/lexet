@@ -45,11 +45,14 @@ run_ide_x_ssh() {
   docker run \
          --name $project_name \
          --label "label=${label}" \
+         --volume $ide_external_root/init:$through_point/init \
+         --volume $ide_external_root/env:$through_point/env \
+         --volume $dir/lib:$through_point/lib \
          --volume $project_external_dir:$mount_point \
          --volume $ide_project_external_dir:$ide_project_dir \
          --volume $root/config/$emacs_config:$through_point/$emacs_config \
          --volume $root/config/$ctags_exclude_config:$through_point/$ctags_exclude_config \
-         --volume $dir/alter.sh:$through_point/alter.sh \
+         --volume $dir/$entrypoint_sshd:$through_point/$entrypoint_sshd \
          --volume $ide_sshd_config_external_file:$through_point/$sshd_config \
          --volume $ide_tmp_external_dir:$ide_tmp_dir \
          --volume $ide_packages_external_dir:$ide_packages_dir \
@@ -70,7 +73,7 @@ run_ide_x_ssh() {
          --interactive \
          --tty \
          --rm \
-         --entrypoint $through_point/alter.sh \
+         --entrypoint $through_point/$entrypoint_sshd \
          --detach \
          --publish 2222 \
          $image_tag > $container_id_file

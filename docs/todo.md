@@ -6,3 +6,6 @@
 # TODO: add needed environment variables in ssh environment when external user connecting
 # TODO: Add project name to emacs environment to display in window title
 # TODO: add properly spellcheck configuration
+# TODO: save insatlled nvms in ide directory
+# TODO: save insatlled rbenvs in ide directory
+# TODO: automaticaly install necessary rbenvs

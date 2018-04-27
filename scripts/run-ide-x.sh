@@ -18,11 +18,14 @@ run_idex() {
   source $dir/init-project.sh
 
   docker run \
+         --name $project_name \
          --label "label=${label}" \
          --volume $project_external_dir:$mount_point \
          --volume $ide_project_external_dir:$ide_project_dir \
          --volume $root/config/$emacs_config:$through_point/$emacs_config \
          --volume $root/config/$ctags_exclude_config:$through_point/$ctags_exclude_config \
+         --volume $ide_external_root/init:$through_point/init \
+         --volume $ide_external_root/env:$through_point/env \
          --volume $ide_tmp_external_dir:$ide_tmp_dir \
          --volume $ide_packages_external_dir:$ide_packages_dir \
          --volume /tmp/.X11-unix:/tmp/.X11-unix \
@@ -43,7 +46,6 @@ run_idex() {
          --rm \
          --user $user_id:$group_id \
          $image_tag
-
 }
 
 run_idex "$@"

@@ -19,4 +19,7 @@ uninstall_ide() {
   rm ${install_point_ide}
   rm ${install_point_idex}
   rm ${install_point_idex_ssh}
+  rm -r ${ide_external_root}
 }
+
+uninstall_ide

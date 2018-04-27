@@ -11,6 +11,8 @@ get_script_dir () {
      echo "$DIR"
 }
 
+
+
 install_ide() {
   local dir=$(get_script_dir)
   source $dir/../config/config.sh
