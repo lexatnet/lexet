@@ -9,3 +9,7 @@
 # TODO: save insatlled nvms in ide directory
 # TODO: save insatlled rbenvs in ide directory
 # TODO: automaticaly install necessary rbenvs
+# TODO: add tags based autocomplition (universal-ctags)
+# TODO: think something with commit through magit (attach host system keys or create ide host level keys)
+# TODO: configure debugger tools for ruby
+# TODO: configure debugger tools for php
