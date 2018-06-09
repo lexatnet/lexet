@@ -111,7 +111,7 @@
 (require 'auto-complete)
 (require 'auto-complete-config)
 (global-auto-complete-mode t)
-
+(setq ac-disable-faces nil)
 
 
 
