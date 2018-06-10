@@ -80,8 +80,10 @@
 
 
 (require 'highlight)
-(global-set-key (kbd "C-x C-a") 'hlt-unhighlight-all-prop)
-(global-set-key (kbd "C-x C-h") 'highlight-region-in-buffer)
+(global-set-key (kbd "C-c h a") 'hlt-unhighlight-all-prop)
+(global-set-key (kbd "C-c h s") 'highlight-region-in-buffer)
+(global-set-key (kbd "C-c h n") 'hlt-next-highlight)
+(global-set-key (kbd "C-c h p") 'hlt-previous-highlight)
 
 (defun get-selected-string (beg end)
   "Return selected string or \"empty string\" if none selected."
@@ -195,6 +197,21 @@
 
 (require 'git-gutter)
 (global-git-gutter-mode t)
+
+(global-set-key (kbd "C-c g u") 'git-gutter:popup-hunk)
+
+;; Jump to next/previous hunk
+(global-set-key (kbd "C-c g p") 'git-gutter:previous-hunk)
+(global-set-key (kbd "C-c g n") 'git-gutter:next-hunk)
+
+;; Stage current hunk
+(global-set-key (kbd "C-c g s") 'git-gutter:stage-hunk)
+
+;; Revert current hunk
+(global-set-key (kbd "C-c g r") 'git-gutter:revert-hunk)
+
+;; Mark current hunk
+(global-set-key (kbd "C-c g m") #'git-gutter:mark-hunk)
 
 
 
@@ -560,6 +577,8 @@
 (cfg:reverse-input-method 'russian-computer)
 
 (global-auto-revert-mode t)
+(global-hl-line-mode +1)
+(set-face-attribute 'hl-line nil :inherit nil :background "#4d4927")
 
 (provide '.emacs)
 ;;; .emacs ends here
