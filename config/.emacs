@@ -7,7 +7,7 @@
 (tool-bar-mode -1)
 (setq inhibit-startup-screen t)
 
-(setq-default frame-title-format '("ide@%f"))
+(setq-default frame-title-format (format "ide - %s@%s" (getenv "project_name") "%f"))
 
 (load-theme 'tango-dark)
 

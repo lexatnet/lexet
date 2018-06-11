@@ -35,6 +35,7 @@ run_ide() {
          -e mount_point=$mount_point \
          -e through_point=$through_point \
          -e emacs_config=$emacs_config \
+         -e project_name=$project_name \
          --workdir $workdir \
          --interactive \
          --tty \

@@ -39,8 +39,6 @@ init_ide() {
            --volume $dir/$entrypoint_init:$through_point/$entrypoint_init \
            --volume $ide_external_init:$through_point/init \
            --volume $ide_external_env:$through_point/env \
-           --volume $ide_external_home:$through_point/home \
-           --volume $ide_tmp_external_dir:$ide_tmp_dir \
            --volume $ide_packages_external_dir:$ide_packages_dir \
            --env-file $env_config \
            -e USER=$USER \

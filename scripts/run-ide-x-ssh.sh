@@ -69,6 +69,7 @@ run_ide_x_ssh() {
          -e emacs_config=$emacs_config \
          -e group_id=$group_id \
          -e user_id=$user_id \
+         -e project_name=$project_name \
          --workdir $workdir \
          --interactive \
          --tty \

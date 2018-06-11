@@ -22,10 +22,12 @@ run_idex() {
          --label "label=${label}" \
          --volume $project_external_dir:$mount_point \
          --volume $ide_project_external_dir:$ide_project_dir \
+         --volume $dir/lib:$through_point/lib \
          --volume $root/config/$emacs_config:$through_point/$emacs_config \
          --volume $root/config/$ctags_exclude_config:$through_point/$ctags_exclude_config \
          --volume $ide_external_root/init:$through_point/init \
          --volume $ide_external_root/env:$through_point/env \
+         --volume $dir/$entrypoint_run_ide:$through_point/$entrypoint_run_ide \
          --volume $ide_tmp_external_dir:$ide_tmp_dir \
          --volume $ide_packages_external_dir:$ide_packages_dir \
          --volume /tmp/.X11-unix:/tmp/.X11-unix \
@@ -42,8 +44,10 @@ run_idex() {
          -e through_point=$through_point \
          -e emacs_config=$emacs_config \
          -e ctags_exclude_config_path=$through_point/$ctags_exclude_config \
+         -e project_name=$project_name \
          --workdir $workdir \
          --rm \
+         --entrypoint $through_point/$entrypoint_run_ide \
          --user $user_id:$group_id \
          $image_tag
 }

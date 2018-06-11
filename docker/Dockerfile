@@ -16,4 +16,6 @@ EXPOSE 2222
 
 ENV ENTRYPOINT_SCRIPT=${entrypoint_script}
 
+SHELL ["/bin/bash", "-c"]
+
 ENTRYPOINT ["bash", "-c", "${ENTRYPOINT_SCRIPT}"]

@@ -59,6 +59,7 @@ make build
 | Toggle regexp search               | M-r        |
 | Edit search string                 | M-e        |
 | repeat last command                | C-x z      |
+| erject, close, abort               | C-g        |
 
 ### Movements
 

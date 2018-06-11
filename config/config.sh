@@ -31,7 +31,7 @@ config_ide_environment() {
   ctags_exclude_config=ctags-exclude.list
   ide_tmp_dir_name=ide-tmp
   ide_tmp_dir=$through_point/$(trim -s $ide_tmp_dir_name)/
-  
+
   storage=/storage
   workdir=$mount_point
   label=${image_tag}
@@ -43,7 +43,7 @@ config_ide_environment() {
   ide_utils_dir_name=ide-utils
   entrypoint_sshd=entrypoint-run-sshd.sh
   entrypoint_init=entrypoint-init-ide.sh
-
+  entrypoint_run_ide=entrypoint-run-ide.sh
 
   # ssh
   ide_key_name=key
