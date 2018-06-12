@@ -142,6 +142,7 @@
   (format "%s/%s" ide-tags-root file))
 
 (defun ide-add-tags-file (file)
+  (visit-tags-table file t)
   (unless (member file tags-table-list)
     (add-to-list 'tags-table-list file)))
 
@@ -155,7 +156,7 @@
      (start-process
       (format "ide process indexation of %s" file)
       "ide tags index"
-      "ctags" "-f"  tag-file-name  (concat default-directory file))
+      "etags" "-f"  tag-file-name  (concat default-directory file))
      `(lambda (process event)
        (print (format "Process: tag file '%s'" ',tag-file-name))
        (princ (format "Process: %s had the event '%s'" process event))
@@ -166,7 +167,8 @@
     (ide-run-file-indexation file-relative-name)))
 
 
-
+(dolist (tag-file tags-table-list)
+  )
 
 
 
