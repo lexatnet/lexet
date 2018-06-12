@@ -45,6 +45,7 @@ run_idex() {
          -e emacs_config=$emacs_config \
          -e ctags_exclude_config_path=$through_point/$ctags_exclude_config \
          -e project_name=$project_name \
+         -e ide_tags_dir=$ide_tags_dir \
          --workdir $workdir \
          --rm \
          --entrypoint $through_point/$entrypoint_run_ide \

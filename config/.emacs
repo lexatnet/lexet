@@ -118,6 +118,58 @@
 
 
 
+
+
+
+
+
+(setq ide-tags-root (getenv "ide_tags_dir"))
+
+
+(defun ide-read-lines (filePath)
+  "Return a list of lines of a file at filePath."
+  (with-temp-buffer
+    (insert-file-contents filePath)
+    (split-string (buffer-string) "\n" t)))
+
+(defun ide-exclude (fn)
+  (if (remove nil (mapcar (lambda (m) (string-match m fn)) (read-lines (getenv "ctags_exclude_config_path")))) nil fn))
+
+(defun ide-create-project-files-list ()
+  (mapcar 'ide-exclude (directory-files-recursively default-directory "")))
+
+(defun ide-generate-tags-filename (file)
+  (format "%s/%s" ide-tags-root file))
+
+(defun ide-add-tags-file (file)
+  (unless (member file tags-table-list)
+    (add-to-list 'tags-table-list file)))
+
+(defun ide-run-file-indexation (file)
+  (let* (
+         (tag-file-name (ide-generate-tags-filename file))
+         (tag-file-directory (file-name-directory tag-file-name))
+         )
+    (make-directory tag-file-directory t)
+    (set-process-sentinel
+     (start-process
+      (format "ide process indexation of %s" file)
+      "ide tags index"
+      "ctags" "-f"  tag-file-name  (concat default-directory file))
+     `(lambda (process event)
+       (print (format "Process: tag file '%s'" ',tag-file-name))
+       (princ (format "Process: %s had the event '%s'" process event))
+       (ide-add-tags-file ',tag-file-name)))))
+
+(defun ide-run-project-indexation ()
+  (dolist (file-relative-name (projectile-dir-files default-directory))
+    (ide-run-file-indexation file-relative-name)))
+
+
+
+
+
+
 (require 'php-mode)
 
 
@@ -296,6 +348,7 @@
 (setq web-mode-code-indent-offset ide-indent)
 (setq sh-basic-offset ide-indent)
 (setq sh-indentation ide-indent)
+(setq python-indent-offset ide-indent)
 
 
 
@@ -314,6 +367,10 @@
 (set-face-attribute 'whitespace-space nil :background "default" :foreground non-printable-colors)
 (set-face-attribute 'whitespace-newline nil :background "default" :foreground non-printable-colors)
 (set-face-attribute 'whitespace-tab nil :background "default" :foreground non-printable-colors)
+
+
+
+
 
 ;;; taken from http://www.emacswiki.org/emacs/MoveLineRegion
 ;;; requires code from http://www.emacswiki.org/emacs/MoveLine;;; and http://www.emacswiki.org/emacs/MoveRegion
@@ -373,12 +430,18 @@
 
 
 
+(custom-set-variables
+  '(ac-etags-requires 1))
 (require 'ac-etags)
 (eval-after-load "etags"
   '(progn
      (ac-etags-setup)))
 
-
+(add-hook 'c-mode-common-hook 'ac-etags-ac-setup)
+(add-hook 'js-mode-common-hook 'ac-etags-ac-setup)
+(add-hook 'json-mode-common-hook 'ac-etags-ac-setup)
+(add-hook 'python-mode-common-hook 'ac-etags-ac-setup)
+(add-hook 'ruby-mode-common-hook 'ac-etags-ac-setup)
 
 
 
@@ -434,8 +497,6 @@
 	  (if this-win-2nd (other-window 1))))))
 
 (global-set-key (kbd "C-x |") 'toggle-window-split)
-
-
 
 
 
@@ -508,13 +569,20 @@
 
 (add-hook 'flycheck-mode-hook 'my/use-eslint-from-node-modules)
 
+
+
+
 (require 'multiple-cursors)
 (global-set-key (kbd "C-c m n") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-c m p") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c m a") 'mc/mark-all-like-this)
 
+
+
 (delete-selection-mode t)
 (electric-pair-mode t)
+
+
 
 (defun back-to-indentation-or-beginning () (interactive)
    (if (= (point) (progn (back-to-indentation) (point)))
@@ -522,10 +590,20 @@
 
 (global-set-key (kbd "<home>") 'back-to-indentation-or-beginning)
 
+
+
+
+
 (setq ide-temporary-directory (getenv "ide_tmp_dir"))
+
+
+
 
 (setq backup-directory-alist
       `((".*" . ,ide-temporary-directory)))
+
+
+
 (setq auto-save-file-name-transforms
       `((".*" ,ide-temporary-directory t)))
 
@@ -536,7 +614,7 @@
 (add-hook 'lisp-mode-hook       'hs-minor-mode)
 (add-hook 'perl-mode-hook       'hs-minor-mode)
 (add-hook 'sh-mode-hook         'hs-minor-mode)
-(add-hook 'js-mode-hook 'hs-minor-mode)
+(add-hook 'js-mode-hook         'hs-minor-mode)
 (add-hook 'json-mode-hook       'hs-minor-mode)
 (add-hook 'ruby-mode-hook       'hs-minor-mode)
 
@@ -549,6 +627,8 @@
 (autoload 'gfm-mode "markdown-mode"
    "Major mode for editing GitHub Flavored Markdown files" t)
 (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
+
+
 
 
 (defun cfg:reverse-input-method (input-method)
@@ -576,9 +656,16 @@
 
 (cfg:reverse-input-method 'russian-computer)
 
+
+
 (global-auto-revert-mode t)
 (global-hl-line-mode +1)
 (set-face-attribute 'hl-line nil :inherit nil :background "#4d4927")
+
+(delete-directory ide-tags-root t)
+(ide-run-project-indexation)
+(add-hook 'after-save-hook (lambda ()
+                             (ide-run-file-indexation (file-relative-name buffer-file-name (projectile-project-root)))))
 
 (provide '.emacs)
 ;;; .emacs ends here
