@@ -36,7 +36,8 @@
         highlight-indent-guides
         yaml-mode
         expand-region
-        markdown-mode))
+        markdown-mode
+        async))
 
 (require 'package)
 
@@ -142,9 +143,8 @@
   (format "%s/%s" ide-tags-root file))
 
 (defun ide-add-tags-file (file)
-  (visit-tags-table file t)
-  (unless (member file tags-table-list)
-    (add-to-list 'tags-table-list file)))
+    (progn
+      (add-to-list 'tags-table-list file)))
 
 (defun ide-run-file-indexation (file)
   (let* (
@@ -668,6 +668,6 @@
 (ide-run-project-indexation)
 (add-hook 'after-save-hook (lambda ()
                              (ide-run-file-indexation (file-relative-name buffer-file-name (projectile-project-root)))))
-
+;(tags-completion-table)
 (provide '.emacs)
 ;;; .emacs ends here
