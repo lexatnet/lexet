@@ -144,7 +144,8 @@
 
 (defun ide-add-tags-file (file)
     (progn
-      (add-to-list 'tags-table-list file)))
+      (add-to-list 'tags-table-list file)
+      (tags-completion-table)))
 
 (defun ide-run-file-indexation (file)
   (let* (
@@ -166,10 +167,28 @@
   (dolist (file-relative-name (projectile-dir-files default-directory))
     (ide-run-file-indexation file-relative-name)))
 
+(defun ide-get-tags-file-name ()
+  (format "%s/%s" ide-tags-root "TAGS"))
 
-(dolist (tag-file tags-table-list)
+(defun ide-tags-indexation ()
+  (let* (
+         (tag-file-name (ide-get-tags-file-name))
+         (tag-file-directory (file-name-directory tag-file-name))
+         (ide-project-files-listing (make-temp-file "ide-project-files")))
+    (make-directory tag-file-directory t)
+    (dolist (file-relative-name (projectile-dir-files default-directory))
+      (append-to-file (concat default-directory file-relative-name "\n") nil ide-project-files-listing))
+    (set-process-sentinel
+     (start-process
+      (format "ide tags indexing of %s" ide-project-files-listing)
+      nil
+      "ctags" "-e" "-f"  tag-file-name  "-L" ide-project-files-listing)
+     `(lambda (process event)
+        (message "Process: tag file '%s'" ,tag-file-name)
+        (message "Process: %s had the event '%s'" process event)
+        (ide-add-tags-file ,tag-file-name)))
+    )
   )
-
 
 
 (require 'php-mode)
@@ -665,7 +684,7 @@
 (set-face-attribute 'hl-line nil :inherit nil :background "#4d4927")
 
 (delete-directory ide-tags-root t)
-(ide-run-project-indexation)
+(ide-tags-indexation)
 (add-hook 'after-save-hook (lambda ()
                              (ide-run-file-indexation (file-relative-name buffer-file-name (projectile-project-root)))))
 ;(tags-completion-table)
