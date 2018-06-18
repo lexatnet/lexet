@@ -170,22 +170,29 @@
 (defun ide-get-tags-file-name ()
   (format "%s/%s" ide-tags-root "TAGS"))
 
+
 (defun ide-tags-indexation ()
   (let* (
          (tag-file-name (ide-get-tags-file-name))
          (tag-file-directory (file-name-directory tag-file-name))
          (ide-project-files-listing (make-temp-file "ide-project-files")))
     (make-directory tag-file-directory t)
-    (dolist (file-relative-name (projectile-dir-files default-directory))
-      (append-to-file (concat default-directory file-relative-name "\n") nil ide-project-files-listing))
+    (append-to-file
+     (concat (mapconcat
+      (lambda (file-relative-name) (concat default-directory file-relative-name))
+      (projectile-dir-files default-directory)
+      "\n") "\n")
+     nil
+     ide-project-files-listing)
+    (message "[ide] list of files for indexing is ready")
     (set-process-sentinel
      (start-process
-      (format "ide tags indexing of %s" ide-project-files-listing)
+      (format "[ide] tags indexing of %s" ide-project-files-listing)
       nil
       "ctags" "-e" "-f"  tag-file-name  "-L" ide-project-files-listing)
      `(lambda (process event)
-        (message "Process: tag file '%s'" ,tag-file-name)
-        (message "Process: %s had the event '%s'" process event)
+        (message "[ide] Indexation Process: tag file '%s'" ,tag-file-name)
+        (message "[ide] Indexation Process: %s had the event '%s'" process event)
         (ide-add-tags-file ,tag-file-name)))
     )
   )
