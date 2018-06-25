@@ -60,6 +60,10 @@ make build
 | Edit search string                 | M-e        |
 | repeat last command                | C-x z      |
 | erject, close, abort               | C-g        |
+| zoom in                            | C-x C-+    |
+| zoom out                           | C-x C--    |
+| zoom reset                         | C-x C-+    |
+
 
 ### Movements
 

@@ -10,3 +10,4 @@
 # TODO: think something with commit through magit (attach host system keys or create ide host level keys)
 # TODO: configure debugger tools for ruby
 # TODO: configure debugger tools for php
+# TODO: add camelCase snake case feture
