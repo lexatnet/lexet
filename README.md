@@ -184,6 +184,8 @@ make build
 | rename             | R          |
 | delete             | d          |
 | chmod              | M          |
+| jum to file        | j          |
+|                    |            |
 
 ### Work with file browsing
 
