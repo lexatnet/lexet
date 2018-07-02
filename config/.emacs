@@ -121,14 +121,11 @@
 
 
 
-
-
-
 (setq ide-tags-root (getenv "ide_tags_dir"))
 
 
 (defun ide-read-lines (filePath)
-  "Return a list of lines of a file at filePath."
+  "Return a list of lines of a file at FILEPATH."
   (with-temp-buffer
     (insert-file-contents filePath)
     (split-string (buffer-string) "\n" t)))
@@ -137,6 +134,7 @@
   (if (remove nil (mapcar (lambda (m) (string-match m fn)) (read-lines (getenv "ctags_exclude_config_path")))) nil fn))
 
 (defun ide-create-project-files-list ()
+  "Return list of files in ide project directory"
   (mapcar 'ide-exclude (directory-files-recursively default-directory "")))
 
 (defun ide-generate-tags-filename (file)
@@ -159,9 +157,9 @@
       "ide tags index"
       "etags" "-f"  tag-file-name  (concat default-directory file))
      `(lambda (process event)
-       (print (format "Process: tag file '%s'" ',tag-file-name))
+       (print (format "Process: tag file '%s'" ,tag-file-name))
        (princ (format "Process: %s had the event '%s'" process event))
-       (ide-add-tags-file ',tag-file-name)))))
+       (ide-add-tags-file ,tag-file-name)))))
 
 (defun ide-run-project-indexation ()
   (dolist (file-relative-name (projectile-dir-files default-directory))
@@ -690,7 +688,9 @@
 (global-hl-line-mode +1)
 (set-face-attribute 'hl-line nil :inherit nil :background "#4d4927")
 
-(delete-directory ide-tags-root t)
+(if (file-exists-p ide-tags-root)
+    (delete-directory ide-tags-root t))
+
 (ide-tags-indexation)
 (add-hook 'after-save-hook (lambda ()
                              (ide-run-file-indexation (file-relative-name buffer-file-name (projectile-project-root)))))

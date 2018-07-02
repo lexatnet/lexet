@@ -30,9 +30,10 @@ run_idex() {
          --volume $dir/$entrypoint_run_ide:$through_point/$entrypoint_run_ide \
          --volume $ide_tmp_external_dir:$ide_tmp_dir \
          --volume $ide_packages_external_dir:$ide_packages_dir \
-         --volume /tmp/.X11-unix:/tmp/.X11-unix \
+         --volume /tmp/.X11-unix:/tmp/.X11-unix:rw \
          --env-file $env_config \
          -e DISPLAY=$DISPLAY \
+         -e QT_X11_NO_MITSHM=1 \
          -e NO_AT_BRIDGE=1 \
          -e USER=$USER \
          -e HOME=$ide_home \

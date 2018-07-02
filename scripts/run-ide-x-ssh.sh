@@ -29,6 +29,8 @@ run_ide_x_ssh() {
 
   echo "ide_sshd_config_external_file=$ide_sshd_config_external_file"
 
+  echo "workdir=$workdir"
+
   generate_sshd_config \
     --port $sshd_port \
     --pid-file $pid_file \
@@ -70,6 +72,7 @@ run_ide_x_ssh() {
          -e group_id=$group_id \
          -e user_id=$user_id \
          -e project_name=$project_name \
+         -e ide_tags_dir=$ide_tags_dir \
          --workdir $workdir \
          --interactive \
          --tty \
@@ -84,7 +87,7 @@ run_ide_x_ssh() {
   ssh_external_port=$(docker port $project_name 2222/tcp | sed -E "s/.*\:([0-9]+)/\1/g")
 
   run_idex_through_ssh() {
-    ssh -v -X -p $ssh_external_port -i $ide_key_external_dir/$ide_key_name -o "IdentitiesOnly yes" -o "StrictHostKeyChecking no" localhost "cd /volume; ide;"
+    ssh -v -X -p $ssh_external_port -i $ide_key_external_dir/$ide_key_name -o "IdentitiesOnly yes" -o "StrictHostKeyChecking no" localhost "cd $workdir; ide;"
   }
 
   try run_idex_through_ssh 5

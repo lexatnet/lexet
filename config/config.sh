@@ -24,7 +24,7 @@ config_ide_environment() {
 
 
   #Docker Run
-  mount_point=/volume
+  mount_point=/project
   emacs_config=.emacs
   through_point=/ide
   env_config=$root/config/env-config.sh

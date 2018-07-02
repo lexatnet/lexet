@@ -13,6 +13,8 @@ export through_point=$through_point
 export sshd_config=$sshd_config
 export emacs_config=$emacs_config
 export group_id=$group_id
+export project_name=$project_name
+export ide_tags_dir=$ide_tags_dir
 
 if [ -d $through_point/init ]; then
   for i in $through_point/init/*.sh; do
