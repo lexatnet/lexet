@@ -37,7 +37,8 @@
         yaml-mode
         expand-region
         markdown-mode
-        async))
+        async
+        sql-indent))
 
 (require 'package)
 
@@ -363,6 +364,9 @@
 
 
 
+(eval-after-load "sql"
+  '(load-library "sql-indent"))
+
 
 ; indent configuration
 (setq ide-indent 2)
@@ -375,6 +379,8 @@
 (setq sh-basic-offset ide-indent)
 (setq sh-indentation ide-indent)
 (setq python-indent-offset ide-indent)
+(setq sql-indent-offset ide-indent)
+
 
 
 
@@ -681,6 +687,7 @@
       (activate-input-method current))))
 
 (cfg:reverse-input-method 'russian-computer)
+
 
 
 

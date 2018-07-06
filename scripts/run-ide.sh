@@ -36,6 +36,7 @@ run_ide() {
          -e through_point=$through_point \
          -e emacs_config=$emacs_config \
          -e project_name=$project_name \
+         -e ide_tags_dir=$ide_tags_dir \
          --workdir $workdir \
          --interactive \
          --tty \
