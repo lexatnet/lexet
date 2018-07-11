@@ -68,6 +68,23 @@
 
 
 
+;enable flspell-mode for text modes
+(dolist (hook '(text-mode-hook))
+  (add-hook hook (lambda () (flyspell-mode 1))))
+
+(dolist (mode '(emacs-lisp-mode-hook
+                python-mode-hook
+                js-mode-hook
+                ruby-mode-hook
+                php-mode-hook
+                sh-mode-hook))
+  (add-hook mode
+            '(lambda ()
+               (flyspell-prog-mode))))
+
+
+
+
 (require 'highlight-symbol)
 (add-hook 'prog-mode-hook 'highlight-symbol-mode)
 (add-hook 'text-mode-hook 'highlight-symbol-mode)

@@ -1,5 +1,5 @@
 # emacs-ide
-Emacs build with useful utils configured for speed and confortable writing code from console or UI versions of emacs. 
+Emacs build with useful utils configured for speed and comfortable writing code from console or UI versions of emacs. 
 
 # Dependences
 
@@ -85,6 +85,17 @@ make build
 | Read a number n and move point to buffer position n               | M-g c          |
 | Read a number n and move point to the beginning of line number n  | M-g M-g, M-g g |
 | Read a number n and move to column n in the current line          | M-g tab        |
+
+### Comments
+| Action title                              | Shortcut   |
+| ----------------------------------------- | :--------: |
+| insert comment or toggle comment region   | M-;        |
+| toggle comment                            | C-x C-;    |
+| kill comment on current line              | C-u M-;    |
+| set comment column                        | C-x ;      |
+| insert new line and align comment         | C-M-j, M-j |
+| comment all lines in region               | C-c C-c    |
+|                                           |            |
 
 
 ### highlighted symbols
@@ -290,10 +301,12 @@ make build
 | Action title         | Shortcut   |
 | -------------------- | :--------: |
 | pop hunk             | C-c g u    |
+| revert current       | C-c g r    |
 | jump next hunk       | C-c g n    |
 | jump previous        | C-c g p    |
 | stage current hunk   | C-c g s    |
 | mark current hunk    | C-c g m    |
+|                      |            |
 
 
 
@@ -337,4 +350,31 @@ make build
 | Run grep on the files in the project. | C-c p s g  |
 |                                       |            |
 
-[here](https://projectile.readthedocs.io/en/latest/usage/) detailed map key bindings
+[Here](Https://Projectile.Readthedocs.Io/En/Latest/Usage/) Detailed Map key bindings
+
+
+
+## Spell checking
+
+| Action title                               | Shortcut   |
+| ------------------------------------------ | :--------: |
+| spell word or selected region or show menu | M-$        |
+| return to spell session                    | C-u M-$    |
+|                                            |            |
+
+
+
+### Spell checking menu commands
+
+| Action title                            | Shortcut   |
+| -------------------------------------   | :--------: |
+| add word to personal dictionary in menu | i          |
+| skip word, leave incorrect              | space      |
+| accept word for editing session         | a          |
+| accept word for buffer editing session  | A          |
+| replace                                 | r          |
+| replace all in buffer                   | R          |
+| exit                                    | x          |
+| show list options                       | ?          |
+|                                         |            |
+
