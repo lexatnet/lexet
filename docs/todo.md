@@ -13,3 +13,4 @@
 # TODO: script lib funcs rewrite functions for passing args
 # TODO: add ssh config for git connections from magit
 # TODO: add detection of attaching display for avoid sleep periods and fast start
+# TODO: fix install node npm packages on initialization

@@ -17,9 +17,11 @@ install_ide() {
   local dir=$(get_script_dir)
   source $dir/../config/config.sh
 
+  echo 'Creation lexet links...'
   ln -s ${root}/scripts/run-ide.sh ${install_point_ide}
   ln -s ${root}/scripts/run-ide-x.sh ${install_point_idex}
   ln -s ${root}/scripts/run-ide-x-ssh.sh ${install_point_idex_ssh}
+  echo 'Lexet links created.'
 }
 
 install_ide

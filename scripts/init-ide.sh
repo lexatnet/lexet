@@ -16,8 +16,9 @@ init_ide() {
   local dir=$(get_script_dir)
   source $dir/../config/config.sh
 
-  echo "Checking if ide directory exists"
+  echo "Checking if lexet data directory exists..."
   if [ ! -d "$ide_external_root" ]; then
+    echo 'lexet data directory not found.'
     local ide_packages_dir=${through_point}/$ide_packages_dir_name
     local ide_packages_external_dir=$ide_external_root/$ide_packages_dir_name
 
@@ -25,10 +26,12 @@ init_ide() {
     local ide_external_env=$ide_external_root/env
     local ide_external_init=$ide_external_root/init
 
+    echo 'Creation lexet data directories structure...'
     [ -d $ide_packages_external_dir ] || mkdir --parent --verbose $ide_packages_external_dir
     [ -d $ide_external_home ] || mkdir --parent --verbose $ide_external_home
     [ -d $ide_external_env ] || mkdir --parent --verbose $ide_external_env
     [ -d $ide_external_init ] || mkdir --parent --verbose $ide_external_init
+    echo 'Lexet data directories structure created.'
 
     echo "runing docker"
     docker run \
@@ -62,5 +65,5 @@ init_ide() {
            $image_tag
   fi
 }
-echo "start init"
+echo "start initialization"
 init_ide
