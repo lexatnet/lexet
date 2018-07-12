@@ -1,4 +1,4 @@
-# emacs-ide
+# lexet
 Emacs build with useful utils configured for speed and comfortable writing code from console or UI versions of emacs. 
 
 # Dependences
