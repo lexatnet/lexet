@@ -12,13 +12,13 @@ get_script_dir () {
      echo "$DIR"
 }
 
-config_ide_environment() {
+config_lexet_environment() {
   local dir=$(get_script_dir)
   source $dir/../scripts/lib/index.sh
 
   #Global
   root=$(normalize_path "$dir/..")
-  image_tag=lexatnet/ide
+  image_tag=lexatnet/lexet
   user_id=$UID
   group_id=$user_id
 
@@ -26,30 +26,30 @@ config_ide_environment() {
   #Docker Run
   mount_point=/project
   emacs_config=.emacs
-  through_point=/ide
+  through_point=/lexet
   env_config=$root/config/env-config.sh
   ctags_exclude_config=ctags-exclude.list
-  ide_tmp_dir_name=ide-tmp
-  ide_tmp_dir=$through_point/$(trim -s $ide_tmp_dir_name)/
+  lexet_tmp_dir_name=lexet-tmp
+  lexet_tmp_dir=$through_point/$(trim -s $lexet_tmp_dir_name)/
 
   storage=/storage
   workdir=$mount_point
   label=${image_tag}
-  ide_external_root=~/.ide
-  ide_home_dir_name=home
-  ide_server_dir_name=server
-  ide_project_dir_name=.project
-  ide_packages_dir_name=ide-packages
-  ide_utils_dir_name=ide-utils
+  lexet_external_root=~/.lexet
+  lexet_home_dir_name=home
+  lexet_server_dir_name=server
+  lexet_project_dir_name=.project
+  lexet_packages_dir_name=lexet-packages
+  lexet_utils_dir_name=lexet-utils
   entrypoint_sshd=entrypoint-run-sshd.sh
-  entrypoint_init=entrypoint-init-ide.sh
-  entrypoint_run_ide=entrypoint-run-ide.sh
+  entrypoint_init=entrypoint-init-lexet.sh
+  entrypoint_run_lexet=entrypoint-run-lexet.sh
 
   # ssh
-  ide_key_name=key
-  ide_ssh_host_rsa_key_name=ssh_host_rsa_key
-  ide_ssh_host_dsa_key_name=ssh_host_dsa_key
-  ide_ssh_host_ecdsa_key_name=ssh_host_ecdsa_key
+  lexet_key_name=key
+  lexet_ssh_host_rsa_key_name=ssh_host_rsa_key
+  lexet_ssh_host_dsa_key_name=ssh_host_dsa_key
+  lexet_ssh_host_ecdsa_key_name=ssh_host_ecdsa_key
 
   sshd_config=sshd_config
   through_script=through-script.sh
@@ -69,13 +69,13 @@ config_ide_environment() {
   rbenv_root=$through_point/env/rbenv
 
   #install
-  install_ide_name=ide
-  install_idex_name=idex
-  install_idex_ssh_name=idexs
+  install_lexet_name=lexet
+  install_lexetx_name=lexetx
+  install_lexetx_ssh_name=lexetxs
   install_dir=/usr/local/bin
-  install_point_ide=${install_dir}/${install_ide_name}
-  install_point_idex=${install_dir}/${install_idex_name}
-  install_point_idex_ssh=${install_dir}/${install_idex_ssh_name}
+  install_point_lexet=${install_dir}/${install_lexet_name}
+  install_point_lexetx=${install_dir}/${install_lexetx_name}
+  install_point_lexetx_ssh=${install_dir}/${install_lexetx_ssh_name}
 }
 
-config_ide_environment
+config_lexet_environment

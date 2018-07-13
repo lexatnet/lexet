@@ -12,4 +12,4 @@ if [ -d $through_point/init ]; then
   unset i
 fi
 
-ide
+lexet

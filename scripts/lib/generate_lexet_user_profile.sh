@@ -1,20 +1,20 @@
 #!/bin/bash
 
-generate_ide_user_profile() {
+generate_lexet_user_profile() {
 cat <<EOL
 export USER=$USER
-export HOME=$ide_home
-export ide_home=$ide_home
-export ide_server_dir=$ide_server_dir
-export ide_tmp_dir=$ide_tmp_dir
-export ide_packages_dir=$ide_packages_dir
+export HOME=$lexet_home
+export lexet_home=$lexet_home
+export lexet_server_dir=$lexet_server_dir
+export lexet_tmp_dir=$lexet_tmp_dir
+export lexet_packages_dir=$lexet_packages_dir
 export mount_point=$mount_point
 export through_point=$through_point
 export sshd_config=$sshd_config
 export emacs_config=$emacs_config
 export group_id=$group_id
 export project_name=$project_name
-export ide_tags_dir=$ide_tags_dir
+export lexet_tags_dir=$lexet_tags_dir
 
 if [ -d $through_point/init ]; then
   for i in $through_point/init/*.sh; do

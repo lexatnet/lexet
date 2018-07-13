@@ -11,7 +11,7 @@ install:
 	./scripts/install.sh
 
 init:
-	./scripts/init-ide.sh
+	./scripts/init-lexet.sh
 
 uninstall:
 	./scripts/uninstall.sh
@@ -26,4 +26,4 @@ connect-bash:
 	./scripts/connect-bash.sh
 
 connect-to-root-sshd:
-	docker exec --interactive --tty ide-root-sshd bash
+	docker exec --interactive --tty lexet-root-sshd bash

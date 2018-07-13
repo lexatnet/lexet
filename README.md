@@ -20,15 +20,15 @@ make init
 execute:
 to run in console version
 ```
-ide <path-to-project>
+lexet <path-to-project>
 ```
 to run UI version
 ```
-idex <path-to-project>
+lexetx <path-to-project>
 ```
 or
 ```
-idexs <path-to-project>
+lexetxs <path-to-project>
 ```
 
 

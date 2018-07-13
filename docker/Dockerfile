@@ -2,7 +2,7 @@ FROM ubuntu:16.04
 
 ARG build_root=/build
 ARG build_script=$build_root/init.sh
-ARG entrypoint_script=ide
+ARG entrypoint_script=lexet
 
 COPY ./docker $build_root/docker
 COPY ./config/config.sh $build_root/config/config.sh

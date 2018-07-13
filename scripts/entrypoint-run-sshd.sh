@@ -13,7 +13,7 @@ if [ -d $through_point/init ]; then
   unset i
 fi
 
-add_user --user $USER --uid $user_id  --gid $group_id --user-home $ide_home
+add_user --user $USER --uid $user_id  --gid $group_id --user-home $lexet_home
 
 su --command "/usr/sbin/sshd -D -e -f $through_point/$sshd_config" $USER
 

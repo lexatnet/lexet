@@ -21,7 +21,7 @@ lib_index() {
   source $dir/try.sh
   source $dir/trim.sh
   source $dir/generate_sshd_config.sh
-  source $dir/generate_ide_user_profile.sh
+  source $dir/generate_lexet_user_profile.sh
   source $dir/normalize_path.sh
   source $dir/get_script_dir.sh
   source $dir/install_ruby.sh

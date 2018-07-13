@@ -6,7 +6,7 @@
 # TODO: add ability to add words to project dictionary
 # TODO: automaticaly install necessary rbenvs
 # TODO: reload tags file on save asynchronously
-# TODO: think something with commit through magit (attach host system keys or create ide host level keys)
+# TODO: think something with commit through magit (attach host system keys or create lexet host level keys)
 # TODO: configure debugger tools for ruby
 # TODO: configure debugger tools for php
 # TODO: add camelCase snake case switcher feture

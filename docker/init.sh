@@ -89,10 +89,10 @@ install_hunspell(){
   rm --recursive hunspell
 }
 
-get_ide_init_piont_script() {
+get_lexet_init_piont_script() {
 cat <<EOL
 
-#ide init point
+#lexet init point
 if [ -d $through_point/init ]; then
   for i in $through_point/init/*.sh; do
     if [ -r \$i ]; then
@@ -118,8 +118,8 @@ install_php_utils(){
   rm phpcbf.phar
 }
 
-create_ide_shortcut(){
-  ln -s "$dist_point/docker/run-emacs.sh" /usr/bin/ide
+create_lexet_shortcut(){
+  ln -s "$dist_point/docker/run-emacs.sh" /usr/bin/lexet
 }
 
 #configure_ssh(){
@@ -129,8 +129,8 @@ create_ide_shortcut(){
 #}
 
 configure_bash() {
-  get_ide_init_piont_script >> /etc/profile
-  get_ide_init_piont_script >> /etc/bash.bashrc
+  get_lexet_init_piont_script >> /etc/profile
+  get_lexet_init_piont_script >> /etc/bash.bashrc
 }
 
 main(){
@@ -142,7 +142,7 @@ main(){
   install_pylint
   install_shellcheck
   install_php_utils
-  create_ide_shortcut
+  create_lexet_shortcut
   configure_bash
   #configure_ssh
 }

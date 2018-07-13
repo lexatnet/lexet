@@ -12,22 +12,22 @@ get_script_dir () {
      echo "$DIR"
 }
 
-run_ide_x_ssh() {
+run_lexet_x_ssh() {
   local dir=$(get_script_dir)
   source $dir/../config/config.sh
   source $dir/init-project.sh
 
-  container_id_file=$ide_project_external_dir/docker-container-id
+  container_id_file=$lexet_project_external_dir/docker-container-id
 
-  pid_file=$ide_project_dir/.ssh/run/sshd.pid
-  authorized_keys_file=$ide_project_dir/.ssh/key.pub
-  rsa_host_key_file=$ide_project_dir/.ssh/ssh_host_rsa_key
-  dsa_host_key_file=$ide_project_dir/.ssh/ssh_host_dsa_key
-  ecdsa_host_key_file=$ide_project_dir/.ssh/ssh_host_ecdsa_key
+  pid_file=$lexet_project_dir/.ssh/run/sshd.pid
+  authorized_keys_file=$lexet_project_dir/.ssh/key.pub
+  rsa_host_key_file=$lexet_project_dir/.ssh/ssh_host_rsa_key
+  dsa_host_key_file=$lexet_project_dir/.ssh/ssh_host_dsa_key
+  ecdsa_host_key_file=$lexet_project_dir/.ssh/ssh_host_ecdsa_key
 
-  ide_sshd_config_external_file=$ide_project_external_dir/$sshd_config
+  lexet_sshd_config_external_file=$lexet_project_external_dir/$sshd_config
 
-  echo "ide_sshd_config_external_file=$ide_sshd_config_external_file"
+  echo "lexet_sshd_config_external_file=$lexet_sshd_config_external_file"
 
   echo "workdir=$workdir"
 
@@ -39,32 +39,32 @@ run_ide_x_ssh() {
     --dsa-host-key-file $dsa_host_key_file \
     --ecdsa-host-key-file $ecdsa_host_key_file \
     --user $USER \
-    > $ide_sshd_config_external_file
+    > $lexet_sshd_config_external_file
 
-  generate_ide_user_profile > $ide_home_external_dir/.profile
-  generate_ide_user_profile > $ide_home_external_dir/.bashrc
+  generate_lexet_user_profile > $lexet_home_external_dir/.profile
+  generate_lexet_user_profile > $lexet_home_external_dir/.bashrc
 
   docker run \
          --name $project_name \
          --label "label=${label}" \
-         --volume $ide_external_root/init:$through_point/init \
-         --volume $ide_external_root/env:$through_point/env \
+         --volume $lexet_external_root/init:$through_point/init \
+         --volume $lexet_external_root/env:$through_point/env \
          --volume $dir/lib:$through_point/lib \
          --volume $project_external_dir:$mount_point \
-         --volume $ide_project_external_dir:$ide_project_dir \
+         --volume $lexet_project_external_dir:$lexet_project_dir \
          --volume $root/config/$emacs_config:$through_point/$emacs_config \
          --volume $root/config/$ctags_exclude_config:$through_point/$ctags_exclude_config \
          --volume $dir/$entrypoint_sshd:$through_point/$entrypoint_sshd \
-         --volume $ide_sshd_config_external_file:$through_point/$sshd_config \
-         --volume $ide_tmp_external_dir:$ide_tmp_dir \
-         --volume $ide_packages_external_dir:$ide_packages_dir \
+         --volume $lexet_sshd_config_external_file:$through_point/$sshd_config \
+         --volume $lexet_tmp_external_dir:$lexet_tmp_dir \
+         --volume $lexet_packages_external_dir:$lexet_packages_dir \
          --env-file $env_config \
          -e USER=$USER \
-         -e HOME=$ide_home \
-         -e ide_home=$ide_home \
-         -e ide_server_dir=$ide_server_dir \
-         -e ide_tmp_dir=$ide_tmp_dir \
-         -e ide_packages_dir=$ide_packages_dir \
+         -e HOME=$lexet_home \
+         -e lexet_home=$lexet_home \
+         -e lexet_server_dir=$lexet_server_dir \
+         -e lexet_tmp_dir=$lexet_tmp_dir \
+         -e lexet_packages_dir=$lexet_packages_dir \
          -e mount_point=$mount_point \
          -e through_point=$through_point \
          -e sshd_config=$sshd_config \
@@ -72,7 +72,7 @@ run_ide_x_ssh() {
          -e group_id=$group_id \
          -e user_id=$user_id \
          -e project_name=$project_name \
-         -e ide_tags_dir=$ide_tags_dir \
+         -e lexet_tags_dir=$lexet_tags_dir \
          --workdir $workdir \
          --interactive \
          --tty \
@@ -86,11 +86,11 @@ run_ide_x_ssh() {
 
   ssh_external_port=$(docker port $project_name 2222/tcp | sed -E "s/.*\:([0-9]+)/\1/g")
 
-  run_idex_through_ssh() {
-    ssh -v -X -p $ssh_external_port -i $ide_key_external_dir/$ide_key_name -o "IdentitiesOnly yes" -o "StrictHostKeyChecking no" localhost "cd $workdir; ide;"
+  run_lexetx_through_ssh() {
+    ssh -v -X -p $ssh_external_port -i $lexet_key_external_dir/$lexet_key_name -o "IdentitiesOnly yes" -o "StrictHostKeyChecking no" localhost "cd $workdir; lexet;"
   }
 
-  try run_idex_through_ssh 5
+  try run_lexetx_through_ssh 5
 
   docker stop $project_name
 
@@ -102,4 +102,4 @@ run_ide_x_ssh() {
   #
 }
 
-run_ide_x_ssh "$@"
+run_lexet_x_ssh "$@"

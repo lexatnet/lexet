@@ -13,15 +13,15 @@ get_script_dir () {
 
 
 
-install_ide() {
+install_lexet() {
   local dir=$(get_script_dir)
   source $dir/../config/config.sh
 
   echo 'Creation lexet links...'
-  ln -s ${root}/scripts/run-ide.sh ${install_point_ide}
-  ln -s ${root}/scripts/run-ide-x.sh ${install_point_idex}
-  ln -s ${root}/scripts/run-ide-x-ssh.sh ${install_point_idex_ssh}
+  ln -s ${root}/scripts/run-lexet.sh ${install_point_lexet}
+  ln -s ${root}/scripts/run-lexet-x.sh ${install_point_lexetx}
+  ln -s ${root}/scripts/run-lexet-x-ssh.sh ${install_point_lexetx_ssh}
   echo 'Lexet links created.'
 }
 
-install_ide
+install_lexet

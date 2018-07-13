@@ -1,10 +1,10 @@
 Port 2222
-PidFile /ide/.project/.ssh/run/sshd.pid
+PidFile /lexet/.project/.ssh/run/sshd.pid
 UsePrivilegeSeparation no
-AuthorizedKeysFile /ide/.project/.ssh/key.pub
-HostKey /ide/.project/.ssh/ssh_host_rsa_key
-HostKey /ide/.project/.ssh/ssh_host_dsa_key
-HostKey /ide/.project/.ssh/ssh_host_ecdsa_key
+AuthorizedKeysFile /lexet/.project/.ssh/key.pub
+HostKey /lexet/.project/.ssh/ssh_host_rsa_key
+HostKey /lexet/.project/.ssh/ssh_host_dsa_key
+HostKey /lexet/.project/.ssh/ssh_host_ecdsa_key
 PasswordAuthentication no
 UsePAM no
 PermitRootLogin no

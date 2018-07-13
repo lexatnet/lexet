@@ -12,7 +12,7 @@ get_script_dir () {
      echo "$DIR"
 }
 
-run_ide() {
+run_lexet() {
   local dir=$(get_script_dir)
   source $dir/../config/config.sh
   source $dir/init-project.sh
@@ -20,23 +20,23 @@ run_ide() {
   docker run \
          --label "label=${label}" \
          --volume $project_external_dir:$mount_point \
-         --volume $ide_project_external_dir:$ide_project_dir \
+         --volume $lexet_project_external_dir:$lexet_project_dir \
          --volume $root/config/$emacs_config:$through_point/$emacs_config \
          --volume $root/config/$ctags_exclude_config:$through_point/$ctags_exclude_config \
-         --volume $ide_tmp_external_dir:$ide_tmp_dir \
-         --volume $ide_packages_external_dir:$ide_packages_dir \
+         --volume $lexet_tmp_external_dir:$lexet_tmp_dir \
+         --volume $lexet_packages_external_dir:$lexet_packages_dir \
          --env-file $env_config \
          -e USER=$USER \
-         -e HOME=$ide_home \
-         -e ide_home=$ide_home \
-         -e ide_server_dir=$ide_server_dir \
-         -e ide_tmp_dir=$ide_tmp_dir \
-         -e ide_packages_dir=$ide_packages_dir \
+         -e HOME=$lexet_home \
+         -e lexet_home=$lexet_home \
+         -e lexet_server_dir=$lexet_server_dir \
+         -e lexet_tmp_dir=$lexet_tmp_dir \
+         -e lexet_packages_dir=$lexet_packages_dir \
          -e mount_point=$mount_point \
          -e through_point=$through_point \
          -e emacs_config=$emacs_config \
          -e project_name=$project_name \
-         -e ide_tags_dir=$ide_tags_dir \
+         -e lexet_tags_dir=$lexet_tags_dir \
          --workdir $workdir \
          --interactive \
          --tty \
@@ -45,4 +45,4 @@ run_ide() {
          $image_tag
 }
 
-run_ide "$@"
+run_lexet "$@"

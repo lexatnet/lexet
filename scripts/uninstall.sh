@@ -12,19 +12,19 @@ get_script_dir () {
      echo "$DIR"
 }
 
-uninstall_ide() {
+uninstall_lexet() {
   local dir=$(get_script_dir)
   source $dir/../config/config.sh
 
   echo 'removing lexet links...'
-  rm ${install_point_ide}
-  rm ${install_point_idex}
-  rm ${install_point_idex_ssh}
+  rm ${install_point_lexet}
+  rm ${install_point_lexetx}
+  rm ${install_point_lexetx_ssh}
   echo ' lexet links removed.'
   
   echo 'removing lexet data...'
-  rm -r ${ide_external_root}
+  rm -r ${lexet_external_root}
   echo 'lexet data removed.'
 }
 
-uninstall_ide
+uninstall_lexet

@@ -1,13 +1,13 @@
 ;;; package --- Summary
 ;;; Commentary:
 ;;; Code:
-(setq package-user-dir (getenv "ide_packages_dir"))
+(setq package-user-dir (getenv "lexet_packages_dir"))
 
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (setq inhibit-startup-screen t)
 
-(setq-default frame-title-format (format "ide - %s@%s" (getenv "project_name") "%f"))
+(setq-default frame-title-format (format "lexet - %s@%s" (getenv "project_name") "%f"))
 
 (load-theme 'tango-dark)
 
@@ -139,59 +139,59 @@
 
 
 
-(setq ide-tags-root (getenv "ide_tags_dir"))
+(setq lexet-tags-root (getenv "lexet_tags_dir"))
 
 
-(defun ide-read-lines (filePath)
+(defun lexet-read-lines (filePath)
   "Return a list of lines of a file at FILEPATH."
   (with-temp-buffer
     (insert-file-contents filePath)
     (split-string (buffer-string) "\n" t)))
 
-(defun ide-exclude (fn)
+(defun lexet-exclude (fn)
   (if (remove nil (mapcar (lambda (m) (string-match m fn)) (read-lines (getenv "ctags_exclude_config_path")))) nil fn))
 
-(defun ide-create-project-files-list ()
-  "Return list of files in ide project directory"
-  (mapcar 'ide-exclude (directory-files-recursively default-directory "")))
+(defun lexet-create-project-files-list ()
+  "Return list of files in lexet project directory"
+  (mapcar 'lexet-exclude (directory-files-recursively default-directory "")))
 
-(defun ide-generate-tags-filename (file)
-  (format "%s/%s" ide-tags-root file))
+(defun lexet-generate-tags-filename (file)
+  (format "%s/%s" lexet-tags-root file))
 
-(defun ide-add-tags-file (file)
+(defun lexet-add-tags-file (file)
     (progn
       (add-to-list 'tags-table-list file)
       (tags-completion-table)))
 
-(defun ide-run-file-indexation (file)
+(defun lexet-run-file-indexation (file)
   (let* (
-         (tag-file-name (ide-generate-tags-filename file))
+         (tag-file-name (lexet-generate-tags-filename file))
          (tag-file-directory (file-name-directory tag-file-name))
          )
     (make-directory tag-file-directory t)
     (set-process-sentinel
      (start-process
-      (format "ide process indexation of %s" file)
-      "ide tags index"
+      (format "lexet process indexation of %s" file)
+      "lexet tags index"
       "etags" "-f"  tag-file-name  (concat default-directory file))
      `(lambda (process event)
        (print (format "Process: tag file '%s'" ,tag-file-name))
        (princ (format "Process: %s had the event '%s'" process event))
-       (ide-add-tags-file ,tag-file-name)))))
+       (lexet-add-tags-file ,tag-file-name)))))
 
-(defun ide-run-project-indexation ()
+(defun lexet-run-project-indexation ()
   (dolist (file-relative-name (projectile-dir-files default-directory))
-    (ide-run-file-indexation file-relative-name)))
+    (lexet-run-file-indexation file-relative-name)))
 
-(defun ide-get-tags-file-name ()
-  (format "%s/%s" ide-tags-root "TAGS"))
+(defun lexet-get-tags-file-name ()
+  (format "%s/%s" lexet-tags-root "TAGS"))
 
 
-(defun ide-tags-indexation ()
+(defun lexet-tags-indexation ()
   (let* (
-         (tag-file-name (ide-get-tags-file-name))
+         (tag-file-name (lexet-get-tags-file-name))
          (tag-file-directory (file-name-directory tag-file-name))
-         (ide-project-files-listing (make-temp-file "ide-project-files")))
+         (lexet-project-files-listing (make-temp-file "lexet-project-files")))
     (make-directory tag-file-directory t)
     (append-to-file
      (concat (mapconcat
@@ -199,17 +199,17 @@
       (projectile-dir-files default-directory)
       "\n") "\n")
      nil
-     ide-project-files-listing)
-    (message "[ide] list of files for indexing is ready")
+     lexet-project-files-listing)
+    (message "[lexet] list of files for indexing is ready")
     (set-process-sentinel
      (start-process
-      (format "[ide] tags indexing of %s" ide-project-files-listing)
+      (format "[lexet] tags indexing of %s" lexet-project-files-listing)
       nil
-      "ctags" "-e" "-f"  tag-file-name  "-L" ide-project-files-listing)
+      "ctags" "-e" "-f"  tag-file-name  "-L" lexet-project-files-listing)
      `(lambda (process event)
-        (message "[ide] Indexation Process: tag file '%s'" ,tag-file-name)
-        (message "[ide] Indexation Process: %s had the event '%s'" process event)
-        (ide-add-tags-file ,tag-file-name)))
+        (message "[lexet] Indexation Process: tag file '%s'" ,tag-file-name)
+        (message "[lexet] Indexation Process: %s had the event '%s'" process event)
+        (lexet-add-tags-file ,tag-file-name)))
     )
   )
 
@@ -386,17 +386,17 @@
 
 
 ; indent configuration
-(setq ide-indent 2)
+(setq lexet-indent 2)
 (setq-default indent-tabs-mode nil)
-(setq tab-width ide-indent)
-(setq js-indent-level ide-indent)
-(setq web-mode-markup-indent-offset ide-indent)
-(setq web-mode-css-indent-offset ide-indent)
-(setq web-mode-code-indent-offset ide-indent)
-(setq sh-basic-offset ide-indent)
-(setq sh-indentation ide-indent)
-(setq python-indent-offset ide-indent)
-(setq sql-indent-offset ide-indent)
+(setq tab-width lexet-indent)
+(setq js-indent-level lexet-indent)
+(setq web-mode-markup-indent-offset lexet-indent)
+(setq web-mode-css-indent-offset lexet-indent)
+(setq web-mode-code-indent-offset lexet-indent)
+(setq sh-basic-offset lexet-indent)
+(setq sh-indentation lexet-indent)
+(setq python-indent-offset lexet-indent)
+(setq sql-indent-offset lexet-indent)
 
 
 
@@ -643,18 +643,18 @@
 
 
 
-(setq ide-temporary-directory (getenv "ide_tmp_dir"))
+(setq lexet-temporary-directory (getenv "lexet_tmp_dir"))
 
 
 
 
 (setq backup-directory-alist
-      `((".*" . ,ide-temporary-directory)))
+      `((".*" . ,lexet-temporary-directory)))
 
 
 
 (setq auto-save-file-name-transforms
-      `((".*" ,ide-temporary-directory t)))
+      `((".*" ,lexet-temporary-directory t)))
 
 
 (add-hook 'c-mode-common-hook   'hs-minor-mode)
@@ -712,12 +712,16 @@
 (global-hl-line-mode +1)
 (set-face-attribute 'hl-line nil :inherit nil :background "#4d4927")
 
-(if (file-exists-p ide-tags-root)
-    (delete-directory ide-tags-root t))
 
-(ide-tags-indexation)
-(add-hook 'after-save-hook (lambda ()
-                             (ide-run-file-indexation (file-relative-name buffer-file-name (projectile-project-root)))))
+
+(if (boundp 'lexet-tags-root)
+    (progn
+      (if (file-exists-p lexet-tags-root)
+          (delete-directory lexet-tags-root t))
+      (lexet-tags-indexation)
+      (add-hook 'after-save-hook (lambda ()
+                                   (lexet-run-file-indexation (file-relative-name buffer-file-name (projectile-project-root)))))))
+
 ;(tags-completion-table)
 (provide '.emacs)
 ;;; .emacs ends here
