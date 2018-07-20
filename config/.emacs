@@ -133,6 +133,7 @@
 (require 'auto-complete-config)
 (global-auto-complete-mode t)
 (setq ac-disable-faces nil)
+;(setq ac-auto-start 3)
 
 
 
@@ -257,7 +258,13 @@
 
 
 (require 'highlight-indent-guides)
-(setq highlight-indent-guides-auto-enabled nil)
+(setq highlight-indent-guides-method 'fill)
+(setq highlight-indent-guides-responsive nil)
+;(setq highlight-indent-guides-auto-enabled nil)
+;(setq highlight-indent-guides-responsive 'top)
+(setq highlight-indent-guides-auto-odd-face-perc 2)
+(setq highlight-indent-guides-auto-even-face-perc 0)
+;(setq highlight-indent-guides-auto-character-face-perc 20)
 ;(set-face-background 'highlight-indent-guides-odd-face "#000000")
 ;(set-face-background 'highlight-indent-guides-even-face "#262626")
 ;(set-face-foreground 'highlight-indent-guides-character-face "#585858")
@@ -388,6 +395,7 @@
 ; indent configuration
 (setq lexet-indent 2)
 (setq-default indent-tabs-mode nil)
+(setq default-tab-width lexet-indent)
 (setq tab-width lexet-indent)
 (setq js-indent-level lexet-indent)
 (setq web-mode-markup-indent-offset lexet-indent)
@@ -480,8 +488,8 @@
 
 
 (custom-set-variables
-  '(ac-etags-requires 1))
-(require 'ac-etags)
+ '(ac-etags-requires 1))
+
 (eval-after-load "etags"
   '(progn
      (ac-etags-setup)))
