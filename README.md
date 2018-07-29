@@ -51,10 +51,7 @@ make build
 | Action title                       | Shortcut   |
 | ---------------------------------- | :--------: |
 | close emacs                        | C-x C-c    |
-| Search in buffer                   | C-s        |
-| Seach backward                     | C-r        |
-| Replace in buffer                  | M-%        |
-| Replace by regexp                  | C-M-%      |
+| Prefix command to pass argument    | C-u        |
 | Toggle case sensivity search       | M-c        |
 | Toggle regexp search               | M-r        |
 | Edit search string                 | M-e        |
@@ -63,6 +60,39 @@ make build
 | zoom in                            | C-x C-+    |
 | zoom out                           | C-x C--    |
 | zoom reset                         | C-x C-+    |
+
+### Search
+| Action title                                            | Shortcut   |
+| ------------------------------------------------------- | :--------: |
+| Search in buffer                                        | C-s        |
+| Seach backward                                          | C-r        |
+| Exit and place cursor at original position              | C-g        |
+| exit and place cursor at current position               | return     |
+| select more strings to the right of cursor              | C-w        |
+| Search the “symbol” under cursor, with boundary check   | M-s .      |
+| search the word under cursor, with boundary check       | M-s w      |
+| Same as isearch but with boundary check                 | M-s _      |
+| list matching lines                                     | M-s o      |
+|                                                         |            |
+
+
+
+### Replace
+| Action title                       | Shortcut             |
+| ---------------------------------- | :------------------: |
+| Replace in buffer                  | M-%                  |
+| Replace by regexp                  | C-M-%                |
+| Replace occurrence                 | y, space             |
+| Skip replace occurrence            | n, delete, backspace |
+| Exit replace                       | q, return            |
+| replace this occurrence and exit   | .                    |
+| go to previous occurrence          | ^                    |
+| undo                               | u                    |
+| undo all                           | U                    |
+| edit replacement                   | e                    |
+| replace all                        | Y                    |
+| help                               | C-h                  |
+
 
 
 ### Movements

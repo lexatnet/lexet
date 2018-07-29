@@ -14,6 +14,8 @@
 ; list the packages you want
 (setq package-list
       '(
+        helm
+        helm-flyspell
         highlight
         highlight-symbol
         auto-complete
@@ -24,11 +26,13 @@
         js2-mode
         ac-js2
         projectile
+        helm-projectile
         neotree
         magit
         git-gutter
         scss-mode
         flycheck
+        helm-flycheck
         ac-etags
         el-get
         undo-tree
@@ -53,9 +57,9 @@
 (package-initialize)
 
 ; fetch the list of packages available
-(unless package-archive-contents
-  (package-refresh-contents))
-
+;(unless package-archive-contents
+;  (package-refresh-contents))
+(package-refresh-contents)
 
 ; install the missing packages
 (dolist (package package-list)
@@ -65,6 +69,10 @@
 
 
 (require 'el-get)
+
+(require 'helm)
+(require 'helm-config)
+(global-set-key (kbd "M-x") 'helm-M-x)
 
 
 
@@ -81,13 +89,18 @@
   (add-hook mode
             '(lambda ()
                (flyspell-prog-mode))))
+(define-key flyspell-mode-map (kbd "C-;") 'helm-flyspell-correct)
 
 
 
 
 (require 'highlight-symbol)
-(add-hook 'prog-mode-hook 'highlight-symbol-mode)
-(add-hook 'text-mode-hook 'highlight-symbol-mode)
+(dolist (mode '(prog-mode-hook
+                text-mode-hook))
+  (add-hook mode
+            '(lambda ()
+               (highlight-symbol-mode))))
+
 (global-set-key (kbd "M-<right>") 'highlight-symbol-next)
 (global-set-key (kbd "M-<left>") 'highlight-symbol-prev)
 
@@ -131,6 +144,7 @@
 
 (require 'auto-complete)
 (require 'auto-complete-config)
+(ac-config-default)
 (global-auto-complete-mode t)
 (setq ac-disable-faces nil)
 ;(setq ac-auto-start 3)
@@ -177,7 +191,7 @@
       "etags" "-f"  tag-file-name  (concat default-directory file))
      `(lambda (process event)
        (print (format "Process: tag file '%s'" ,tag-file-name))
-       (princ (format "Process: %s had the event '%s'" process event))
+       (print (format "Process: %s had the event '%s'" process event))
        (lexet-add-tags-file ,tag-file-name)))))
 
 (defun lexet-run-project-indexation ()
@@ -216,7 +230,7 @@
 
 
 (require 'php-mode)
-
+(add-hook 'php-mode-hook 'php-enable-default-coding-style)
 
 
 
@@ -235,6 +249,11 @@
 
 
 (require 'ac-js2)
+
+(dolist (mode '(js-mode-hook))
+  (add-hook mode
+            '(lambda ()
+               (ac-js2-mode))))
 
 
 
@@ -322,6 +341,9 @@
 (require 'projectile)
 (projectile-global-mode)
 (setq projectile-switch-project-action 'neotree-projectile-action)
+(setq projectile-completion-system 'helm)
+(require 'helm-projectile)
+(helm-projectile-on)
 
 
 
@@ -486,7 +508,7 @@
 (global-set-key (kbd "M-<down>") 'move-line-region-down)
 
 
-
+(require 'ac-etags)
 (custom-set-variables
  '(ac-etags-requires 1))
 
@@ -494,11 +516,27 @@
   '(progn
      (ac-etags-setup)))
 
-(add-hook 'c-mode-common-hook 'ac-etags-ac-setup)
-(add-hook 'js-mode-common-hook 'ac-etags-ac-setup)
-(add-hook 'json-mode-common-hook 'ac-etags-ac-setup)
-(add-hook 'python-mode-common-hook 'ac-etags-ac-setup)
-(add-hook 'ruby-mode-common-hook 'ac-etags-ac-setup)
+(defun lexet-ac-setup-source-etags ()
+  (setq ac-sources (append ac-sources '(ac-source-etags))))
+
+;; (add-hook 'c-mode-common-hook 'lexet-ac-setup-source-etags)
+;; (add-hook 'js-mode-hook 'lexet-ac-setup-source-etags)
+;; (add-hook 'json-mode-hook 'lexet-ac-setup-source-etags)
+;; (add-hook 'python-mode-hook 'lexet-ac-setup-source-etags)
+;; (add-hook 'ruby-mode-hook 'lexet-ac-setup-source-etags)
+;; (add-hook 'php-mode-hook 'lexet-ac-setup-source-etags)
+
+(dolist (mode '(c-mode-common-hook
+                json-mode-hook
+                emacs-lisp-mode-hook
+                python-mode-hook
+                js-mode-hook
+                ruby-mode-hook
+                php-mode-hook
+                sh-mode-hook))
+  (add-hook mode
+            '(lambda ()
+               (lexet-ac-setup-source-etags))))
 
 
 
