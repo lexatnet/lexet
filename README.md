@@ -44,7 +44,10 @@ make build
 
 # Usage
 
+
+
 ## Shortcuts
+
 
 
 ### Control
@@ -61,6 +64,8 @@ make build
 | zoom out                           | C-x C--    |
 | zoom reset                         | C-x C-+    |
 
+
+
 ### Search
 | Action title                                            | Shortcut   |
 | ------------------------------------------------------- | :--------: |
@@ -73,7 +78,6 @@ make build
 | search the word under cursor, with boundary check       | M-s w      |
 | Same as isearch but with boundary check                 | M-s _      |
 | list matching lines                                     | M-s o      |
-|                                                         |            |
 
 
 
@@ -96,7 +100,6 @@ make build
 
 
 ### Movements
-
 | Action title                                                      | Shortcuts      |
 | ----------------------------------------------------------------- | -------------- |
 | Move forward one character                                        | C-f, right     |
@@ -116,6 +119,8 @@ make build
 | Read a number n and move point to the beginning of line number n  | M-g M-g, M-g g |
 | Read a number n and move to column n in the current line          | M-g tab        |
 
+
+
 ### Comments
 | Action title                              | Shortcut   |
 | ----------------------------------------- | :--------: |
@@ -125,17 +130,18 @@ make build
 | set comment column                        | C-x ;      |
 | insert new line and align comment         | C-M-j, M-j |
 | comment all lines in region               | C-c C-c    |
-|                                           |            |
 
 
-### highlighted symbols
+
+### Highlighted symbols
 | Action title                 | Shortcut     |
 | ---------------------------- | :----------: |
 | next highlighted symbol      | M-rigth      |
 | previous highlighted symbol  | M-left       |
 
 
-### highlight
+
+### Highlight
 | Action title                      | Shortcut     |
 | --------------------------------- | :----------: |
 | highlight regions match selected  | C-c h s      |
@@ -144,8 +150,8 @@ make build
 | unhighlight all                   | C-c h a      |
 
 
-### File
 
+### File
 | Action title      | Shortcut   |
 | ----------------- | :--------: |
 | open file         | C-x C-f    |
@@ -154,8 +160,8 @@ make build
 | save all          | C-x s      |
 
 
-### Copy-Paste operations
 
+### Copy-Paste operations
 | Action title      | Shortcut   |
 | ----------------- | :--------: |
 | copy              | M-w        |
@@ -164,8 +170,8 @@ make build
 | paste next        | M-y        |
 
 
-### Work with windows
 
+### Work with windows
 | Action title             | Shortcut   |
 | ------------------------ | :--------: |
 | close window             | C-x 0      |
@@ -176,23 +182,23 @@ make build
 | toggle split orientation | `C-x |`    |
 
 
-### Working with buffers
 
+### Working with buffers
 | Action title      | Shortcut   |
 | ----------------- | :--------: |
 | show buffers list | C-x C-b    |
 
 
-### working with history
 
+### Working with history
 | Action title       | Shortcut   |
 | ------------------ | :--------: |
 | undo               | C-/        |
 | show history tree  | C-x u      |
 
 
-#### Working with history tree
 
+#### Working with history tree
 | Action title       | Shortcut   |
 | ------------------ | :--------: |
 | close history tree | q          |
@@ -200,8 +206,8 @@ make build
 | next change        | down       |
 
 
-### Working with selection
 
+### Working with selection
 | Action title       | Shortcut   |
 | ------------------ | :--------: |
 | set selection mark | C-Space    |
@@ -210,8 +216,8 @@ make build
 | move selected down | M-down     |
 
 
-### Dired Mod
 
+### Dired Mod
 | Action title       | Shortcut   |
 | ------------------ | :--------: |
 | open dired browser | C-x d      |
@@ -226,13 +232,14 @@ make build
 | delete             | d          |
 | chmod              | M          |
 | jum to file        | j          |
-|                    |            |
+
+
 
 ### Work with file browsing
-
 | Action title        | Shortcut   |
 | ------------------- | :--------: |
 | open file browser   | C-x d      |
+
 
 
 #### Work with file browser
@@ -253,7 +260,7 @@ make build
 | visit current file                                 | f                     |
 | view current file                                  | v                     |
 | visit current file in other window                 | o                     |
-| create a new subdirectory                          | +                     |
+| create a new sub-directory                         | +                     |
 | compare file at point with the one at mark         | =                     |
 |                                                    |                       |
 | mark a file or subdirectory for later commands     | m                     |
@@ -325,9 +332,7 @@ make build
 
 
 
-
 ## Work with git gutter
-
 | Action title         | Shortcut   |
 | -------------------- | :--------: |
 | pop hunk             | C-c g u    |
@@ -336,20 +341,20 @@ make build
 | jump previous        | C-c g p    |
 | stage current hunk   | C-c g s    |
 | mark current hunk    | C-c g m    |
-|                      |            |
 
 
 
 ## Checking
-
 | Action title      | Shortcut   |
 | ----------------- | :--------: |
+
 
 
 ## Work with Magit
 | Action title      | Shortcut   |
 | ----------------- | :--------: |
 | open status       | C-x g      |
+
 
 
 ## Formatting
@@ -363,16 +368,17 @@ make build
 | join string with previous | M-^        |
 
 
-## Multicursor
 
+## Multicursor
 | Action title                 | Shortcut   |
 | ---------------------------- | :--------: |
 | mark next like selected      | C-c m n    |
 | mark previous like selected  | C-c m p    |
 | mark all like selected       | C-c m a    |
 
-## Work with Projectile
 
+
+## Work with Projectile
 | Action title                          | Shortcut   |
 | ------------------------------------- | :--------: |
 | Help                                  | C-c p C-h  |
@@ -385,17 +391,14 @@ make build
 
 
 ## Spell checking
-
 | Action title                               | Shortcut   |
 | ------------------------------------------ | :--------: |
 | spell word or selected region or show menu | M-$        |
 | return to spell session                    | C-u M-$    |
-|                                            |            |
 
 
 
 ### Spell checking menu commands
-
 | Action title                            | Shortcut   |
 | -------------------------------------   | :--------: |
 | add word to personal dictionary in menu | i          |
@@ -406,5 +409,31 @@ make build
 | replace all in buffer                   | R          |
 | exit                                    | x          |
 | show list options                       | ?          |
-|                                         |            |
 
+
+
+### Hide/Show blocks
+| Action title                                | Shortcut                |
+| ------------------------------------------- | :---------------------: |
+| Hide the current block                      | C-c @ C-h, C-c @ C-d    |
+| Show the current block                      | C-c @ C-s               |
+| Either hide or show the current block       | C-c @ C-c, C-x @ C-e    |
+| Hide all top-level blocks                   | C-c @ C-M-h, C-c @ C-t  |
+| Show all blocks in the buffer               | C-c @ C-M-s, C-c @ C-a  |
+| Hide all blocks n levels below this block   | C-u n C-c @ C-l         |
+
+
+
+### Expand region
+| Action title                                                      | Shortcut   |
+| ----------------------------------------------------------------- | :--------: |
+| Expand region increases the selected region by semantic units.    | C-^        |
+
+
+
+### Pairs
+| Action title                            | Shortcut   |
+| --------------------------------------- | :--------: |
+| move forward                            | C-M-f      |
+| move backward                           | C-M-b      |
+|                                         |            |
