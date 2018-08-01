@@ -208,12 +208,14 @@ make build
 
 
 ### Working with selection
-| Action title       | Shortcut   |
-| ------------------ | :--------: |
-| set selection mark | C-Space    |
-| select word        | C-s C-w    |
-| move selected up   | M-up       |
-| move selected down | M-down     |
+| Action title       | Shortcut       |
+| ------------------ | :------------: |
+| set selection mark | C-Space, C-@   |
+| select word        | C-s C-w        |
+| move selected up   | M-up           |
+| move selected down | M-down         |
+|                    | C-x C-x        |
+|                    |                |
 
 
 

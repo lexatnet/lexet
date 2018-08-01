@@ -46,7 +46,11 @@
         sql-indent
         smartparens
         hydra
-        use-package))
+        use-package
+        smart-mode-line
+        powerline
+        treemacs
+        winum))
 
 (require 'package)
 
@@ -61,9 +65,9 @@
 (package-initialize)
 
 ; fetch the list of packages available
-;(unless package-archive-contents
-;  (package-refresh-contents))
-(package-refresh-contents)
+(unless package-archive-contents
+ (package-refresh-contents))
+;; (package-refresh-contents)
 
 ; install the missing packages
 (dolist (package package-list)
@@ -319,14 +323,14 @@
 ;; highlight brackets
 ;; (show-paren-mode 1)
 ;; (setq show-paren-delay 0)
-
+;; (setq show-paren-style 'mixed) ; highlight brackets if visible, else entire expression
 
 
 
 (require 'neotree)
-(setq neo-window-width 40)
+;; (setq neo-window-width 40)
 (setq neo-window-fixed-size nil)
-(setq neo-smart-open t)
+;; (setq neo-smart-open t)
 
 
 
@@ -402,10 +406,10 @@
               (neotree-find file-name)))
       (message "Could not find git project root."))))
 
-;(global-set-key [f8] 'neotree-project-dir)
+(global-set-key [f8] 'neotree-project-dir)
 ;(global-set-key [f8] 'neotree-toggle)
 
-(setq show-paren-style 'mixed) ; highlight brackets if visible, else entire expression
+
 
 
 
@@ -1005,6 +1009,83 @@
       (lexet-tags-indexation)
       (add-hook 'after-save-hook (lambda ()
                                    (lexet-run-file-indexation (file-relative-name buffer-file-name (projectile-project-root)))))))
+
+
+
+(use-package treemacs
+  :ensure t
+  :defer t
+  :init
+  (with-eval-after-load 'winum
+    (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+  :config
+  (progn
+    (setq treemacs-collapse-dirs              (if (executable-find "python") 3 0)
+          treemacs-deferred-git-apply-delay   0.5
+          treemacs-file-event-delay           5000
+          treemacs-file-follow-delay          0.2
+          treemacs-follow-after-init          t
+          treemacs-follow-recenter-distance   0.1
+          treemacs-goto-tag-strategy          'refetch-index
+          treemacs-indentation                2
+          treemacs-indentation-string         " "
+          treemacs-is-never-other-window      nil
+          treemacs-no-png-images              nil
+          treemacs-project-follow-cleanup     nil
+          treemacs-persist-file               (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
+          treemacs-recenter-after-file-follow nil
+          treemacs-recenter-after-tag-follow  nil
+          treemacs-show-hidden-files          t
+          treemacs-silent-filewatch           nil
+          treemacs-silent-refresh             nil
+          treemacs-sorting                    'alphabetic-desc
+          treemacs-space-between-root-nodes   t
+          treemacs-tag-follow-cleanup         t
+          treemacs-tag-follow-delay           1.5
+          treemacs-width                      35)
+
+    ;; The default width and height of the icons is 22 pixels. If you are
+    ;; using a Hi-DPI display, uncomment this to double the icon size.
+    ;;(treemacs-resize-icons 44)
+
+    (treemacs-follow-mode t)
+    (treemacs-filewatch-mode t)
+    (treemacs-fringe-indicator-mode t)
+    (pcase (cons (not (null (executable-find "git")))
+                 (not (null (executable-find "python3"))))
+      (`(t . t)
+       (treemacs-git-mode 'extended))
+      (`(t . _)
+       (treemacs-git-mode 'simple))))
+  :bind
+  (:map global-map
+        ("M-0"       . treemacs-select-window)
+        ("C-x t 1"   . treemacs-delete-other-windows)
+        ("C-x t t"   . treemacs)
+        ("C-x t B"   . treemacs-bookmark)
+        ("C-x t C-t" . treemacs-find-file)
+        ("C-x t M-t" . treemacs-find-tag)))
+
+(use-package treemacs-projectile
+  :after treemacs projectile
+  :ensure t)
+
+
+
+(use-package smart-mode-line-powerline-theme
+   :ensure t
+   :after powerline
+   :after smart-mode-line
+   :config
+   (setq sml/theme 'powerline)
+   (setq sml/no-confirm-load-theme t)
+   (sml/setup)
+   ;; (sml/apply-theme 'powerline)
+   )
+
+;; (setq sml/theme 'powerline)
+;; (setq sml/no-confirm-load-theme t)
+;; (sml/setup)
 
 ;(tags-completion-table)
 (provide '.emacs)
