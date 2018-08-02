@@ -1072,20 +1072,21 @@
 
 
 
-(use-package smart-mode-line-powerline-theme
-   :ensure t
-   :after powerline
-   :after smart-mode-line
-   :config
-   (setq sml/theme 'powerline)
-   (setq sml/no-confirm-load-theme t)
-   (sml/setup)
-   ;; (sml/apply-theme 'powerline)
-   )
+;; (use-package smart-mode-line-powerline-theme
+;;    :ensure t
+;;    :after powerline
+;;    :after smart-mode-line
+;;    :config
+;;    (setq sml/theme 'powerline)
+;;    (setq sml/no-confirm-load-theme t)
+;;    (sml/setup)
+;;    ;; (sml/apply-theme 'powerline)
+;;    )
 
-;; (setq sml/theme 'powerline)
-;; (setq sml/no-confirm-load-theme t)
-;; (sml/setup)
+(column-number-mode)
+(setq sml/theme 'powerline)
+(setq sml/no-confirm-load-theme t)
+(sml/setup)
 
 ;(tags-completion-table)
 (provide '.emacs)
