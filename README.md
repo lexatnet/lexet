@@ -434,8 +434,22 @@ make build
 
 
 ### Pairs
-| Action title                            | Shortcut   |
-| --------------------------------------- | :--------: |
-| move forward                            | C-M-f      |
-| move backward                           | C-M-b      |
-|                                         |            |
+| Action title                                                                        | Shortcut        |
+| ----------------------------------------------------------------------------------- | :-------------: |
+| show Hydra menu                                                                     | C-M-s           |
+| jump to pair forward                                                                | C-M-f           |
+| jump to pair backward                                                               | C-M-b           |
+| Remove the wrapping pair from the this expression.                                  | M-D             |
+| Jump to the beginning of current expression, that is after the opening delimiter.   | C-S-d           |
+| Jump to the end of current expression, that is before the closing delimiter         | C-S-a           |
+| Kill expression                                                                     | C-M-k           |
+| Copy expression                                                                     | C-M-w           |
+| jump to begining wrapped delimiter                                                  | C-M-d           |
+| jump to begining wrapping delimiter                                                 | C-M-u           |
+| Jump to end wrapping delimiter                                                      | C-M-e           |
+| jump to begining current expression                                                 | C-S-d           |
+| Jump to end current expression                                                      | C-S-a           |
+| Remove the wrapping pair from the following expression                              | M-<delete>      |
+| Remove the wrapping pair from the previous expression                               | M-<backspace>   |
+| Change inner                                                                        | C-"             |
+|                                                                                     |                 |

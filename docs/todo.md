@@ -6,8 +6,11 @@
 # TODO: think something with commit through magit (attach host system keys or create lexet host level keys)
 # TODO: configure debugger tools for ruby
 # TODO: configure debugger tools for php
-# TODO: add camelCase snake case switcher feture
+# TODO: add camelCase snake case switcher feature
 # TODO: add ssh config for git connections from magit
 # TODO: add detection of attaching display for avoid sleep periods and fast start
 # TODO: fix install node npm packages on initialization
 # TODO: add prettier
+# TODO: manage Hydra for smartparens (move more commands in hydra)
+# TODO: migrate from neotree to treemacs ( fix config )
+# TODO: update smatparens readme
