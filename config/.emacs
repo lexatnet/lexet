@@ -3,8 +3,8 @@
 ;;; Code:
 (setq package-user-dir (getenv "lexet_packages_dir"))
 
-(menu-bar-mode nil)
-(tool-bar-mode nil)
+(menu-bar-mode 0)
+(tool-bar-mode 0)
 (delete-selection-mode t)
 (global-auto-revert-mode t)
 (setq column-number-mode t)
@@ -13,21 +13,16 @@
 (setq-default frame-title-format (format "lexet - %s@%s" (getenv "project_name") "%f"))
 
 (load-theme 'tango-dark)
+(global-hl-line-mode +1)
+(set-face-attribute 'hl-line nil :inherit nil :background "#4d4927")
+
 
 ; list the packages you want
 (setq package-list
       '(
-        helm-flyspell
         js2-mode
-        ac-js2
-        projectile
-        magit
-        flycheck
         helm-flycheck
-        ac-etags
         el-get
-        expand-region
-        markdown-mode
         async
         sql-indent
         use-package
@@ -63,8 +58,7 @@
 
 
 (use-package el-get
-  :ensure t
-  )
+  :ensure t)
 
 (use-package hydra
   :ensure t)
@@ -78,45 +72,36 @@
 
 
 
-;enable flspell-mode for text modes
-(dolist (hook '(text-mode-hook))
-  (add-hook hook (lambda () (flyspell-mode 1))))
+;; enable flspell-mode for text modes
+(use-package flyspell
+  :hook ((emacs-lisp-mode . flyspell-prog-mode)
+         (python-mode . flyspell-prog-mode)
+         (js-mode . flyspell-prog-mode)
+         (ruby-mode . flyspell-prog-mode)
+         (php-mode . flyspell-prog-mode)
+         (sh-mode . flyspell-prog-mode)
+         (text-mode . flyspell-mode))
+  :bind (
+         :map flyspell-mode-map
+         ("C-;" . helm-flyspell-correct)))
 
-(dolist (mode '(emacs-lisp-mode-hook
-                python-mode-hook
-                js-mode-hook
-                ruby-mode-hook
-                php-mode-hook
-                sh-mode-hook))
-  (add-hook mode
-            '(lambda ()
-               (flyspell-prog-mode)
-	       (define-key flyspell-mode-map (kbd "C-;") 'helm-flyspell-correct))))
 
+(use-package helm-flyspell
+  :ensure t
+  :bind (
+         :map flyspell-mode-map
+         ("M-S" . helm-flyspell-correct)))
 
 
 (use-package highlight-symbol
   :ensure t
-  :config (dolist (mode '(prog-mode-hook
-                  text-mode-hook))
-    (add-hook mode
-              '(lambda ()
-                 (highlight-symbol-mode))))
-  :bind (
-    ("M-<right>" . highlight-symbol-next)
-    ("M-<left>" . highlight-symbol-prev)
-    )
-  )
-
-
-
-
-
-
+  :hook ((prog-mode . highlight-symbol-mode)
+         (text-mode . highlight-symbol-mode))
+  :bind (("M-<right>" . highlight-symbol-next)
+         ("M-<left>" . highlight-symbol-prev)))
 
 
 ;; (use-package zones)
-
 
 
 (use-package highlight
@@ -127,6 +112,7 @@
     ("C-c h n" . hlt-next-highlight)
     ("C-c h p" . hlt-previous-highlight)
     ))
+
 
 (defun get-selected-string (beg end)
   "Return selected string or \"empty string\" if none selected."
@@ -151,8 +137,6 @@
       (hlt-highlight-regexp-region (point-min) (point-max) selection))))
 
 
-
-
 (use-package auto-complete
   :ensure t
   :config
@@ -170,8 +154,6 @@
   (define-key ac-complete-mode-map (kbd "C-:") 'ac-complete-with-helm))
 
 
-
-
 (setq lexet-tags-root (getenv "lexet_tags_dir"))
 
 
@@ -181,20 +163,25 @@
     (insert-file-contents filePath)
     (split-string (buffer-string) "\n" t)))
 
+
 (defun lexet-exclude (fn)
   (if (remove nil (mapcar (lambda (m) (string-match m fn)) (read-lines (getenv "ctags_exclude_config_path")))) nil fn))
+
 
 (defun lexet-create-project-files-list ()
   "Return list of files in lexet project directory"
   (mapcar 'lexet-exclude (directory-files-recursively default-directory "")))
 
+
 (defun lexet-generate-tags-filename (file)
   (format "%s/%s" lexet-tags-root file))
+
 
 (defun lexet-add-tags-file (file)
     (progn
       (add-to-list 'tags-table-list file)
       (tags-completion-table)))
+
 
 (defun lexet-run-file-indexation (file)
   (let* (
@@ -212,9 +199,11 @@
        (print (format "Process: %s had the event '%s'" process event))
        (lexet-add-tags-file ,tag-file-name)))))
 
+
 (defun lexet-run-project-indexation ()
   (dolist (file-relative-name (projectile-dir-files default-directory))
     (lexet-run-file-indexation file-relative-name)))
+
 
 (defun lexet-get-tags-file-name ()
   (format "%s/%s" lexet-tags-root "TAGS"))
@@ -259,6 +248,7 @@
          (php-mode . lexet-php-mode-init))
   )
 
+
 (use-package ac-php
   :ensure t
   :bind (
@@ -270,13 +260,14 @@
     (ac-php-core-eldoc-setup ) ;; enable eldoc
     )
 
+
 (use-package yasnippet
   :ensure t
   :commands (yas-minor-mode)
   :hook ((prog-mode . yas-minor-mode))
   :config
-  (yas-reload-all)
-  )
+  (yas-reload-all))
+
 
 (use-package yasnippet-snippets
   :ensure t
@@ -298,15 +289,9 @@
   (setq js2-indent-switch-body t))
 
 
-
-
 (use-package ac-js2
   :ensure t
-  :config
-  (dolist (mode '(js-mode-hook))
-    (add-hook mode
-              '(lambda ()
-                 (ac-js2-mode)))))
+  :hook ((js-mode . ac-js2-mode)))
 
 
 
@@ -321,18 +306,17 @@
   ;; (setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'")))
   )
 
+
 (use-package scss-mode
   :ensure t
   :config
-  (add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
-  )
+  :mode (("\\.scss\\'" . scss-mode)))
 
 
 (use-package yaml-mode
   :ensure t
   :config
-  (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
-
+  :mode (("\\.yml\\'" . yaml-mode)))
 
 
 (use-package highlight-indent-guides
@@ -355,7 +339,6 @@
 ;; (show-paren-mode 1)
 ;; (setq show-paren-delay 0)
 ;; (setq show-paren-style 'mixed) ; highlight brackets if visible, else entire expression
-
 
 
 (use-package neotree
@@ -397,7 +380,6 @@
   :bind(("C-x g" . magit-status)))
 
 
-
 (use-package undo-tree
   :ensure t
   :config
@@ -405,9 +387,6 @@
   ;; (global-set-key (kbd "C-<") 'undo)
   ;; (global-set-key (kbd "C-<") 'redo)
   )
-
-
-
 
 
 (use-package git-gutter
@@ -432,17 +411,11 @@
          ("C-c g m" . git-gutter:mark-hunk)))
 
 
-
-
-
-
 (use-package projectile
   :ensure t
   :config
   (projectile-global-mode)
-  (setq projectile-switch-project-action 'neotree-projectile-action)
-  )
-
+  (setq projectile-switch-project-action 'neotree-projectile-action))
 
 
 (use-package helm-projectile
@@ -460,26 +433,11 @@
   :bind (("C-^" . er/expand-region)))
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 (global-set-key (kbd "C-x C-b") 'buffer-menu)
 
 
-
-
-
 (setq path-to-ctags "ctags") ;; <- your ctags path here
+
 
 (defun create-tags (dir-name)
     "Create tags file."
@@ -490,9 +448,7 @@
                   path-to-ctags
                   ctags-exclude-config-path
                   (directory-file-name dir-name)))
-    (shell-command ctags-command)
-  )
-
+    (shell-command ctags-command))
 
 
 (eval-after-load "sql"
@@ -512,9 +468,6 @@
 (setq sh-indentation lexet-indent)
 (setq python-indent-offset lexet-indent)
 (setq sql-indent-offset lexet-indent)
-
-
-
 
 
 (use-package whitespace
@@ -540,9 +493,6 @@
   )
 
 
-
-
-
 ;;; taken from http://www.emacswiki.org/emacs/MoveLineRegion
 ;;; requires code from http://www.emacswiki.org/emacs/MoveLine;;; and http://www.emacswiki.org/emacs/MoveRegion
 (defun move-line (n)
@@ -558,15 +508,18 @@
     (forward-line -1)
     (forward-char col)))
 
+
 (defun move-line-up (n)
   "Move the current line up by N lines."
   (interactive "p")
   (move-line (if (null n) -1 (- n))))
 
+
 (defun move-line-down (n)
   "Move the current line down by N lines."
   (interactive "p")
   (move-line (if (null n) 1 n)))
+
 
 (defun move-region (start end n)
   "Move the current region up or down by N lines."
@@ -578,6 +531,7 @@
       (setq deactivate-mark nil)
       (set-mark start))))
 
+
 (defun move-region-up (start end n)
   "Move the current line up by N lines."
   (interactive "r\np")
@@ -588,41 +542,37 @@
   (interactive "r\np")
   (move-region start end (if (null n) 1 n)))
 
+
 (defun move-line-region-up (start end n)
   (interactive "r\np")
   (if (region-active-p) (move-region-up start end n) (move-line-up n)))
+
 
 (defun move-line-region-down (start end n)
   (interactive "r\np")
   (if (region-active-p) (move-region-down start end n) (move-line-down n)))
 
+
 (global-set-key (kbd "M-<up>") 'move-line-region-up)
 (global-set-key (kbd "M-<down>") 'move-line-region-down)
 
 
-(require 'ac-etags)
-(custom-set-variables
- '(ac-etags-requires 1))
-
-(eval-after-load "etags"
-  '(progn
-     (ac-etags-setup)))
-
-(defun lexet-ac-setup-source-etags ()
-  (setq ac-sources (append ac-sources '(ac-source-etags))))
-
-(dolist (mode '(c-mode-common-hook
-                json-mode-hook
-                emacs-lisp-mode-hook
-                python-mode-hook
-                js-mode-hook
-                ruby-mode-hook
-                php-mode-hook
-                sh-mode-hook))
-  (add-hook mode
-            '(lambda ()
-               (lexet-ac-setup-source-etags))))
-
+(use-package ac-etags
+  :after (etags)
+  :custom
+  (ac-etags-requires 1)
+  :hook ((c-mode-common . lexet-ac-setup-source-etags)
+         (json-mode . lexet-ac-setup-source-etags)
+         (emacs-lisp-mode . lexet-ac-setup-source-etags)
+         (python-mode . lexet-ac-setup-source-etags)
+         (js-mode . lexet-ac-setup-source-etags)
+         (ruby-mode . lexet-ac-setup-source-etags)
+         (php-mode . lexet-ac-setup-source-etags)
+         (sh-mode . lexet-ac-setup-source-etags))
+  :init
+  (ac-etags-setup)
+  (defun lexet-ac-setup-source-etags ()
+    (setq ac-sources (append ac-sources '(ac-source-etags)))))
 
 
 (use-package flycheck
@@ -681,10 +631,6 @@
 (global-set-key (kbd "C-x |") 'toggle-window-split)
 
 
-
-
-
-
 ;; (defun search-eslint-rc ()
 ;;   "search eslint configurations in parent dirs and set it for flycheck"
 ;;   (let (
@@ -710,18 +656,10 @@
 ;; (add-hook 'flycheck-mode-hook 'search-eslint-rc)
 
 
-
-
-
-(autoload 'ruby-mode "ruby-mode" "Major mode for ruby files" t)
-(add-to-list 'auto-mode-alist
-               '("\\.\\(?:cap\\|gemspec\\|irbrc\\|gemrc\\|rake\\|rb\\|ru\\|thor\\)\\'" . ruby-mode))
-(add-to-list 'auto-mode-alist
-               '("\\(?:Brewfile\\|Capfile\\|Gemfile\\(?:\\.[a-zA-Z0-9._-]+\\)?\\|[rR]akefile\\)\\'" . ruby-mode))
-(add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
-
-
-
+(use-package ruby-mode
+  :mode (("\\.\\(?:cap\\|gemspec\\|irbrc\\|gemrc\\|rake\\|rb\\|ru\\|thor\\)\\'" . ruby-mode)
+         ("\\(?:Brewfile\\|Capfile\\|Gemfile\\(?:\\.[a-zA-Z0-9._-]+\\)?\\|[rR]akefile\\)\\'" . ruby-mode))
+  :interpreter ("ruby" . ruby-mode))
 
 
 (defun my/use-eslint-from-node-modules ()
@@ -1026,16 +964,13 @@
                (hs-minor-mode))))
 
 
-(autoload 'markdown-mode "markdown-mode"
-   "Major mode for editing Markdown files" t)
-(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-
-(autoload 'gfm-mode "markdown-mode"
-   "Major mode for editing GitHub Flavored Markdown files" t)
-(add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
-
-
+(use-package markdown-mode
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :init (setq markdown-command "multimarkdown")
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.markdown\\'" . markdown-mode)
+         ("\\.md\\'" . markdown-mode)))
 
 
 (defun cfg:reverse-input-method (input-method)
@@ -1067,8 +1002,6 @@
 
 
 
-(global-hl-line-mode +1)
-(set-face-attribute 'hl-line nil :inherit nil :background "#4d4927")
 
 
 
@@ -1158,8 +1091,7 @@
    :ensure t
    :after (powerline smart-mode-line)
    :config
-    (sml/apply-theme 'powerline)
-)
+    (sml/apply-theme 'powerline))
 
 (provide '.emacs)
 ;;; .emacs ends here
