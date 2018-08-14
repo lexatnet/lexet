@@ -11,6 +11,11 @@
 # TODO: add detection of attaching display for avoid sleep periods and fast start
 # TODO: fix install node npm packages on initialization
 # TODO: add prettier
+# TODO: fix python installation (available only python3 python2.7 installed but not available in PATH)
 # TODO: manage Hydra for smartparens (move more commands in hydra)
 # TODO: migrate from neotree to treemacs ( fix config )
 # TODO: update smatparens readme
+# TODO: fix el-get install init for use
+# TODO: add zones package use el-get
+# TODO: move custom functions in custom packages
+# TODO: fix smart-mode-line (not loaded)
