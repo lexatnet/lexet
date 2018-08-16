@@ -359,6 +359,17 @@ make build
 
 
 
+### Resolve Git Conflicts
+| Action title                   | Shortcut   |
+| ------------------------------ | :--------: |
+| keep current                   | C-c ^ RET  |
+| Keep all                       | C-c ^ a    |
+| Keep mine                      | C-c ^ m    |
+| Keep other                     | C-c ^ o    |
+| Move to next conflict in file  | C-c ^ n    |
+
+
+
 ## Formatting
 | Action title              | Shortcut   |
 | ------------------------- | :--------: |
