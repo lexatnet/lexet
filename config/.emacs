@@ -558,6 +558,7 @@
 
 
 (use-package ac-etags
+  :ensure t
   :after (etags)
   :custom
   (ac-etags-requires 1)
