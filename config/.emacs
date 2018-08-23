@@ -1,3 +1,4 @@
+
 ;;; package --- Summary
 ;;; Commentary:
 ;;; Code:
@@ -1092,7 +1093,11 @@
    :ensure t
    :after (powerline smart-mode-line)
    :config
-    (sml/apply-theme 'powerline))
+   (sml/apply-theme 'powerline))
+
+(use-package dockerfile-mode
+   :ensure t
+   :mode (("Dockerfile\\'" . dockerfile-mode)))
 
 (provide '.emacs)
 ;;; .emacs ends here
