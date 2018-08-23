@@ -19,15 +19,15 @@ init_lexet() {
   echo "Checking if lexet data directory exists..."
   if [ ! -d "$lexet_external_root" ]; then
     echo 'lexet data directory not found.'
-    local lexet_packages_dir=${through_point}/$lexet_packages_dir_name
-    local lexet_packages_external_dir=$lexet_external_root/$lexet_packages_dir_name
+    local lexet_vendor_packages_dir=${through_point}/$lexet_vendor_packages_dir_name
+    local lexet_vendor_packages_external_dir=$lexet_external_root/$lexet_vendor_packages_dir_name
 
     local lexet_external_home=$lexet_external_root/home
     local lexet_external_env=$lexet_external_root/env
     local lexet_external_init=$lexet_external_root/init
 
     echo 'Creation lexet data directories structure...'
-    [ -d $lexet_packages_external_dir ] || mkdir --parent --verbose $lexet_packages_external_dir
+    [ -d $lexet_vendor_packages_external_dir ] || mkdir --parent --verbose $lexet_vendor_packages_external_dir
     [ -d $lexet_external_home ] || mkdir --parent --verbose $lexet_external_home
     [ -d $lexet_external_env ] || mkdir --parent --verbose $lexet_external_env
     [ -d $lexet_external_init ] || mkdir --parent --verbose $lexet_external_init
@@ -42,7 +42,7 @@ init_lexet() {
            --volume $dir/$entrypoint_init:$through_point/$entrypoint_init \
            --volume $lexet_external_init:$through_point/init \
            --volume $lexet_external_env:$through_point/env \
-           --volume $lexet_packages_external_dir:$lexet_packages_dir \
+           --volume $lexet_vendor_packages_external_dir:$lexet_vendor_packages_dir \
            --volume $lexet_external_home:$through_point/home \
            --env-file $env_config \
            -e USER=$USER \
@@ -50,7 +50,7 @@ init_lexet() {
            -e lexet_home=$through_point/home \
            -e lexet_server_dir=$lexet_server_dir \
            -e lexet_tmp_dir=$lexet_tmp_dir \
-           -e lexet_packages_dir=$lexet_packages_dir \
+           -e lexet_vendor_packages_dir=$lexet_vendor_packages_dir \
            -e mount_point=$mount_point \
            -e through_point=$through_point \
            -e emacs_config=$emacs_config \

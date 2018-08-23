@@ -2,7 +2,8 @@
 ;;; package --- Summary
 ;;; Commentary:
 ;;; Code:
-(setq package-user-dir (getenv "lexet_packages_dir"))
+(add-to-list 'load-path (getenv "lexet_packages_dir"))
+(setq package-user-dir (getenv "lexet_vendor_packages_dir"))
 
 (menu-bar-mode 0)
 (tool-bar-mode 0)
@@ -572,7 +573,7 @@
          (php-mode . lexet-ac-setup-source-etags)
          (sh-mode . lexet-ac-setup-source-etags))
   :init
-  (ac-etags-setup)
+  ;; (ac-etags-setup)
   (defun lexet-ac-setup-source-etags ()
     (setq ac-sources (append ac-sources '(ac-source-etags)))))
 
@@ -1098,6 +1099,13 @@
 (use-package dockerfile-mode
    :ensure t
    :mode (("Dockerfile\\'" . dockerfile-mode)))
+
+(use-package lexet-hydra-multiple-cursors
+  ;; :load-path (lambda ()  (getenv "lexet_packages_dir"))
+  ;; :after (multiple-cursors hydra)
+  ;; :requires (multiple-cursors hydra)
+  :config
+  (lexet-hydra-multiple-cursors-init))
 
 (provide '.emacs)
 ;;; .emacs ends here

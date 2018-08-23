@@ -24,7 +24,8 @@ run_lexet() {
          --volume $root/config/$emacs_config:$through_point/$emacs_config \
          --volume $root/config/$ctags_exclude_config:$through_point/$ctags_exclude_config \
          --volume $lexet_tmp_external_dir:$lexet_tmp_dir \
-         --volume $lexet_packages_external_dir:$lexet_packages_dir \
+         --volume $root/packages:$lexet_packages_dir \
+         --volume $lexet_vendor_packages_external_dir:$lexet_vendor_packages_dir \
          --env-file $env_config \
          -e USER=$USER \
          -e HOME=$lexet_home \
@@ -32,6 +33,7 @@ run_lexet() {
          -e lexet_server_dir=$lexet_server_dir \
          -e lexet_tmp_dir=$lexet_tmp_dir \
          -e lexet_packages_dir=$lexet_packages_dir \
+         -e lexet_vendor_packages_dir=$lexet_vendor_packages_dir \
          -e mount_point=$mount_point \
          -e through_point=$through_point \
          -e emacs_config=$emacs_config \

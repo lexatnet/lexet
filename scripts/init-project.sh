@@ -18,10 +18,10 @@ echo "tmp=${lexet_tmp_external_dir}"
 if [ -z $lexet_external_root ]
 then
   lexet_project_external_dir=$project_external_dir/${lexet_project_dir_name}/data
-  lexet_packages_external_dir=$project_external_dir/${lexet_project_dir_name}/$lexet_packages_dir_name
+  lexet_vendor_packages_external_dir=$project_external_dir/${lexet_project_dir_name}/$lexet_vendor_packages_dir_name
 else
   lexet_project_external_dir=$lexet_external_root/projects/$project_name
-  lexet_packages_external_dir=$lexet_external_root/$lexet_packages_dir_name
+  lexet_vendor_packages_external_dir=$lexet_external_root/$lexet_vendor_packages_dir_name
 fi
 
 lexet_home_external_dir=$lexet_project_external_dir/$lexet_home_dir_name
@@ -32,13 +32,14 @@ lexet_server_external_dir=$lexet_project_external_dir/$lexet_server_dir_name
 
 lexet_project_dir=${through_point}/${lexet_project_dir_name}
 lexet_packages_dir=${through_point}/$lexet_packages_dir_name
+lexet_vendor_packages_dir=${through_point}/$lexet_vendor_packages_dir_name
 lexet_utils_dir=${through_point}/$lexet_utils_dir_name
 lexet_home=${lexet_project_dir}/$lexet_home_dir_name
 lexet_server_dir=${lexet_project_dir}/$lexet_server_dir_name
 lexet_tags_dir=${lexet_project_dir}/tags
 
 [ -d $lexet_tmp_external_dir ] || mkdir --parent --verbose $lexet_tmp_external_dir
-[ -d $lexet_packages_external_dir ] || mkdir --parent --verbose $lexet_packages_external_dir
+[ -d $lexet_vendor_packages_external_dir ] || mkdir --parent --verbose $lexet_vendor_packages_external_dir
 [ -d $lexet_project_external_dir ] || mkdir --parent --verbose $lexet_project_external_dir
 [ -d $lexet_home_external_dir ] || mkdir --parent --verbose $lexet_home_external_dir
 [ -d $lexet_server_external_dir ] || mkdir --mode=700 $lexet_server_external_dir

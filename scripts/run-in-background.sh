@@ -26,14 +26,14 @@ run_lexet_image_in_background() {
          --volume $dir/$through_script:$through_point/$through_script \
          --volume $dir/$sshd_config:$through_point/$sshd_config \
          --volume $lexet_tmp_external_dir:$lexet_tmp_dir \
-         --volume $lexet_packages_external_dir:$lexet_packages_dir \
+         --volume $lexet_vendor_packages_external_dir:$lexet_vendor_packages_dir \
          --env-file $root/$env_config \
          -e USER=$USER \
          -e HOME=$lexet_home \
          -e lexet_home=$lexet_home \
          -e lexet_server_dir=$lexet_server_dir \
          -e lexet_tmp_dir=$lexet_tmp_dir \
-         -e lexet_packages_dir=$lexet_packages_dir \
+         -e lexet_vendor_packages_dir=$lexet_vendor_packages_dir \
          -e mount_point=$mount_point \
          -e through_point=$through_point \
          -e sshd_config=$sshd_config \

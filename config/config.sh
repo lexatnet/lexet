@@ -39,6 +39,7 @@ config_lexet_environment() {
   lexet_home_dir_name=home
   lexet_server_dir_name=server
   lexet_project_dir_name=.project
+  lexet_vendor_packages_dir_name=lexet-vendor-packages
   lexet_packages_dir_name=lexet-packages
   lexet_utils_dir_name=lexet-utils
   entrypoint_sshd=entrypoint-run-sshd.sh

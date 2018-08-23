@@ -29,7 +29,8 @@ run_lexetx() {
          --volume $lexet_external_root/env:$through_point/env \
          --volume $dir/$entrypoint_run_lexet:$through_point/$entrypoint_run_lexet \
          --volume $lexet_tmp_external_dir:$lexet_tmp_dir \
-         --volume $lexet_packages_external_dir:$lexet_packages_dir \
+         --volume $root/packages:$lexet_packages_dir \
+         --volume $lexet_vendor_packages_external_dir:$lexet_vendor_packages_dir \
          --volume /tmp/.X11-unix:/tmp/.X11-unix:rw \
          --env-file $env_config \
          -e DISPLAY=$DISPLAY \
@@ -41,6 +42,7 @@ run_lexetx() {
          -e lexet_server_dir=$lexet_server_dir \
          -e lexet_tmp_dir=$lexet_tmp_dir \
          -e lexet_packages_dir=$lexet_packages_dir \
+         -e lexet_vendor_packages_dir=$lexet_vendor_packages_dir \
          -e mount_point=$mount_point \
          -e through_point=$through_point \
          -e emacs_config=$emacs_config \

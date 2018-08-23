@@ -64,7 +64,8 @@ run_lexet_x_ssh() {
             --volume $dir/$entrypoint_sshd:$through_point/$entrypoint_sshd \
             --volume $lexet_sshd_config_external_file:$through_point/$sshd_config \
             --volume $lexet_tmp_external_dir:$lexet_tmp_dir \
-            --volume $lexet_packages_external_dir:$lexet_packages_dir \
+            --volume $root/packages:$lexet_packages_dir \
+            --volume $lexet_vendor_packages_external_dir:$lexet_vendor_packages_dir \
             --env-file $env_config \
             -e USER=$USER \
             -e HOME=$lexet_home \
@@ -72,6 +73,7 @@ run_lexet_x_ssh() {
             -e lexet_server_dir=$lexet_server_dir \
             -e lexet_tmp_dir=$lexet_tmp_dir \
             -e lexet_packages_dir=$lexet_packages_dir \
+            -e lexet_vendor_packages_dir=$lexet_vendor_packages_dir \
             -e mount_point=$mount_point \
             -e through_point=$through_point \
             -e sshd_config=$sshd_config \
