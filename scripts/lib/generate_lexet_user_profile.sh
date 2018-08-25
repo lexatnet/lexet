@@ -7,6 +7,7 @@ export HOME=$lexet_home
 export lexet_home=$lexet_home
 export lexet_server_dir=$lexet_server_dir
 export lexet_tmp_dir=$lexet_tmp_dir
+export lexet_packages_dir=$lexet_packages_dir
 export lexet_vendor_packages_dir=$lexet_vendor_packages_dir
 export mount_point=$mount_point
 export through_point=$through_point

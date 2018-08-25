@@ -14,12 +14,17 @@
 
 (setq-default frame-title-format (format "lexet - %s@%s" (getenv "project_name") "%f"))
 
+(setq lexet-temporary-directory (getenv "lexet_tmp_dir"))
+(setq backup-directory-alist
+      `((".*" . ,lexet-temporary-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,lexet-temporary-directory t)))
+
 (load-theme 'tango-dark)
 (global-hl-line-mode +1)
 (set-face-attribute 'hl-line nil :inherit nil :background "#4d4927")
 
-
-; list the packages you want
+;base list of packages
 (setq package-list
       '(
         js2-mode
@@ -33,11 +38,8 @@
 (require 'package)
 
 ;(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") )
-
 (add-to-list  'package-archives '("melpa" . "https://melpa.org/packages/") )
-
 (add-to-list  'package-archives '("gnu" . "https://elpa.gnu.org/packages/") )
-
 ;(add-to-list  'package-archives '("marmalade" . "https://marmalade-repo.org/packages/") )
 
 (package-initialize)
@@ -57,8 +59,6 @@
   ;; (add-to-list 'load-path "<path where use-package is installed>")
   (require 'use-package))
 
-
-
 (use-package el-get
   :ensure t)
 
@@ -70,9 +70,6 @@
   :config
   (require 'helm-config)
   :bind (("M-x" . helm-M-x)))
-
-
-
 
 ;; enable flspell-mode for text modes
 (use-package flyspell
@@ -87,13 +84,12 @@
          :map flyspell-mode-map
          ("C-;" . helm-flyspell-correct)))
 
-
 (use-package helm-flyspell
   :ensure t
+  :after (helm flyspell)
   :bind (
          :map flyspell-mode-map
          ("M-S" . helm-flyspell-correct)))
-
 
 (use-package highlight-symbol
   :ensure t
@@ -102,42 +98,37 @@
   :bind (("M-<right>" . highlight-symbol-next)
          ("M-<left>" . highlight-symbol-prev)))
 
-
 ;; (use-package zones)
-
 
 (use-package highlight
   :ensure t
-  :bind (
-    ("C-c h a" . hlt-unhighlight-all-prop)
-    ("C-c h s" . highlight-region-in-buffer)
-    ("C-c h n" . hlt-next-highlight)
-    ("C-c h p" . hlt-previous-highlight)
-    ))
+  :init
+  (defun get-selected-string (beg end)
+    "Return selected string or \"empty string\" if none selected."
+    (interactive (if (use-region-p)
+                     (list (region-beginning) (region-end))
+                   (list (point-min) (point-min))))
+    (let ((selection (buffer-substring-no-properties beg end)))
+      (if (= (length selection) 0)
+          (message "empty string")
+        (progn
+          (message selection)
+          selection))))
 
-
-(defun get-selected-string (beg end)
-  "Return selected string or \"empty string\" if none selected."
-  (interactive (if (use-region-p)
-                   (list (region-beginning) (region-end))
-                 (list (point-min) (point-min))))
-  (let ((selection (buffer-substring-no-properties beg end)))
-    (if (= (length selection) 0)
-        (message "empty string")
+  (defun highlight-region-in-buffer (beg end)
+    "Highlight all regions mached selected in current buffer."
+    (interactive (if (use-region-p)
+                     (list (region-beginning) (region-end))
+                   (list (point-min) (point-min))))
+    (let  ((selection (get-selected-string beg end)))
       (progn
         (message selection)
-        selection))))
+        (hlt-highlight-regexp-region (point-min) (point-max) selection))))
 
-(defun highlight-region-in-buffer (beg end)
-  "Highlight all regions mached selected in current buffer."
-  (interactive (if (use-region-p)
-                   (list (region-beginning) (region-end))
-                 (list (point-min) (point-min))))
-  (let  ((selection (get-selected-string beg end)))
-    (progn
-      (message selection)
-      (hlt-highlight-regexp-region (point-min) (point-max) selection))))
-
+  :bind (("C-c h a" . hlt-unhighlight-all-prop)
+         ("C-c h s" . highlight-region-in-buffer)
+         ("C-c h n" . hlt-next-highlight)
+         ("C-c h p" . hlt-previous-highlight)))
 
 (use-package auto-complete
   :ensure t
@@ -146,7 +137,7 @@
   (ac-config-default)
   (global-auto-complete-mode t)
   (setq ac-disable-faces nil)
-                                        ;(setq ac-auto-start 3)
+  ;; (setq ac-auto-start 3)
   )
 
 (use-package ac-helm
@@ -155,113 +146,25 @@
   (global-set-key (kbd "C-:") 'ac-complete-with-helm)
   (define-key ac-complete-mode-map (kbd "C-:") 'ac-complete-with-helm))
 
-
-(setq lexet-tags-root (getenv "lexet_tags_dir"))
-
-
-(defun lexet-read-lines (filePath)
-  "Return a list of lines of a file at FILEPATH."
-  (with-temp-buffer
-    (insert-file-contents filePath)
-    (split-string (buffer-string) "\n" t)))
-
-
-(defun lexet-exclude (fn)
-  (if (remove nil (mapcar (lambda (m) (string-match m fn)) (read-lines (getenv "ctags_exclude_config_path")))) nil fn))
-
-
-(defun lexet-create-project-files-list ()
-  "Return list of files in lexet project directory"
-  (mapcar 'lexet-exclude (directory-files-recursively default-directory "")))
-
-
-(defun lexet-generate-tags-filename (file)
-  (format "%s/%s" lexet-tags-root file))
-
-
-(defun lexet-add-tags-file (file)
-    (progn
-      (add-to-list 'tags-table-list file)
-      (tags-completion-table)))
-
-
-(defun lexet-run-file-indexation (file)
-  (let* (
-         (tag-file-name (lexet-generate-tags-filename file))
-         (tag-file-directory (file-name-directory tag-file-name))
-         )
-    (make-directory tag-file-directory t)
-    (set-process-sentinel
-     (start-process
-      (format "lexet process indexation of %s" file)
-      "lexet tags index"
-      "etags" "-f"  tag-file-name  (concat default-directory file))
-     `(lambda (process event)
-       (print (format "Process: tag file '%s'" ,tag-file-name))
-       (print (format "Process: %s had the event '%s'" process event))
-       (lexet-add-tags-file ,tag-file-name)))))
-
-
-(defun lexet-run-project-indexation ()
-  (dolist (file-relative-name (projectile-dir-files default-directory))
-    (lexet-run-file-indexation file-relative-name)))
-
-
-(defun lexet-get-tags-file-name ()
-  (format "%s/%s" lexet-tags-root "TAGS"))
-
-
-(defun lexet-tags-indexation ()
-  (let* (
-         (tag-file-name (lexet-get-tags-file-name))
-         (tag-file-directory (file-name-directory tag-file-name))
-         (lexet-project-files-listing (make-temp-file "lexet-project-files")))
-    (make-directory tag-file-directory t)
-    (append-to-file
-     (concat (mapconcat
-      (lambda (file-relative-name) (concat default-directory file-relative-name))
-      (projectile-dir-files default-directory)
-      "\n") "\n")
-     nil
-     lexet-project-files-listing)
-    (message "[lexet] list of files for indexing is ready")
-    (set-process-sentinel
-     (start-process
-      (format "[lexet] tags indexing of %s" lexet-project-files-listing)
-      nil
-      "ctags" "-e" "-f"  tag-file-name  "-L" lexet-project-files-listing)
-     `(lambda (process event)
-        (message "[lexet] Indexation Process: tag file '%s'" ,tag-file-name)
-        (message "[lexet] Indexation Process: %s had the event '%s'" process event)
-        (lexet-add-tags-file ,tag-file-name)))
-    )
-  )
-
-
 (use-package php-mode
   :ensure t
   :config
   :init
-  (defun lexet-php-mode-init ()
-  )
+  (defun lexet-php-mode-init ())
   (eval-after-load 'php-mode
     '(require 'php-ext))
   :hook ((php-mode . php-enable-default-coding-style)
-         (php-mode . lexet-php-mode-init))
-  )
-
+         (php-mode . lexet-php-mode-init)))
 
 (use-package ac-php
   :ensure t
-  :bind (
-         ("C-]" . ac-php-find-symbol-at-point)   ;goto define
+  :bind (("C-]" . ac-php-find-symbol-at-point)   ;goto define
          ("C-t" . ac-php-location-stack-back)    ;go back
          )
   :config
     (setq ac-sources  '(ac-source-php ))
     (ac-php-core-eldoc-setup ) ;; enable eldoc
     )
-
 
 (use-package yasnippet
   :ensure t
@@ -270,15 +173,12 @@
   :config
   (yas-reload-all))
 
-
 (use-package yasnippet-snippets
   :ensure t
   :after (yasnippet))
 
-
 (use-package json-mode
   :ensure t)
-
 
 (use-package js2-mode
   :ensure t
@@ -290,13 +190,9 @@
   (add-to-list 'interpreter-mode-alist '("node" . js2-jsx-mode))
   (setq js2-indent-switch-body t))
 
-
 (use-package ac-js2
   :ensure t
   :hook ((js-mode . ac-js2-mode)))
-
-
-
 
 (use-package web-mode
   :ensure t
@@ -308,18 +204,15 @@
   ;; (setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'")))
   )
 
-
 (use-package scss-mode
   :ensure t
   :config
   :mode (("\\.scss\\'" . scss-mode)))
 
-
 (use-package yaml-mode
   :ensure t
   :config
   :mode (("\\.yml\\'" . yaml-mode)))
-
 
 (use-package highlight-indent-guides
   :ensure t
@@ -335,13 +228,6 @@
   ;(set-face-background 'highlight-indent-guides-even-face "#262626")
   ;(set-face-foreground 'highlight-indent-guides-character-face "#585858")
   (add-hook 'prog-mode-hook 'highlight-indent-guides-mode))
-
-
-;; highlight brackets
-;; (show-paren-mode 1)
-;; (setq show-paren-delay 0)
-;; (setq show-paren-style 'mixed) ; highlight brackets if visible, else entire expression
-
 
 (use-package neotree
   :ensure t
@@ -376,11 +262,9 @@
   :bind(([f8] . neotree-project-dir))
   )
 
-
 (use-package magit
   :ensure t
   :bind(("C-x g" . magit-status)))
-
 
 (use-package undo-tree
   :ensure t
@@ -389,7 +273,6 @@
   ;; (global-set-key (kbd "C-<") 'undo)
   ;; (global-set-key (kbd "C-<") 'redo)
   )
-
 
 (use-package git-gutter
   :ensure t
@@ -412,13 +295,11 @@
          ;; Mark current hunk
          ("C-c g m" . git-gutter:mark-hunk)))
 
-
 (use-package projectile
   :ensure t
   :config
   (projectile-global-mode)
   (setq projectile-switch-project-action 'neotree-projectile-action))
-
 
 (use-package helm-projectile
   :ensure t
@@ -427,16 +308,9 @@
   (setq projectile-completion-system 'helm)
   (helm-projectile-on))
 
-
-
-
 (use-package expand-region
   :ensure t
   :bind (("C-^" . er/expand-region)))
-
-
-(global-set-key (kbd "C-x C-b") 'buffer-menu)
-
 
 (setq path-to-ctags "ctags") ;; <- your ctags path here
 
@@ -452,24 +326,8 @@
                   (directory-file-name dir-name)))
     (shell-command ctags-command))
 
-
 (eval-after-load "sql"
   '(load-library "sql-indent"))
-
-
-; indent configuration
-(setq lexet-indent 2)
-(setq-default indent-tabs-mode nil)
-(setq default-tab-width lexet-indent)
-(setq tab-width lexet-indent)
-(setq js-indent-level lexet-indent)
-(setq web-mode-markup-indent-offset lexet-indent)
-(setq web-mode-css-indent-offset lexet-indent)
-(setq web-mode-code-indent-offset lexet-indent)
-(setq sh-basic-offset lexet-indent)
-(setq sh-indentation lexet-indent)
-(setq python-indent-offset lexet-indent)
-(setq sql-indent-offset lexet-indent)
 
 
 (use-package whitespace
@@ -493,7 +351,6 @@
   ;; (set-face-attribute 'whitespace-newline nil :background "default" :foreground non-printable-colors)
   ;; (set-face-attribute 'whitespace-tab nil :background "default" :foreground non-printable-colors)
   )
-
 
 ;;; taken from http://www.emacswiki.org/emacs/MoveLineRegion
 ;;; requires code from http://www.emacswiki.org/emacs/MoveLine;;; and http://www.emacswiki.org/emacs/MoveRegion
@@ -633,7 +490,6 @@
 
 (global-set-key (kbd "C-x |") 'toggle-window-split)
 
-
 ;; (defun search-eslint-rc ()
 ;;   "search eslint configurations in parent dirs and set it for flycheck"
 ;;   (let (
@@ -658,12 +514,10 @@
 
 ;; (add-hook 'flycheck-mode-hook 'search-eslint-rc)
 
-
 (use-package ruby-mode
   :mode (("\\.\\(?:cap\\|gemspec\\|irbrc\\|gemrc\\|rake\\|rb\\|ru\\|thor\\)\\'" . ruby-mode)
          ("\\(?:Brewfile\\|Capfile\\|Gemfile\\(?:\\.[a-zA-Z0-9._-]+\\)?\\|[rR]akefile\\)\\'" . ruby-mode))
   :interpreter ("ruby" . ruby-mode))
-
 
 (defun my/use-eslint-from-node-modules ()
   "use local eslint from node_modules before global"
@@ -692,19 +546,11 @@
 
 (add-hook 'flycheck-mode-hook 'my/use-eslint-from-node-modules)
 
-
-
-
 (use-package multiple-cursors
   :ensure t
   :bind (("C-c m n" . mc/mark-next-like-this)
          ("C-c m p" . mc/mark-previous-like-this)
          ("C-c m a" . mc/mark-all-like-this)))
-
-
-
-
-
 
 ;; (electric-pair-mode t)
 (use-package smartparens
@@ -937,21 +783,6 @@
 
 (global-set-key (kbd "<home>") 'back-to-indentation-or-beginning)
 
-
-
-(setq lexet-temporary-directory (getenv "lexet_tmp_dir"))
-
-
-(setq backup-directory-alist
-      `((".*" . ,lexet-temporary-directory)))
-
-
-
-(setq auto-save-file-name-transforms
-      `((".*" ,lexet-temporary-directory t)))
-
-
-
 ; show/hide blocks
 (dolist (mode '(c-mode-common-hook
 		emacs-lisp-mode-hook
@@ -1000,23 +831,6 @@
       (activate-input-method current))))
 
 (cfg:reverse-input-method 'russian-computer)
-
-
-
-
-
-
-
-
-(if (boundp 'lexet-tags-root)
-    (progn
-      (if (file-exists-p lexet-tags-root)
-          (delete-directory lexet-tags-root t))
-      (lexet-tags-indexation)
-      (add-hook 'after-save-hook (lambda ()
-                                   (lexet-run-file-indexation (file-relative-name buffer-file-name (projectile-project-root)))))))
-
-
 
 (use-package treemacs
   :disabled
@@ -1104,8 +918,22 @@
   ;; :load-path (lambda ()  (getenv "lexet_packages_dir"))
   ;; :after (multiple-cursors hydra)
   ;; :requires (multiple-cursors hydra)
+  ;; :hook ((prog-mode . highlight-symbol-mode)
+  ;;        (text-mode . highlight-symbol-mode))
   :config
   (lexet-hydra-multiple-cursors-init))
+
+(use-package lexet-bindings
+  :config
+  (lexet-bindings-init))
+
+(use-package lexet-project-indexation
+  :config
+  (lexet-project-indexation-init))
+
+(use-package lexet-indentation
+  :config
+  (lexet-indentation-init))
 
 (provide '.emacs)
 ;;; .emacs ends here
