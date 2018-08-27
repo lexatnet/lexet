@@ -142,9 +142,11 @@
 
 (use-package ac-helm
   :ensure t
-  :config
-  (global-set-key (kbd "C-:") 'ac-complete-with-helm)
-  (define-key ac-complete-mode-map (kbd "C-:") 'ac-complete-with-helm))
+  :after (helm auto-complete)
+  :init
+  :bind (
+         :map ac-complete-mode-map
+         ("<tab>" . ac-complete-with-helm)))
 
 (use-package php-mode
   :ensure t
@@ -158,13 +160,14 @@
 
 (use-package ac-php
   :ensure t
-  :bind (("C-]" . ac-php-find-symbol-at-point)   ;goto define
-         ("C-t" . ac-php-location-stack-back)    ;go back
-         )
+  :bind (
+         ;; goto define
+         ("C-]" . ac-php-find-symbol-at-point)
+         ;; go back
+         ("C-t" . ac-php-location-stack-back))
   :config
-    (setq ac-sources  '(ac-source-php ))
-    (ac-php-core-eldoc-setup ) ;; enable eldoc
-    )
+  (setq ac-sources (append ac-sources '(ac-source-php)))
+  (ac-php-core-eldoc-setup ))
 
 (use-package yasnippet
   :ensure t
@@ -303,7 +306,7 @@
 
 (use-package helm-projectile
   :ensure t
-  :after (projectile helm)
+  ;; :after (projectile helm)
   :config
   (setq projectile-completion-system 'helm)
   (helm-projectile-on))
@@ -313,7 +316,6 @@
   :bind (("C-^" . er/expand-region)))
 
 (setq path-to-ctags "ctags") ;; <- your ctags path here
-
 
 (defun create-tags (dir-name)
     "Create tags file."
@@ -328,7 +330,6 @@
 
 (eval-after-load "sql"
   '(load-library "sql-indent"))
-
 
 (use-package whitespace
   :config
@@ -352,88 +353,28 @@
   ;; (set-face-attribute 'whitespace-tab nil :background "default" :foreground non-printable-colors)
   )
 
-;;; taken from http://www.emacswiki.org/emacs/MoveLineRegion
-;;; requires code from http://www.emacswiki.org/emacs/MoveLine;;; and http://www.emacswiki.org/emacs/MoveRegion
-(defun move-line (n)
-  "Move the current line up or down by N lines."
-  (interactive "p")
-  (setq col (current-column))
-  (beginning-of-line) (setq start (point))
-  (end-of-line) (forward-char) (setq end (point))
-  (let ((line-text (delete-and-extract-region start end)))
-    (forward-line n)
-    (insert line-text)
-    ;; restore point to original column in moved line
-    (forward-line -1)
-    (forward-char col)))
-
-
-(defun move-line-up (n)
-  "Move the current line up by N lines."
-  (interactive "p")
-  (move-line (if (null n) -1 (- n))))
-
-
-(defun move-line-down (n)
-  "Move the current line down by N lines."
-  (interactive "p")
-  (move-line (if (null n) 1 n)))
-
-
-(defun move-region (start end n)
-  "Move the current region up or down by N lines."
-  (interactive "r\np")
-  (let ((line-text (delete-and-extract-region start end)))
-    (forward-line n)
-    (let ((start (point)))
-      (insert line-text)
-      (setq deactivate-mark nil)
-      (set-mark start))))
-
-
-(defun move-region-up (start end n)
-  "Move the current line up by N lines."
-  (interactive "r\np")
-  (move-region start end (if (null n) -1 (- n))))
-
-(defun move-region-down (start end n)
-  "Move the current line down by N lines."
-  (interactive "r\np")
-  (move-region start end (if (null n) 1 n)))
-
-
-(defun move-line-region-up (start end n)
-  (interactive "r\np")
-  (if (region-active-p) (move-region-up start end n) (move-line-up n)))
-
-
-(defun move-line-region-down (start end n)
-  (interactive "r\np")
-  (if (region-active-p) (move-region-down start end n) (move-line-down n)))
-
-
-(global-set-key (kbd "M-<up>") 'move-line-region-up)
-(global-set-key (kbd "M-<down>") 'move-line-region-down)
-
+(use-package etags)
 
 (use-package ac-etags
   :ensure t
-  :after (etags)
+  ;; :after (etags)
   :custom
   (ac-etags-requires 1)
   :hook ((c-mode-common . lexet-ac-setup-source-etags)
          (json-mode . lexet-ac-setup-source-etags)
          (emacs-lisp-mode . lexet-ac-setup-source-etags)
+         (lisp-mode . lexet-ac-setup-source-etags)
+         (lisp-interaction-mode . lexet-ac-setup-source-etags)
          (python-mode . lexet-ac-setup-source-etags)
          (js-mode . lexet-ac-setup-source-etags)
          (ruby-mode . lexet-ac-setup-source-etags)
          (php-mode . lexet-ac-setup-source-etags)
          (sh-mode . lexet-ac-setup-source-etags))
   :init
-  ;; (ac-etags-setup)
+  (ac-etags-setup)
   (defun lexet-ac-setup-source-etags ()
+    (print "lexet-ac-setup-source-etags call")
     (setq ac-sources (append ac-sources '(ac-source-etags)))))
-
 
 (use-package flycheck
   :ensure t
@@ -451,44 +392,13 @@
                 (append flycheck-disabled-checkers
                         '(javascript-jscs)))
 
-
-                                        ;(add-hook 'sh-mode-hook 'flycheck-mode)
+  ;; (add-hook 'sh-mode-hook 'flycheck-mode)
   (setq flycheck-shellcheck-follow-sources nil)
   (setq flycheck-python-pylint-executable "pylint3")
 
   (setq-default flycheck-disabled-checkers
                 (append flycheck-disabled-checkers
                         '(ruby-rubylint))))
-
-
-
-
-(defun toggle-window-split ()
-  (interactive)
-  (if (= (count-windows) 2)
-      (let* ((this-win-buffer (window-buffer))
-	     (next-win-buffer (window-buffer (next-window)))
-	     (this-win-edges (window-edges (selected-window)))
-	     (next-win-edges (window-edges (next-window)))
-	     (this-win-2nd (not (and (<= (car this-win-edges)
-					 (car next-win-edges))
-				     (<= (cadr this-win-edges)
-					 (cadr next-win-edges)))))
-	     (splitter
-	      (if (= (car this-win-edges)
-		     (car (window-edges (next-window))))
-		  'split-window-horizontally
-		'split-window-vertically)))
-	(delete-other-windows)
-	(let ((first-win (selected-window)))
-	  (funcall splitter)
-	  (if this-win-2nd (other-window 1))
-	  (set-window-buffer (selected-window) this-win-buffer)
-	  (set-window-buffer (next-window) next-win-buffer)
-	  (select-window first-win)
-	  (if this-win-2nd (other-window 1))))))
-
-(global-set-key (kbd "C-x |") 'toggle-window-split)
 
 ;; (defun search-eslint-rc ()
 ;;   "search eslint configurations in parent dirs and set it for flycheck"
@@ -518,33 +428,6 @@
   :mode (("\\.\\(?:cap\\|gemspec\\|irbrc\\|gemrc\\|rake\\|rb\\|ru\\|thor\\)\\'" . ruby-mode)
          ("\\(?:Brewfile\\|Capfile\\|Gemfile\\(?:\\.[a-zA-Z0-9._-]+\\)?\\|[rR]akefile\\)\\'" . ruby-mode))
   :interpreter ("ruby" . ruby-mode))
-
-(defun my/use-eslint-from-node-modules ()
-  "use local eslint from node_modules before global"
-  (let* (
-         (node-path (getenv "NODE_PATH"))
-         (node-paths (split-string (if node-path node-path "") ":"))
-         (root (locate-dominating-file
-                (or (buffer-file-name) default-directory)
-                "node_modules"))
-         (eslint (and root
-                      (expand-file-name "node_modules/.bin/eslint" root))))
-    (when (and eslint (file-executable-p eslint))
-      (when (not (member root node-paths))
-        (message "root->%s" root)
-        (message "node-paths->%s" node-paths)
-        (add-to-list 'node-paths root)
-        (message "node-paths->%s" node-paths)
-        (let (
-              (new-node-path (mapconcat 'identity node-paths ":")))
-          (message "new-node-path->%s" new-node-path)
-          (setenv "NODE_PATH" new-node-path)
-          (message "NODE_PATH->%s" (getenv "NODE_PATH"))
-          ))
-      (message "eslint->%s" eslint)
-      (setq-local flycheck-javascript-eslint-executable eslint))))
-
-(add-hook 'flycheck-mode-hook 'my/use-eslint-from-node-modules)
 
 (use-package multiple-cursors
   :ensure t
@@ -774,29 +657,20 @@
       (let ((o (sp--get-active-overlay)))
         (indent-region (overlay-start o) (overlay-end o)))))
   )
-
 ;; -----------------------------------------------------
 
-(defun back-to-indentation-or-beginning () (interactive)
-   (if (= (point) (progn (back-to-indentation) (point)))
-       (beginning-of-line)))
-
-(global-set-key (kbd "<home>") 'back-to-indentation-or-beginning)
-
-; show/hide blocks
-(dolist (mode '(c-mode-common-hook
-		emacs-lisp-mode-hook
-		java-mode-hook
-		lisp-mode-hook
-		perl-mode-hook
-		sh-mode-hook
-		js-mode-hook
-		json-mode-hook
-		ruby-mode-hook))
-  (add-hook mode
-            '(lambda ()
-               (hs-minor-mode))))
-
+;; show/hide blocks
+(use-package hideshow
+  :ensure t
+  :hook ((c-mode-common . hs-minor-mode)
+	 (emacs-lisp-mode . hs-minor-mode)
+	 (java-mode . hs-minor-mode)
+	 (lisp-mode . hs-minor-mode)
+	 (perl-mode . hs-minor-mode)
+	 (sh-mode . hs-minor-mode)
+	 (js-mode . hs-minor-mode)
+	 (json-mode . hs-minor-mode)
+	 (ruby-mode . hs-minor-mode)))
 
 (use-package markdown-mode
   :ensure t
@@ -805,32 +679,6 @@
   :mode (("README\\.md\\'" . gfm-mode)
          ("\\.markdown\\'" . markdown-mode)
          ("\\.md\\'" . markdown-mode)))
-
-
-(defun cfg:reverse-input-method (input-method)
-  "Build the reverse mapping of single letters from INPUT-METHOD."
-  (interactive
-   (list (read-input-method-name "Use input method (default current): ")))
-  (if (and input-method (symbolp input-method))
-      (setq input-method (symbol-name input-method)))
-  (let ((current current-input-method)
-        (modifiers '(nil (control) (meta) (control meta))))
-    (when input-method
-      (activate-input-method input-method))
-    (when (and current-input-method quail-keyboard-layout)
-      (dolist (map (cdr (quail-map)))
-        (let* ((to (car map))
-               (from (quail-get-translation
-                      (cadr map) (char-to-string to) 1)))
-          (when (and (characterp from) (characterp to))
-            (dolist (mod modifiers)
-              (define-key local-function-key-map
-                (vector (append mod (list from)))
-                (vector (append mod (list to)))))))))
-    (when input-method
-      (activate-input-method current))))
-
-(cfg:reverse-input-method 'russian-computer)
 
 (use-package treemacs
   :disabled
@@ -878,8 +726,8 @@
        (treemacs-git-mode 'extended))
       (`(t . _)
        (treemacs-git-mode 'simple))))
-  :bind
-  (:map global-map
+  :bind (
+         :map global-map
         ("M-0"       . treemacs-select-window)
         ("C-x t 1"   . treemacs-delete-other-windows)
         ("C-x t t"   . treemacs)
@@ -934,6 +782,23 @@
 (use-package lexet-indentation
   :config
   (lexet-indentation-init))
+
+(use-package lexet-move-region
+  :bind (("M-<up>" . move-line-region-up)
+         ("M-<down>" . move-line-region-down)))
+
+(use-package lexet-toggle-window-split
+  :bind (("C-x |" . toggle-window-split)))
+
+(use-package lexet-reverse-input-method
+  :config
+  (cfg:reverse-input-method 'russian-computer))
+
+(use-package lexet-use-eslint-from-node-modules
+  :hook ((flycheck-mode . lexet/use-eslint-from-node-modules)))
+
+(use-package lexet-back-to-indentation-or-beginning
+  :bind (("<home>" . back-to-indentation-or-beginning)))
 
 (provide '.emacs)
 ;;; .emacs ends here
