@@ -25,8 +25,6 @@
 
 ;;; Code:
 
-;; code goes here
-
 (defun lexet-bindings-init ()
   "Create lexet bindings."
   (global-set-key (kbd "C-x C-b") 'buffer-menu))

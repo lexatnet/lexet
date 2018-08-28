@@ -25,9 +25,10 @@
 
 ;;; Code:
 
-(defun back-to-indentation-or-beginning
-   (if (= (point) (progn (back-to-indentation) (point)))
-       (beginning-of-line)))
+(defun back-to-indentation-or-beginning ()
+  (interactive)
+  (if (= (point) (progn (back-to-indentation) (point)))
+      (beginning-of-line)))
 
 (provide 'lexet-back-to-indentation-or-beginning)
 ;;; lexet-back-to-indentation-or-beginning.el ends here

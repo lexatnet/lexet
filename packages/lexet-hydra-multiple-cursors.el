@@ -25,8 +25,6 @@
 
 ;;; Code:
 
-;; code goes here
-
 (defun lexet-hydra-multiple-cursors-init ()
     "Create lexet hydra multiple cursors."
     (defhydra lexet-hydra-multiple-cursors-key-map (global-map "<f2>")

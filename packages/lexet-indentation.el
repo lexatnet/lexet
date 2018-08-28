@@ -25,8 +25,6 @@
 
 ;;; Code:
 
-;; code goes here
-
 (defun lexet-indentation-init ()
     "Indent configuration."
     (setq lexet-indent 2)

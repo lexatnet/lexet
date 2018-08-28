@@ -25,7 +25,6 @@
 
 ;;; Code:
 
-;; code goes here
 (require 'projectile)
 
 (setq lexet-tags-root (getenv "lexet_tags_dir"))
