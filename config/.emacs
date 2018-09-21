@@ -146,7 +146,7 @@
   :init
   :bind (
          :map ac-complete-mode-map
-         ("<tab>" . ac-complete-with-helm)))
+         ("C-c c" . ac-complete-with-helm)))
 
 (use-package php-mode
   :ensure t
@@ -777,7 +777,7 @@
 
 (use-package lexet-project-indexation
   :config
-  (lexet-project-indexation-init))
+  (lexet-project-indexation-init "alinement"))
 
 (use-package lexet-indentation
   :config

@@ -46,7 +46,7 @@
 
 
 (defun lexet-generate-tags-filename (file)
-  (format "%s/%s" lexet-tags-root file))
+  (concat  (file-name-as-directory lexet-tags-root) (file-relative-name file)))
 
 
 (defun lexet-add-tags-file (file)
@@ -54,19 +54,18 @@
       (add-to-list 'tags-table-list file)
       (tags-completion-table)))
 
-
 (defun lexet-run-file-indexation (file)
   (let* ((tag-file-name (lexet-generate-tags-filename file))
          (tag-file-directory (file-name-directory tag-file-name)))
     (make-directory tag-file-directory t)
     (set-process-sentinel
      (start-process
-      (format "lexet process indexation of %s" file)
-      "lexet tags index"
-      "etags" "-f"  tag-file-name  (concat default-directory file))
+      (format "[lexet] lexet process indexation of %s" file)
+      "[lexet] tags index"
+      "ctags" "-e" "-f"  tag-file-name  (concat default-directory file))
      `(lambda (process event)
-       (print (format "Process: tag file '%s'" ,tag-file-name))
-       (print (format "Process: %s had the event '%s'" process event))
+       (print (format "[lexet] Process: tag file '%s'" ,tag-file-name))
+       (print (format "[lexet] Process: %s had the event '%s'" process event))
        (lexet-add-tags-file ,tag-file-name)))))
 
 
@@ -76,44 +75,105 @@
 
 
 (defun lexet-get-tags-file-name ()
-  (format "%s/%s" lexet-tags-root "TAGS"))
+  (concat  (file-name-as-directory lexet-tags-root) "TAGS"))
 
 
-(defun lexet-tags-indexation ()
+(defun lexet-index-file-listing (tag-file-name lexet-project-files-listing)
+  (set-process-sentinel
+     (start-process
+      (format "[lexet] tags indexing of %s" lexet-project-files-listing)
+      nil
+      "ctags" "-e" "-f" tag-file-name "-L" lexet-project-files-listing)
+     `(lambda (process event)
+        (message "[lexet] Indexation Process: tag file '%s'" ,tag-file-name)
+        (message "[lexet] Indexation Process: %s had the event '%s'" process event)
+        (lexet-add-tags-file ,tag-file-name))))
+
+(defun lexet-fragmental-indexation (files-listing)
+  (dolist (file-name (lexet-read-lines files-listing))
+      (lexet-run-file-indexation file-name)))
+
+(defun lexet-relative-project-file-to-absolute-project-file (file-name)
+  (concat default-directory file-name))
+
+(defun lexet-list-to-file (file list)
+  (append-to-file
+   (concat (mapconcat
+            #'identity
+            list
+            "\n") "\n")
+   nil
+   file))
+
+(defun lexet-fusion-indexation (files-listing)
+  (let* (
+         (tag-file-name (lexet-get-tags-file-name)))
+    (lexet-index-file-listing tag-file-name files-listing)))
+
+(defun lexet-tags-indexation (indexation-strategy)
   (let* (
          (tag-file-name (lexet-get-tags-file-name))
          (tag-file-directory (file-name-directory tag-file-name))
          (lexet-project-files-listing (make-temp-file "lexet-project-files")))
+    (message "[lexet] create tags files directory")
     (make-directory tag-file-directory t)
-    (append-to-file
-     (concat (mapconcat
-      (lambda (file-relative-name) (concat default-directory file-relative-name))
-      (projectile-dir-files default-directory)
-      "\n") "\n")
-     nil
-     lexet-project-files-listing)
+    (message "[lexet] start creation project files listing")
+    (message (format "[lexet] project files listing file %s" lexet-project-files-listing))
+    (lexet-list-to-file
+     lexet-project-files-listing
+     (mapcar
+      'lexet-relative-project-file-to-absolute-project-file
+      (projectile-dir-files default-directory)))
     (message "[lexet] list of files for indexing is ready")
-    (set-process-sentinel
+    (cond
+     ((string= indexation-strategy "fragmentation")
+      (lexet-fragmental-indexation lexet-project-files-listing))
+     ((string= indexation-strategy "alinement")
+      (lexet-incremental-indexation lexet-project-files-listing))
+     ((string= indexation-strategy "fusion")
+      (lexet-fusion-indexation lexet-project-files-listing)))))
+
+(defun lexet-incremental-indexation (files-listing)
+  (let* (
+         (tags-files-list
+          (concat
+           (file-name-as-directory lexet-tags-root)
+           "TAGS-file-list"))
+         (incremental-tags-generator
+          (concat
+           (file-name-as-directory
+            (concat
+             (file-name-as-directory
+              (getenv "through_point"))
+             "/lib"))
+           "incremental_tags_generation.sh")))
+  (set-process-sentinel
      (start-process
-      (format "[lexet] tags indexing of %s" lexet-project-files-listing)
+      (format "[lexet] tags indexing of %s" files-listing)
       nil
-      "ctags" "-e" "-f"  tag-file-name  "-L" lexet-project-files-listing)
+      incremental-tags-generator
+      "--file-list" files-listing
+      "--tags-root" lexet-tags-root
+      "--tags-prefix" "TAGS-"
+      "--tags-files-list" tags-files-list
+      "--max-tag-file-size" "100000")
      `(lambda (process event)
-        (message "[lexet] Indexation Process: tag file '%s'" ,tag-file-name)
+        (message "[lexet] Indexation Process: tags files list '%s'" ,tags-files-list)
         (message "[lexet] Indexation Process: %s had the event '%s'" process event)
-        (lexet-add-tags-file ,tag-file-name)))
-    )
-  )
+        (dolist (tags-file-name (lexet-read-lines ,tags-files-list))
+          (message "[lexet] Add tags file: %s" tags-file-name)
+          (lexet-add-tags-file tags-file-name))))))
 
 
 
-(defun lexet-project-indexation-init ()
+(defun lexet-project-indexation-init (indexation-strategy)
   "Run project indexation."
   (if (boundp 'lexet-tags-root)
       (progn
         (if (file-exists-p lexet-tags-root)
             (delete-directory lexet-tags-root t))
-        (lexet-tags-indexation)
+        (message "[lexet] indexation init")
+        (lexet-tags-indexation indexation-strategy)
         (add-hook 'after-save-hook
                   (lambda ()
                     (lexet-run-file-indexation

@@ -27,6 +27,7 @@ lib_index() {
   source $dir/install_ruby.sh
   source $dir/install_node.sh
   source $dir/add_user.sh
+  source $dir/incremental_tags_generation.sh
   echo 'Libs loaded.'
 }
 
