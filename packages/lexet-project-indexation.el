@@ -70,7 +70,7 @@
 
 
 (defun lexet-run-project-indexation ()
-  (dolist (file-relative-name (projectile-dir-files default-directory))
+  (dolist (file-relative-name (projectile-dir-files default-directory default-directory))
     (lexet-run-file-indexation file-relative-name)))
 
 
@@ -123,7 +123,7 @@
      lexet-project-files-listing
      (mapcar
       'lexet-relative-project-file-to-absolute-project-file
-      (projectile-dir-files default-directory)))
+      (projectile-dir-files default-directory default-directory)))
     (message "[lexet] list of files for indexing is ready")
     (cond
      ((string= indexation-strategy "fragmentation")

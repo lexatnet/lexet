@@ -72,8 +72,8 @@ run_lexet_x_ssh() {
             -e lexet_home=$lexet_home \
             -e lexet_server_dir=$lexet_server_dir \
             -e lexet_tmp_dir=$lexet_tmp_dir \
-            -e lexet_packages_dir=$lexet_packages_dir \
             -e lexet_vendor_packages_dir=$lexet_vendor_packages_dir \
+            -e lexet_packages_dir=$lexet_packages_dir \
             -e mount_point=$mount_point \
             -e through_point=$through_point \
             -e sshd_config=$sshd_config \

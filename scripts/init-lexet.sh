@@ -19,6 +19,7 @@ init_lexet() {
   echo "Checking if lexet data directory exists..."
   if [ ! -d "$lexet_external_root" ]; then
     echo 'lexet data directory not found.'
+    local lexet_packages_dir=${through_point}/$lexet_packages_dir_name
     local lexet_vendor_packages_dir=${through_point}/$lexet_vendor_packages_dir_name
     local lexet_vendor_packages_external_dir=$lexet_external_root/$lexet_vendor_packages_dir_name
 
@@ -43,6 +44,7 @@ init_lexet() {
            --volume $lexet_external_init:$through_point/init \
            --volume $lexet_external_env:$through_point/env \
            --volume $lexet_vendor_packages_external_dir:$lexet_vendor_packages_dir \
+           --volume $root/packages:$lexet_packages_dir \
            --volume $lexet_external_home:$through_point/home \
            --env-file $env_config \
            -e USER=$USER \
@@ -51,6 +53,7 @@ init_lexet() {
            -e lexet_server_dir=$lexet_server_dir \
            -e lexet_tmp_dir=$lexet_tmp_dir \
            -e lexet_vendor_packages_dir=$lexet_vendor_packages_dir \
+           -e lexet_packages_dir=$lexet_packages_dir \
            -e mount_point=$mount_point \
            -e through_point=$through_point \
            -e emacs_config=$emacs_config \
