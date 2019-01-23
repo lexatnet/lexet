@@ -35,7 +35,7 @@ install_ruby() {
   echo 'export PATH="$RBENV_ROOT/bin:$PATH"' >> $init_script
   echo 'eval "$(rbenv init -)"' >> $init_script # or /etc/profile
 
-  #install for non-login bash sesions
+  #install for non-login bash sesionsru
   #echo "source $init_script" >> /etc/bash.bashrc
 
   source $init_script
@@ -45,5 +45,6 @@ install_ruby() {
   rbenv global $RUBY_VERSION
   gem install bundler
   gem install rubocop
+  gem install rubocop-rspec
   gem install ruby-lint
 }

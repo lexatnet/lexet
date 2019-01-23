@@ -19,3 +19,6 @@
 # TODO: add zones package use el-get
 # TODO: move custom functions in custom packages
 # TODO: fix smart-mode-line (not loaded)
+# TODO: fix autocomplete (not works on big projects)
+# TODO: fix indexation for projects without git (error indexation)
+# TODO: add automatic installation necessary rubocop for particular ruby version

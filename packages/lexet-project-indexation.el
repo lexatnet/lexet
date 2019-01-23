@@ -123,7 +123,7 @@
      lexet-project-files-listing
      (mapcar
       'lexet-relative-project-file-to-absolute-project-file
-      (projectile-dir-files default-directory default-directory)))
+      (projectile-dir-files default-directory)))
     (message "[lexet] list of files for indexing is ready")
     (cond
      ((string= indexation-strategy "fragmentation")

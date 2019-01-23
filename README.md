@@ -1,23 +1,63 @@
 # lexet
-Emacs build with useful utils configured for speed and comfortable writing code from console or UI versions of emacs. 
+Emacs build with useful utils configured for speed and comfortable writing code from console or UI versions of emacs.
 
-# Dependences
 
+
+# Dependencies
 - docker
 - make
 - ssh
 
-# Install
 
-execute:
+
+# Download
+clone or download this repo to the place where you would prefer to put lexet execution files
+
+
+
+# Install
+creation symlinks in exec paths
 ```
 make install
+```
+
+prepare lexet environment in ~/.lexet
+```
 make init
 ```
 
-# Run
 
-execute:
+
+# Update
+override lexet execution files by new version
+for example if you have local cloned repo
+go to your local repo:
+```
+cd <path to your local lexet repo>
+```
+update files
+```
+git push
+```
+clear lexet data
+```
+rm -rf ~/.lexet
+```
+reinitialize
+```
+make init
+```
+
+
+
+# Uninstall
+```
+make uninstall
+```
+
+
+
+# Run
 to run in console version
 ```
 lexet <path-to-project>
@@ -31,24 +71,9 @@ or
 lexetxs <path-to-project>
 ```
 
-
-# Development
-this section for developers
-
-## Build
-to build docker image execute folowing commands:
-```
-make build
-```
-
-
 # Usage
 
-
-
 ## Shortcuts
-
-
 
 ### Control
 | Action title                       | Shortcut   |
@@ -464,3 +489,14 @@ make build
 | Remove the wrapping pair from the previous expression                               | M-<backspace>   |
 | Change inner                                                                        | C-"             |
 |                                                                                     |                 |
+
+
+# Development
+this section for developers
+
+## Build
+to build docker image execute folowing commands:
+```
+make build
+```
+
