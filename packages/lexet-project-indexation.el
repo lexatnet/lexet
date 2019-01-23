@@ -52,7 +52,9 @@
 (defun lexet-add-tags-file (file)
     (progn
       (add-to-list 'tags-table-list file)
-      (tags-completion-table)))
+      ;(tags-completion-table)
+      (visit-tags-table file)
+      ))
 
 (defun lexet-run-file-indexation (file)
   (let* ((tag-file-name (lexet-generate-tags-filename file))
