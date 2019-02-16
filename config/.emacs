@@ -8,7 +8,9 @@
 (tool-bar-mode 0)
 (delete-selection-mode t)
 (global-auto-revert-mode t)
+(defalias 'yes-or-no-p 'y-or-n-p)
 (setq column-number-mode t)
+(setq tags-revert-without-query 1)
 (setq inhibit-startup-screen t)
 
 (setq-default frame-title-format (format "lexet - %s@%s" (getenv "project_name") "%f"))

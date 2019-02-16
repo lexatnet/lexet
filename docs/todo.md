@@ -1,8 +1,6 @@
 # TODO: fix nvm for ssh session
 # TODO: add automatic user name detection for ssh_config
-# TODO: add automatically spell check on file save
 # TODO: automaticaly install necessary rbenvs
-# TODO: reload tags file on save asynchronously
 # TODO: think something with commit through magit (attach host system keys or create lexet host level keys)
 # TODO: configure debugger tools for ruby
 # TODO: configure debugger tools for php
@@ -13,12 +11,13 @@
 # TODO: add prettier
 # TODO: fix python installation (available only python3 python2.7 installed but not available in PATH)
 # TODO: manage Hydra for smartparens (move more commands in hydra)
-# TODO: migrate from neotree to treemacs ( fix config )
+# TODO: migrate from neotree to treemacs (fix config)
 # TODO: update smatparens readme
 # TODO: fix el-get install init for use
 # TODO: add zones package use el-get
-# TODO: move custom functions in custom packages
-# TODO: fix smart-mode-line (not loaded)
 # TODO: fix autocomplete (not works on big projects)
+# TODO: up speed for autocomplete
 # TODO: fix indexation for projects without git (error indexation)
 # TODO: add automatic installation necessary rubocop for particular ruby version
+# TODO: init default installation for eslint
+# TODO: Migrate autocomplete to company mode
