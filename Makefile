@@ -10,6 +10,9 @@ docker-push:
 install:
 	./scripts/install.sh
 
+pyhton-install:
+	python3 ./scripts/install.py
+
 init:
 	./scripts/init-lexet.sh
 

@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
 ARG build_root=/build
 ARG build_script=$build_root/init.sh
