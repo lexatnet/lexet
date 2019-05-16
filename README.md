@@ -396,14 +396,20 @@ lexetxs <path-to-project>
 
 
 ## Formatting
-| Action title              | Shortcut   |
-| ------------------------- | :--------: |
-| uppercase word            | M-u        |
-| lowercase word            | M-l        |
-| capitalize word           | M-c        |
-| uppercase selection       | C-x C-u    |
-| lowercase selection       | C-x C-l    |
-| join string with previous | M-^        |
+| Action title                    | Shortcut   |
+| ------------------------------- | :--------: |
+| uppercase word                  | M-u        |
+| lowercase word                  | M-l        |
+| capitalize word                 | M-c        |
+| uppercase selection             | C-x C-u    |
+| lowercase selection             | C-x C-l    |
+| join string with previous       | M-^        |
+| toggle name menu                | C-c c      |
+| toggle name case snake<->camel  | C-c c t    |
+| change name case ->camel        | C-c c c    |
+| change name case ->snake        | C-c c s    |
+|                                 |            |
+|                                 |            |
 
 
 

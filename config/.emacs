@@ -13,6 +13,9 @@
 (setq tags-revert-without-query 1)
 (setq inhibit-startup-screen t)
 
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
+
 (setq-default frame-title-format (format "lexet - %s@%s" (getenv "project_name") "%f"))
 
 (setq lexet-temporary-directory (getenv "lexet_tmp_dir"))
@@ -762,6 +765,11 @@
 (use-package dockerfile-mode
    :ensure t
    :mode (("Dockerfile\\'" . dockerfile-mode)))
+
+(use-package string-inflection
+   :ensure t
+   :commands string-inflection-toggle
+   :bind ("C-c l" . string-inflection-toggle))
 
 (use-package lexet-hydra-multiple-cursors
   ;; :load-path (lambda ()  (getenv "lexet_packages_dir"))
