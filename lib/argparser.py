@@ -29,4 +29,10 @@ from console or UI versions of emacs.
       dest='mode',
       nargs=1
     )
+    parser.add_argument(
+      '-p', '--project',
+      action='store',
+      dest='project',
+      nargs=1
+    )
     return parser.parse_args(argsList)

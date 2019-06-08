@@ -40,7 +40,9 @@ class Lexet():
     uninstaller.uninstall()
 
   def run(self):
-    starter = LexetStarter(self.config)
+    project_path = self.args.project
+    self.project = LexetProject(self.config, project_path)
+    starter = LexetStarter(self.config, self.project)
     starter.start()
 
   def runAction(self):
