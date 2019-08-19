@@ -1,3 +1,4 @@
+
 ;;; package --- Summary
 ;;; Commentary:
 ;;; Code:
@@ -197,6 +198,16 @@
 (use-package ac-js2
   :ensure t
   :hook ((js-mode . ac-js2-mode)))
+
+;; TypeScript
+(use-package typescript-mode
+  :ensure t
+  :mode (("\\.ts\\'" . typescript-mode)
+         ("\\.tsx\\'" . typescript-mode)))
+
+(use-package vue-mode
+  :ensure t
+  :config (add-to-list 'auto-mode-alist '("\\.vue\\'" . vue-mode)))
 
 (use-package web-mode
   :ensure t

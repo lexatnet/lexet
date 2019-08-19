@@ -29,7 +29,7 @@ class Lexet():
     self.argsParsed = True
 
   def configure(self):
-    self.config = LexConfig(self.args.config)
+    self.config = LexetConfig(self.args.config)
 
   def install(self):
     installer = LexetInstaller(self.config)

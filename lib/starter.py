@@ -3,6 +3,9 @@ class LexetStarter():
     self.config = config
     self.project = project
 
+  def start(self):
+    pass
+
   def run():
     parts = ['docker']
     parts.append('run')
@@ -374,5 +377,4 @@ class LexetStarter():
     os.system(' '.join(parts))
 
   def run_x_ssh():
-
-
+    pass
