@@ -10,19 +10,19 @@ class LexetProject():
     logging.info('project name "$project_name"')
 
   def generate_project_name(self, path):
-    return os.path.abspath(path).strip().replace(os.sep)
+    return os.path.abspath(path).strip().replace(
+      os.sep,
+      self.conf['project']['project_name_separator']
+    )
 
-  def get_lexet_tmp_external_dir_default(self):
-    return return os.path.join(
+  def get_lexet_tmp_external_dir(self):
+    return os.path.join(
       '/tmp/lexet',
       self.name
     )
 
-  def get_lexet_tmp_external_dir(self):
-    lexet_tmp_external_dir=${2:-$lexet_tmp_external_dir_default}
-
   def get_lexet_key_external(self):
-    return return os.path.join(
+    return os.path.join(
       self.get_lexet_key_external_dir(),
       self.config.lexet_key_name
     )
@@ -251,4 +251,13 @@ class LexetProject():
     )
 
   def create_link_for_ssh():
-    ln -s $lexet_key_external_pub $lexet_home_ssh_external_dir/authorized_keys
+    parts = ['ln']
+    parts.append('-s')
+    parts.append($lexet_key_external_pub)
+    parts.append(
+      Template('$lexet_home_ssh_external_dir/authorized_keys')
+      .substitute(
+        lexet_home_ssh_external_dir = self.get_lexet_home_ssh_external_dir()
+      )
+    )
+    os.system(' '.join(parts))

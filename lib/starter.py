@@ -19,8 +19,7 @@ class LexetStarter():
       Template('--volume $project_external_dir:$mount_point')
       .substitute(
         project_external_dir = self.conf['environment']['label'],
-        mount_point =
-      )
+        mount_point = self.conf.get
     )
     parts.append(
       Template('--volume $lexet_project_external_dir:$lexet_project_dir')
