@@ -9,7 +9,7 @@ class LexetInstaller():
     logging.info('Creation links...')
     os.symlink(
       os.path.join(
-        self.config.conf['global']['root']
+        self.config.conf['global']['root'],
         'lexet'
       ),
       self.config.conf['install']['install_point_lexet']

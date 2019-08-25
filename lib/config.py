@@ -12,7 +12,8 @@ class LexetConfig():
       os.path.join(dir_path, os.pardir)
     )
 
-    self.conf['GLOBAL'] = root
-    self.conf['user_id'] = os.getuid()
+    self.conf['GLOBAL'] = {}
+    self.conf['GLOBAL']['root'] = root
+    self.conf['GLOBAL']['user_id'] = str(os.getuid())
 
     self.conf.read(config)

@@ -20,11 +20,12 @@ root = os.path.abspath(
 
 class Lexet():
   def __init__(self, args):
-    self.parseArgs(args)
+    self.parseArgs(args[1:])
     self.configure()
 
   def parseArgs(self, args):
     parser = LexetArgumentParser()
+    # import pdb; pdb.set_trace()
     self.args = parser.parse_args(args)
     self.argsParsed = True
 
