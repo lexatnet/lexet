@@ -1,5 +1,6 @@
 import getpass
 import os
+from string import Template
 
 class LexetStarter():
   def __init__(self, conf, project):
@@ -9,7 +10,7 @@ class LexetStarter():
   def start(self):
     self.run()
 
-  def run():
+  def run(self):
     parts = ['docker']
     parts.append('run')
     parts.append(
@@ -76,9 +77,9 @@ class LexetStarter():
       )
     )
     parts.append(
-      Template('-e USER=$USER')
+      Template('-e USER=$user')
       .substitute(
-        USER = getpass.getuser()
+        user = getpass.getuser()
       )
     )
     parts.append(
@@ -163,10 +164,11 @@ class LexetStarter():
         group_id = os.getuid()
       )
     )
-    parts.append('$image_tag')
+    parts.append(self.conf['global']['image_tag'])
+    # import pdb; pdb.set_trace()
     os.system(' '.join(parts))
 
-  def run_x():
+  def run_x(self):
     parts = ['docker']
     parts.append('run')
     parts.append(
@@ -382,7 +384,7 @@ class LexetStarter():
         group_id = os.getuid()
       )
     )
-    parts.append('$image_tag')
+    parts.append(self.conf['global']['image_tag'])
     os.system(' '.join(parts))
 
   def run_x_ssh():

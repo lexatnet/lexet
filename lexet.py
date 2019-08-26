@@ -1,12 +1,13 @@
 import logging
 import os
 import sys
+from lib import LexetArgumentParser
 from lib import LexetConfig
+from lib import LexetProject
 from lib import LexetBuilder
 from lib import LexetInstaller
 from lib import LexetUninstaller
 from lib import LexetStarter
-from lib import LexetArgumentParser
 
 file_path = os.path.realpath(__file__)
 dir_path = os.path.dirname(file_path)
@@ -25,12 +26,11 @@ class Lexet():
 
   def parseArgs(self, args):
     parser = LexetArgumentParser()
-    # import pdb; pdb.set_trace()
     self.args = parser.parse_args(args)
     self.argsParsed = True
 
   def configure(self):
-    self.config = LexetConfig(self.args.config)
+    self.config = LexetConfig(self.args.config).get_config()
 
   def install(self):
     installer = LexetInstaller(self.config)
@@ -41,20 +41,25 @@ class Lexet():
     uninstaller.uninstall()
 
   def run(self):
-    project_path = self.args.project
+    project_path = self.args.project.pop()
     self.project = LexetProject(self.config, project_path)
     starter = LexetStarter(self.config, self.project)
     starter.start()
 
   def runAction(self):
-    action = self.args.action
+    action = self.args.action.pop()
+    # import pdb; pdb.set_trace()
     getattr(self, action)()
 
 
 def main():
-  args = sys.argv
-  lexet = Lexet(args)
-  lexet.runAction()
+  try:
+    args = sys.argv
+    lexet = Lexet(args)
+    lexet.runAction()
+  except Exception as ex:
+    import pdb; pdb.set_trace()
+    print(ex)
 
 if __name__ == "__main__":
     # execute only if run as a script

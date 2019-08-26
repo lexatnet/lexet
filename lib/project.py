@@ -2,6 +2,7 @@ import logging
 import os
 import sys
 import tempfile
+from string import Template
 
 class LexetProject():
   def __init__(self, config, path):
@@ -11,6 +12,7 @@ class LexetProject():
     logging.info('project name "$project_name"')
 
   def generate_project_name(self, path):
+    # import pdb; pdb.set_trace()
     return os.path.abspath(path).strip().replace(
       os.sep,
       self.conf['project']['project_name_separator']
@@ -201,7 +203,8 @@ class LexetProject():
     command_parts.append(
     Template('-f $lexet_key_external_dir/$lexet_key_name')
       .substitute(
-        build_root = self.conf['docker']['build_root']
+        lexet_key_external_dir = self.get_lexet_key_external_dir(),
+        lexet_key_name = self.conf['ssh']['lexet_key_name']
       )
     )
     os.system(' '.join(command_parts))
@@ -214,7 +217,8 @@ class LexetProject():
     command_parts.append(
     Template('-f $lexet_key_external_dir/$lexet_ssh_host_rsa_key_name')
       .substitute(
-        build_root = self.conf['docker']['build_root']
+        lexet_key_external_dir = self.get_lexet_key_external_dir(),
+        lexet_ssh_host_rsa_key_name = self.conf['ssh']['lexet_ssh_host_rsa_key_name']
       )
     )
     os.system(' '.join(command_parts))
@@ -227,7 +231,8 @@ class LexetProject():
     command_parts.append(
     Template('-f $lexet_key_external_dir/$lexet_ssh_host_dsa_key_name')
       .substitute(
-        build_root = self.conf['docker']['build_root']
+        lexet_key_external_dir = self.get_lexet_key_external_dir(),
+        lexet_ssh_host_rsa_key_name = self.conf['ssh']['lexet_ssh_host_dsa_key_name']
       )
     )
     os.system(' '.join(command_parts))
@@ -240,7 +245,8 @@ class LexetProject():
     command_parts.append(
     Template('-f $lexet_key_external_dir/$lexet_ssh_host_ecdsa_key_name')
       .substitute(
-        build_root = self.conf['docker']['build_root']
+        lexet_key_external_dir = self.get_lexet_key_external_dir(),
+        lexet_ssh_host_rsa_key_name = self.conf['ssh']['lexet_ssh_host_ecdsa_key_name']
       )
     )
     os.system(' '.join(command_parts))

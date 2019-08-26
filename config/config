@@ -13,23 +13,23 @@ through_script = through-script.sh
 [docker]
 # docker build
 through_point = /lexet
-docker_file = %(root)/docker/Dockerfile
+docker_file = ${global:root}/docker/Dockerfile
 sshd_port = 2222
 build_root = /build
 build_script = %(build_root)/docker/init.sh
 entrypoint_script = %(build_root)/docker/entrypoint.sh
 dist_point = %(build_root)
-volume = %(image_tag)-volume
-nvm_root = %(through_point)/env/nvm
-rbenv_root = %(through_point)/env/rbenv
+volume = ${global:image_tag}-volume
+nvm_root = ${docker:through_point}/env/nvm
+rbenv_root = ${docker:through_point}/env/rbenv
 
 # docker run
 mount_point = /project
 emacs_config = .emacs
-env_config = %(root)/config/env-config.sh
+env_config = ${global:root}/config/env-config.sh
 ctags_exclude_config = ctags-exclude.list
 lexet_tmp_dir_name = lexet-tmp
-lexet_tmp_dir = %(through_point)/%(lexet_tmp_dir_name)
+lexet_tmp_dir = ${docker:through_point}/${docker:lexet_tmp_dir_name}
 
 [install]
 install_lexet_name = lexet
@@ -42,8 +42,8 @@ install_point_lexetx_ssh = %(install_dir)/%(install_lexetx_ssh_name)
 
 [environment]
 storage = /storage
-workdir = %(mount_point)
-label = %(image_tag)
+workdir = ${docker:mount_point}
+label = ${global:image_tag}
 lexet_external_root = ~/.lexet
 lexet_home_dir_name = home
 lexet_server_dir_name = server

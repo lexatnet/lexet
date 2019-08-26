@@ -14,13 +14,7 @@ from console or UI versions of emacs.
       '-c', '--config',
       action='store',
       dest='config',
-      nargs=1
-    )
-    parser.add_argument(
-      '-c', '--config',
-      action='store',
-      dest='config',
-      default='lib/config'
+      default='lib/config',
       nargs=1
     )
     parser.add_argument(
