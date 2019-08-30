@@ -9,7 +9,7 @@ class LexetProject():
     self.conf = config
     self.path = path
     self.name = self.generate_project_name(path)
-    logging.info('project name "$project_name"')
+    logging.info('project name "{project_name}"'.format(project_name = self.name))
 
   def generate_project_name(self, path):
     # import pdb; pdb.set_trace()

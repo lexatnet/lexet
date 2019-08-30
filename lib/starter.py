@@ -1,14 +1,20 @@
 import getpass
 import os
 from string import Template
+import logging
 
 class LexetStarter():
   def __init__(self, conf, project):
     self.conf = conf
     self.project = project
 
-  def start(self):
-    self.run()
+  def start(self, mode):
+    if mode == 'text':
+      self.run()
+    elif mode == 'ui':
+      self.run_x()
+    elif mode == 'uis':
+      self.run_x_ssh()
 
   def run(self):
     parts = ['docker']
@@ -165,6 +171,7 @@ class LexetStarter():
       )
     )
     parts.append(self.conf['global']['image_tag'])
+    logging.info('run command "{command}"'.format(command=' '.join(parts)))
     # import pdb; pdb.set_trace()
     os.system(' '.join(parts))
 
@@ -385,6 +392,7 @@ class LexetStarter():
       )
     )
     parts.append(self.conf['global']['image_tag'])
+    logging.info('run command "{command}"'.format(command=' '.join(parts)))
     os.system(' '.join(parts))
 
   def run_x_ssh():

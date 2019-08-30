@@ -28,7 +28,8 @@ from console or UI versions of emacs.
       '-m', '--mode',
       action='store',
       dest='mode',
-      nargs=1
+      nargs=1,
+      choices=['text', 'ui', 'uis']
     )
     parser.add_argument(
       '-p', '--project',

@@ -18,6 +18,7 @@ root = os.path.abspath(
   )
 )
 
+logging.basicConfig(level=logging.DEBUG)
 
 class Lexet():
   def __init__(self, args):
@@ -44,7 +45,8 @@ class Lexet():
     project_path = self.args.project.pop()
     self.project = LexetProject(self.config, project_path)
     starter = LexetStarter(self.config, self.project)
-    starter.start()
+    mode = self.args.mode.pop()
+    starter.start(mode)
 
   def runAction(self):
     action = self.args.action.pop()
