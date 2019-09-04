@@ -16,7 +16,7 @@ class LexetProject():
     return os.path.abspath(path).strip().replace(
       os.sep,
       self.conf['project']['project_name_separator']
-    )
+    ).strip('.')
 
   def get_lexet_tmp_external_dir(self):
     return os.path.join(
@@ -281,3 +281,8 @@ class LexetProject():
       )
     )
     os.system(' '.join(parts))
+
+  def get_project_sessions_dir(self):
+    return Template('$lexet_project_external_dir/.ssh-sessions').substitute(
+      lexet_project_external_dir = self.get_lexet_project_external_dir()
+    )

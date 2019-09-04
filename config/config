@@ -1,6 +1,7 @@
 [global]
 image_tag = lexatnet/lexet
 group_id = %(user_id)
+scripts_dir = %(build_root)/scripts
 
 [ssh]
 lexet_key_name = key
