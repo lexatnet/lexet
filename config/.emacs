@@ -242,7 +242,9 @@
   ;(set-face-background 'highlight-indent-guides-odd-face "#000000")
   ;(set-face-background 'highlight-indent-guides-even-face "#262626")
   ;(set-face-foreground 'highlight-indent-guides-character-face "#585858")
-  (add-hook 'prog-mode-hook 'highlight-indent-guides-mode))
+  (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+  (add-hook 'text-mode-hook 'highlight-indent-guides-mode)
+  (add-hook 'html-mode-hook 'highlight-indent-guides-mode))
 
 (use-package neotree
   :ensure t
