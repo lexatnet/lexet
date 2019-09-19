@@ -4,6 +4,14 @@
 ;;; Code:
 (add-to-list 'load-path (getenv "lexet_packages_dir"))
 (setq package-user-dir (getenv "lexet_vendor_packages_dir"))
+;; (add-hook 'after-init-hook
+;;           '(lambda () (setq debug-on-error t)))
+;; (add-hook 'after-init-hook
+;;           '(lambda () (setq debug-ignored-errors t)))
+;; (add-hook 'after-init-hook
+;;           '(lambda () (setq debug-on-message "wrong argument type")))
+
+
 
 (menu-bar-mode 0)
 (tool-bar-mode 0)
@@ -207,7 +215,11 @@
 
 (use-package vue-mode
   :ensure t
-  :config (add-to-list 'auto-mode-alist '("\\.vue\\'" . vue-mode)))
+  :config
+  (add-to-list 'auto-mode-alist '("\\.vue\\'" . vue-mode))
+  (setq mmm-js-mode-enter-hook (lambda () (setq syntax-ppss-table nil)))
+  (setq mmm-typescript-mode-enter-hook (lambda () (setq syntax-ppss-table nil)))
+  )
 
 (use-package web-mode
   :ensure t
