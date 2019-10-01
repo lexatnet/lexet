@@ -30,3 +30,9 @@ connect-bash:
 
 connect-to-root-sshd:
 	docker exec --interactive --tty lexet-root-sshd bash
+
+build-appimage:
+	wget -O - https://raw.githubusercontent.com/AppImage/pkg2appimage/master/pkg2appimage | bash -s -- ./recipe.yml
+
+build-appimage-into-docker:
+	./scripts/build-appimage-into-docker.sh
