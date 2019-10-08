@@ -26,11 +26,15 @@ ingredients:
     - emacs-snapshot
     # - pylint3
     # - shellcheck
+  pretend:
+    - libgbm1 19.0.8-0ubuntu0~18.04.2
+    - libwebkit2gtk-4.0-37 2.24.4-0ubuntu0.18.04.1
+    - libegl1 1.0.0-2ubuntu2.3
   script:
     - wget -c https://raw.githubusercontent.com/mu-editor/mu/master/conf/mu.codewith.editor.png
     - cp ./mu.codewith.editor.png ./lexet.png
 script:
-  - ln -s ./etags-snapshot ./usr/bin/emacs
+  - ln -s ./emacs-snapshot ./usr/bin/emacs
   - cp ../lexet.png ./lexet.png
   - ln -s ./lexet.png ./usr/share/icons/hicolor/256x256/
   - cat > lexet.desktop <<EOF
