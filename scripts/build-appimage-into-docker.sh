@@ -22,7 +22,8 @@ build_lexet_appimage() {
          --volume $root/recipe.yml:$through_point/recipe.yml \
          -e through_point=$through_point \
          --entrypoint $through_point/build.sh \
-         ubuntu:xenial
+         --rm \
+         ubuntu:bionic
 }
 
 build_lexet_appimage
