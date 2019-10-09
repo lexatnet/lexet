@@ -12,19 +12,17 @@ get_script_dir () {
 }
 
 
-build_lexet_appimage() {
+build_lexet_image() {
   local dir=$(get_script_dir)
   source $dir/../config/config.sh
 
-  docker run \
-         --volume $root/build:$through_point/ \
-         --volume $root/recipe.yml:$through_point/recipe.yml \
-         --volume $root/AppRun.sh:$through_point/AppRun \
-         --volume $root/run.py:$through_point/run.py \
-         --volume $root/lib:$through_point/lib \
-         -e through_point=$through_point \
-         --rm \
-         $appimage_builder_image_tag
+  docker build \
+         --build-arg build_root=$build_root \
+         --build-arg build_script=$appimage_builder_build_script \
+         --build-arg entrypoint_script=$appimage_builder_entrypoint_script \
+         --tag $appimage_builder_image_tag \
+         --file $appimage_builder_docker_file \
+         $root
 }
 
-build_lexet_appimage
+build_lexet_image

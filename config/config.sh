@@ -18,7 +18,8 @@ config_lexet_environment() {
 
   #Global
   root=$(normalize_path "$dir/..")
-  image_tag=lexatnet/lexet
+  lexet_image_tag=lexatnet/lexet
+  appimage_builder_image_tag=lexatnet/appimage-builder
   user_id=$UID
   group_id=$user_id
 
@@ -58,11 +59,14 @@ config_lexet_environment() {
 
 
   #Docker Build
-  docker_file=$root/docker/Dockerfile
+  lexet_docker_file=$root/docker/Dockerfile
+  appimage_builder_docker_file=$root/docker/AppImageBuilder-Dockerfile
   sshd_port=2222
   build_root=/build
   build_script=${build_root}/docker/init.sh
+  appimage_builder_build_script=${build_root}/docker/appimage-builder-build-script.sh
   entrypoint_script=${build_root}/docker/entrypoint.sh
+  appimage_builder_entrypoint_script=${build_root}/docker/appimage-builder-entrypoint.sh
   dist_point=${build_root}
   volume=${image_tag}-volume
 

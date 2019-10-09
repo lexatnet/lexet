@@ -89,7 +89,7 @@ run_lexet_x_ssh() {
             --entrypoint $through_point/$entrypoint_sshd \
             --detach \
             --publish 2222 \
-            $image_tag > $container_id_file
+            $lexet_image_tag > $container_id_file
 
      sleep 15
   fi

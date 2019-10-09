@@ -44,7 +44,7 @@ run_lexet() {
          --tty \
          --rm \
          --user $user_id:$group_id \
-         $image_tag
+         $lexet_image_tag
 }
 
 run_lexet "$@"

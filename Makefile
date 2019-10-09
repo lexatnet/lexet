@@ -1,5 +1,8 @@
 build:
-	./scripts/build-docker.sh
+	./scripts/build-lexet-docker.sh
+
+build-appimage-builder:
+	./scripts/build-appimage-builder-docker.sh
 
 docker-tag:
 	./scripts/docker-tag.sh

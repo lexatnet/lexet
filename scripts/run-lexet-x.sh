@@ -53,7 +53,7 @@ run_lexetx() {
          --rm \
          --entrypoint $through_point/$entrypoint_run_lexet \
          --user $user_id:$group_id \
-         $image_tag
+         $lexet_image_tag
 }
 
 run_lexetx "$@"

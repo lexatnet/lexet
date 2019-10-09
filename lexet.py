@@ -1,13 +1,14 @@
 import logging
 import os
 import sys
-from lib import LexetArgumentParser
-from lib import LexetConfig
-from lib import LexetProject
-from lib import LexetBuilder
-from lib import LexetInstaller
-from lib import LexetUninstaller
-from lib import LexetStarter
+from lexet-lib import LexetArgumentParser
+from lexet-lib import LexetConfig
+from lexet-lib import LexetProject
+from lexet-lib import LexetBuilder
+from lexet-lib import LexetInstaller
+from lexet-lib import LexetUninstaller
+from lexet-lib import LexetStarter
+from lexet-lib import LexetHome
 
 file_path = os.path.realpath(__file__)
 dir_path = os.path.dirname(file_path)
@@ -23,12 +24,16 @@ logging.basicConfig(level=logging.DEBUG)
 class Lexet():
   def __init__(self, args):
     self.parseArgs(args[1:])
+    self.home()
     self.configure()
 
   def parseArgs(self, args):
     parser = LexetArgumentParser()
     self.args = parser.parse_args(args)
     self.argsParsed = True
+
+  def home(self):
+    
 
   def configure(self):
     self.config = LexetConfig(self.args.config).get_config()

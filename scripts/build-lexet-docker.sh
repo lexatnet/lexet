@@ -18,10 +18,10 @@ build_lexet_image() {
 
   docker build \
          --build-arg build_root=$build_root \
-         --build-arg build_script=$build_script \
+         --build-arg build_script=$lexet_build_script \
          --build-arg entrypoint_script=$entrypoint_script \
-         --tag $image_tag \
-         --file $docker_file \
+         --tag $lexet_image_tag \
+         --file $lexet_docker_file \
          $root
 }
 

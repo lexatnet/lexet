@@ -19,13 +19,13 @@ ingredients:
   ppas:
     - ubuntu-elisp/ppa
   packages:
-    # - python3-venv
-    # - python3-pip
-    # - python3
-    # - php-cli
+    - python3-venv
+    - python3-pip
+    - python3
+    - php-cli
     - emacs-snapshot
-    # - pylint3
-    # - shellcheck
+    - pylint3
+    - shellcheck
   pretend:
     - libgbm1 19.0.8-0ubuntu0~18.04.2
     - libwebkit2gtk-4.0-37 2.24.4-0ubuntu0.18.04.1
@@ -34,6 +34,11 @@ ingredients:
     - wget -c https://raw.githubusercontent.com/mu-editor/mu/master/conf/mu.codewith.editor.png
     - cp ./mu.codewith.editor.png ./lexet.png
 script:
+  - cp ../../AppRun ./AppRun
+  - chmod a+x ./AppRun
+  - cp ../../run.py ./run.py
+  - cp -r ../../lexet-lib ./lexet-lib
+  - cp -r ../../config ./config
   - ln -s ./emacs-snapshot ./usr/bin/emacs
   - cp ../lexet.png ./lexet.png
   - ln -s ./lexet.png ./usr/share/icons/hicolor/256x256/
