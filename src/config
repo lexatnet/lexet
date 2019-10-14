@@ -1,0 +1,19 @@
+[global]
+
+
+[environment]
+root = ~/.lexet-new
+vendor_packages_dir_name = lexet-vendor-packages
+packages_dir_name = lexet-packages
+utils_dir_name = lexet-utils
+
+
+[root]
+emacs_config = ${environment:root}/.emacs
+projects_dir = ${environment:root}/projects
+ctags_exclude_config = ${environment:root}/ctags-exclude.list
+lexet_tmp_dir = ${environment:root}/tmp
+
+
+[project]
+project_name_separator = .hunspell

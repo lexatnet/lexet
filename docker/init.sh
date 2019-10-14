@@ -16,47 +16,71 @@ dir=$(get_script_dir)
 source $dir/../config/config.sh
 
 install_utils(){
+  echo -e '\n------install_utils------\n'
+
   apt-get update
+  # set noninteractive installation
+  export DEBIAN_FRONTEND=noninteractive
+  #TZ= Asia/Omsk
+  #install tzdata package
+  apt-get install -y tzdata
+  # set your timezone
+  ln -fs /usr/share/zoneinfo/Asia/Omsk /etc/localtime
+  dpkg-reconfigure --frontend noninteractive tzdata
+
 
   apt-get install -y software-properties-common
   apt-get install -y mc
 
+  echo -e '\n------install git------\n'
   apt-get install -y git
+  echo -e '\n------install make------\n'
   apt-get install -y make
+  echo -e '\n------install autoconf------\n'
   apt-get install -y autoconf
+  echo -e '\n------install pkg-config------\n'
   apt-get install -y pkg-config
-
+  echo -e '\n------install php-cli------\n'
   apt-get install -y php-cli
+  echo -e '\n------install cscope------\n'
   apt-get install -y cscope
 
+  echo -e '\n------install curl------\n'
   apt-get install -y curl
 
+  echo -e '\n------install language-pack-en-base------\n'
   apt-get install -y language-pack-en-base
 
   #for rbenv & ruby
+  echo -e '\n------install language-pack-en-base------\n'
   apt-get install -y libssl-dev libreadline-dev zlib1g-dev
 }
 
 install_ssh(){
+  echo -e '\n------install_ssh------\n'
   apt-get install -y openssh-server
   mkdir -vp /var/run/sshd
 }
 
 install_emacs(){
+  echo -e '\n------install_emacs------\n'
   apt-add-repository ppa:ubuntu-elisp/ppa
   apt-get update
   apt-get install -y emacs-snapshot
 }
 
 install_pylint(){
+  echo -e '\n------install_pylint------\n'
   apt-get install -y pylint3
 }
 
 install_shellcheck(){
+  echo -e '\n------install_shellcheck------\n'
   apt-get install shellcheck
 }
 
 install_ctags(){
+  echo -e '\n------install_ctags-----\n'
   #install ctags from sources
 
   cd $dist_point
@@ -73,6 +97,7 @@ install_ctags(){
 }
 
 install_hunspell(){
+  echo -e '\n------install_hunspell-----\n'
 
   cd $dist_point
   git clone https://github.com/hunspell/hunspell.git
@@ -106,6 +131,7 @@ EOL
 }
 
 install_php_utils(){
+  echo -e '\n------install_php_utils-----\n'
   cd $dist_point
   curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar
   php phpcs.phar -h
@@ -119,6 +145,7 @@ install_php_utils(){
 }
 
 create_lexet_shortcut(){
+  echo -e '\n------create_lexet_shortcut-----\n'
   ln -s "$dist_point/docker/run-emacs.sh" /usr/bin/lexet
 }
 
@@ -129,6 +156,7 @@ create_lexet_shortcut(){
 #}
 
 configure_bash() {
+  echo -e '\n------configure_bash-----\n'
   get_lexet_init_piont_script >> /etc/profile
   get_lexet_init_piont_script >> /etc/bash.bashrc
 }

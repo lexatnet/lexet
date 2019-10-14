@@ -1,0 +1,83 @@
+app: lexet
+ingredients:
+  dist: bionic
+  sources:
+    - deb http://archive.ubuntu.com/ubuntu/ bionic main universe
+    - deb http://archive.ubuntu.com/ubuntu/ bionic-updates universe
+    - deb http://archive.ubuntu.com/ubuntu bionic main
+    - deb http://archive.ubuntu.com/ubuntu bionic-updates main
+    - deb http://archive.ubuntu.com/ubuntu bionic-security main
+    - deb http://archive.ubuntu.com/ubuntu/ bionic main restricted
+    - deb http://archive.ubuntu.com/ubuntu/ bionic-updates main restricted
+    - deb http://archive.ubuntu.com/ubuntu/ bionic multiverse
+    - deb http://archive.ubuntu.com/ubuntu/ bionic-updates multiverse
+    - deb http://security.ubuntu.com/ubuntu bionic-security main
+    - deb http://security.ubuntu.com/ubuntu bionic-security main restricted
+    - deb http://security.ubuntu.com/ubuntu bionic-security universe
+    - deb http://security.ubuntu.com/ubuntu bionic-security multiverse
+    - deb http://archive.ubuntu.com/ubuntu/ bionic-backports main restricted universe multiverse
+  ppas:
+    - ubuntu-elisp/ppa
+  packages:
+    - python3-venv
+    - python3-pip
+    - python3
+    - php-cli
+    - emacs-snapshot
+    - pylint3
+    - shellcheck
+  pretend:
+    - libgbm1 19.0.8-0ubuntu0~18.04.2
+    - libwebkit2gtk-4.0-37 2.24.4-0ubuntu0.18.04.1
+    - libegl1 1.0.0-2ubuntu2.3
+  script:
+    - [ -f ./mu.codewith.editor.png ] || wget -c https://raw.githubusercontent.com/mu-editor/mu/master/conf/mu.codewith.editor.png
+    - [ -f ./lexet.png ] || cp ./mu.codewith.editor.png ./lexet.png
+    - [ -d ctags ] || git clone https://github.com/universal-ctags/ctags.git
+    - [ -d hunspell ] || git clone https://github.com/hunspell/hunspell.git
+
+
+script:
+  # install ctags from sources
+  - cp -r ../ctags ./ctags
+  - cd ctags
+  - ./autogen.sh
+  - ./configure --prefix="${HERE}/usr/bin"
+  - make
+  - make install
+  - cd ..
+  # clear
+  - rm --recursive ctags
+
+  # install hunspell from sources
+  - cp -r ../hunspell ./hunspell
+  - cd hunspell
+  - autoreconf -vfi
+  - ./configure --prefix="${HERE}/usr/bin"
+  - make
+  - make install
+  - ldconfig
+  - cd ..
+  # clear
+  - rm --recursive hunspell
+
+  - cp ../../AppRun ./AppRun
+  - chmod a+x ./AppRun
+  - cp -r ../../src ./lexet
+  - cp -r ../../config ./config
+  - ln -s ./emacs-snapshot ./usr/bin/emacs
+  - cp ../lexet.png ./lexet.png
+  - ln -s ./lexet.png ./usr/share/icons/hicolor/256x256/
+  - cat > lexet.desktop <<EOF
+  - [Desktop Entry]
+  - Type=Application
+  - Name=Lexet
+  - Comment=IDE
+  - Icon=lexet
+  - Exec=emacs %F
+  - Terminal=false
+  - Categories=Application;Development;
+  - Keywords=Editor;
+  - MimeType=text/x-python3;
+  - EOF
+  # - ln -s ./lexet.desktop ./usr/share/applications/lexet.desktop

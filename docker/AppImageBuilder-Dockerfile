@@ -1,7 +1,7 @@
-FROM ubuntu:18.04
+FROM ubuntu:bionic
 
 ARG build_root=/build
-ARG build_script=$build_root/init.sh
+ARG build_script=$build_root/appimage-builder-entrypoint.sh
 ARG entrypoint_script=lexet
 
 COPY ./docker $build_root/docker
