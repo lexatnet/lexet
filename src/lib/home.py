@@ -2,15 +2,13 @@ from shutil import copyfile
 import os
 from pathlib import Path
 
-file_path = os.path.realpath(__file__)
-dir_path = os.path.dirname(file_path)
-root = os.path.abspath(
-  os.path.join(
-    dir_path,
-    os.pardir,
-    os.pardir
-  )
-)
+file_path = Path(__file__).resolve()
+dir_path = file_path.parent()
+root = Path(
+  dir_path,
+  os.pardir,
+  os.pardir
+).resolve()
 
 class LexetHome():
   def __init__(self, home):
@@ -42,8 +40,8 @@ class LexetHome():
         'config'
       ),
       Path(
-        os.path.expanduser('~'),
-        '.lexet-new'
+        Path.home(),
+        '.lexet-new',
         'config'
       ),
     )
@@ -56,8 +54,8 @@ class LexetHome():
         '.emacs'
       ),
       Path(
-        os.path.expanduser('~'),
-        '.lexet-new/'
+        Path.home(),
+        '.lexet-new',
         '.emacs'
       ),
     )
