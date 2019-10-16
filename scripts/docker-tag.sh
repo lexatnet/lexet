@@ -15,4 +15,4 @@ get_script_dir () {
 dir=$(get_script_dir)
 source $dir/../config/config.sh
 
-docker tag $image_name $image_tag
+docker tag $image_name $appimage_builder_image_tag

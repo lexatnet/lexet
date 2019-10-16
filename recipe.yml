@@ -38,11 +38,13 @@ ingredients:
 
 
 script:
+  - cwd=$(pwd)
+  - echo "current directory = '${cwd}'"
   # # install ctags from sources
   # - cp -r ../ctags ./ctags
   # - cd ctags
   # - ./autogen.sh
-  # - ./configure --prefix="${HERE}/usr/bin"
+  # - ./configure --prefix="${cwd}/usr/bin"
   # - make
   # - make install
   # - cd ..
@@ -53,7 +55,7 @@ script:
   # - cp -r ../hunspell ./hunspell
   # - cd hunspell
   # - autoreconf -vfi
-  # - ./configure --prefix="${HERE}/usr/bin"
+  # - ./configure --prefix="${cwd}/usr/bin"
   # - make
   # - make install
   # - ldconfig
@@ -68,25 +70,28 @@ script:
   - cp ../../AppRun ./AppRun
   - chmod a+x ./AppRun
 
+  - [ -d ${cwd}/env ] || mkdir --verbose ${cwd}/env
+  - [ -d ${cwd}/init ] || mkdir --verbose ${cwd}/init
+
+  # import sripts lib
+  - source $through_point/scripts/index.sh
+
+  # install utils
+  - $through_point/scripts/install-utils.sh --root ${HERE}
+
   # copy lexet app
   - cp -r ../../src ./lexet
 
   # copy configs
   - cp -r ../../config ./config
 
+  # create emacs link
   - ln -s ./emacs-snapshot ./usr/bin/emacs
+
+  # prepare icon
   - cp ../lexet.png ./lexet.png
   - ln -s ./lexet.png ./usr/share/icons/hicolor/256x256/
-  - cat > lexet.desktop <<EOF
-  - [Desktop Entry]
-  - Type=Application
-  - Name=Lexet
-  - Comment=IDE
-  - Icon=lexet
-  - Exec=emacs %F
-  - Terminal=false
-  - Categories=Application;Development;
-  - Keywords=Editor;
-  - MimeType=text/x-python3;
-  - EOF
+
+  # build desktop file
+  - create_lexet_desktop_file --name ./lexet.desktop
   # - ln -s ./lexet.desktop ./usr/share/applications/lexet.desktop

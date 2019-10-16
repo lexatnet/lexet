@@ -13,4 +13,14 @@ export LEXET_MOUNT_POINT="${HERE}"
 export LEXET_PATH="${HERE}/lexet"
 export LEXET_CONFIGS="${HERE}/config"
 
+if [ -d ${HERE}/init ]; then
+  for i in ${HERE}/init/*.sh; do
+    if [ -r $i ]; then
+      echo $i
+      . $i
+    fi
+  done
+  unset i
+fi
+
 "${HERE}"/usr/bin/python3 "${HERE}"/lexet/lexet.py "$@"

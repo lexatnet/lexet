@@ -11,15 +11,22 @@ Emacs build with useful utils configured for speed and comfortable writing code 
 
 
 # Download
-clone or download this repo to the place where you would prefer to put lexet execution files
+clone or download this repo to the place where you would prefer to put lexet building files
+
+
+
+# Build AppImage Builder Docker Image
+```
+make build-appimage-builder
+
+```
 
 
 
 # Build AppImage
 
 ```
-make build-appimage-builder
-make build-appimage-into-docker
+make build-appimage
 ```
 You could move AppImage to directory which you prefere to store AppImages
 

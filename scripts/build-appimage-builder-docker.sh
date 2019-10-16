@@ -12,7 +12,7 @@ get_script_dir () {
 }
 
 
-build_lexet_image() {
+build_appimage_builder_image() {
   local dir=$(get_script_dir)
   source $dir/../config/config.sh
 
@@ -25,4 +25,4 @@ build_lexet_image() {
          $root
 }
 
-build_lexet_image
+build_appimage_builder_image
