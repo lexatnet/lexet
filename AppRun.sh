@@ -9,4 +9,8 @@ export EMACSDOC=$EMACSPATH/etc
 export EMACSLOADPATH=$EMACSPATH/site-lisp:$EMACSPATH/lisp:$EMACSPATH/lisp/emacs-lisp
 export INFOPATH=./local/share/info
 
+export LEXET_MOUNT_POINT="${HERE}"
+export LEXET_PATH="${HERE}/lexet"
+export LEXET_CONFIGS="${HERE}/config"
+
 "${HERE}"/usr/bin/python3 "${HERE}"/lexet/lexet.py "$@"

@@ -2,6 +2,9 @@ import logging
 import os
 import sys
 import traceback
+from pathlib import Path
+from string import Template
+
 from lib import LexetArgumentParser
 from lib import LexetConfig
 from lib import LexetProject
@@ -10,22 +13,16 @@ from lib import LexetStarter
 from lib import LexetHome
 from lib import LexetEnv
 
-file_path = os.path.realpath(__file__)
-dir_path = os.path.dirname(file_path)
-root = os.path.abspath(
-  os.path.join(
-    dir_path,
-    os.pardir
-  )
-)
+
+lexet_path = Path(os.environ['LEXET_PATH'])
 
 logging.basicConfig(level=logging.DEBUG)
 
 class Lexet():
   def __init__(self, args):
     self.parseArgs(args[1:])
-    self.home()
     self.configure()
+    self.home()
 
   def env(self):
     self.env = LexetEnv(self.config, self.project)
@@ -37,12 +34,20 @@ class Lexet():
     self.argsParsed = True
 
   def home(self):
-    home = LexetHome(self.args.home)
+    home_path = self.args.home.pop()
+    home = LexetHome(self.config, home_path)
     if not home.exists():
       home.create()
 
   def configure(self):
-    self.config = LexetConfig(self.args.config).get_config()
+    config_path = self.get_config_path()
+    logging.info(
+      Template('loading config "$config"')
+      .substitute(
+        config = config_path
+      )
+    )
+    self.config = LexetConfig(config_path).get_config()
 
   def run(self):
     project_path = self.args.project.pop()
@@ -51,6 +56,13 @@ class Lexet():
     starter = LexetStarter(self.config, self.project)
     mode = self.args.mode.pop()
     starter.start(mode)
+
+  def get_config_path(self):
+    root_config = Path(lexet_path, 'config')
+    args_config = Path(self.args.config.pop())
+    if args_config.exists() and args_config.is_file():
+      return str(args_config)
+    return str(root_config)
 
   def runAction(self):
     action = self.args.action.pop()

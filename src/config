@@ -1,19 +1,40 @@
 [global]
+#
+# this section has 3 virtual variables defined in configurator
+# this variables could be used in other sections to define values
+# relative to mount point:
+# lexet_mount_point
+# lexet_path
+# lexet_configs
+
+[name]
+vendor_packages_dir = lexet-vendor-packages
+packages_dir = lexet-packages
+projects_dir = projects
+root_dir = .lexet
 
 
 [environment]
-root = ~/.lexet-new
-vendor_packages_dir_name = lexet-vendor-packages
-packages_dir_name = lexet-packages
-utils_dir_name = lexet-utils
+root = ~/${name:root_dir}
 
 
 [root]
 emacs_config = ${environment:root}/.emacs
-projects_dir = ${environment:root}/projects
+projects_dir = ${environment:root}/${name:projects_dir}
+packages_dir = ${global:lexet_mount_point}/${name:packages_dir}
+vendor_packages_dir = ${environment:root}/${name:vendor_packages_dir}
 ctags_exclude_config = ${environment:root}/ctags-exclude.list
 lexet_tmp_dir = ${environment:root}/tmp
 
 
 [project]
-project_name_separator = .hunspell
+project_name_separator = .
+
+
+[init]
+# DO NOT TOUCH this section
+# if you do not compleatly undersend what are you doing
+# it's using in initialization process
+config_src = ${global:lexet_path}/config
+config = ${environment:root}/config
+emacs_config_src = ${global:lexet_configs}/.emacs

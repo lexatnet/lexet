@@ -56,7 +56,7 @@ class LexetStarter():
       )
     )
 
-    parts.append('-q --load ~/.lexet/.emacs')
+    parts.append('-q --load ~/.lexet-new/.emacs')
 
     logging.info('run command "{command}"'.format(command=' '.join(parts)))
     os.system(' '.join(parts))

@@ -15,16 +15,22 @@ clone or download this repo to the place where you would prefer to put lexet exe
 
 
 
-# Install
-creation symlinks in exec paths
-```
-make install
-```
+# Build AppImage
 
-prepare lexet environment in ~/.lexet
 ```
-make init
+make build-appimage-builder
+make build-appimage-into-docker
 ```
+You could move AppImage to directory which you prefere to store AppImages
+
+
+
+# Run Lexet
+
+``` bash
+<path-to-AppImage> <options>
+```
+Use -h to get available options
 
 
 
@@ -37,39 +43,17 @@ cd <path to your local lexet repo>
 ```
 update files
 ```
-git push
+git pull
 ```
-clear lexet data
-```
-rm -rf ~/.lexet
-```
-reinitialize
-```
-make init
-```
+and walk through Build AppImage steps
 
 
 
 # Uninstall
-```
-make uninstall
-```
+- Remove Lexet AppImage
+- Remove Lexet Home folder : ```~/.lexet```(default)
 
 
-
-# Run
-to run in console version
-```
-lexet <path-to-project>
-```
-to run UI version
-```
-lexetx <path-to-project>
-```
-or
-```
-lexetxs <path-to-project>
-```
 
 # Usage
 

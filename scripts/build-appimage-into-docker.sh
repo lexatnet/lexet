@@ -21,8 +21,10 @@ build_lexet_appimage() {
          --volume $root/recipe.yml:$through_point/recipe.yml:ro \
          --volume $root/AppRun.sh:$through_point/AppRun:ro \
          --volume $root/src:$through_point/src:ro \
+         --volume $root/packages:$through_point/lexet-packages:ro \
          --volume $root/config:$through_point/config:ro \
          -e through_point=$through_point \
+         -u $(id -u ${USER}):$(id -g ${USER}) \
          --rm \
          $appimage_builder_image_tag
 }

@@ -15,14 +15,14 @@ from console or UI versions of emacs.
       '-H', '--home',
       action='store',
       dest='home',
-      default='~/.lexet-new',
+      default=['~/.lexet-new'],
       nargs=1
     )
     parser.add_argument(
       '-c', '--config',
       action='store',
       dest='config',
-      default='lib/config',
+      default=['~/lexet-new/config'],
       nargs=1
     )
     parser.add_argument(
@@ -31,7 +31,7 @@ from console or UI versions of emacs.
       dest='action',
       nargs=1,
       choices=['install', 'build', 'run'],
-      default='ui'
+      default=['run']
     )
     parser.add_argument(
       '-m', '--mode',

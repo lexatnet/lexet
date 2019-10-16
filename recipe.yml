@@ -61,10 +61,19 @@ script:
   # clear
   - rm --recursive hunspell
 
+  # copy lexet packages
+  - cp -r ../../lexet-packages ./lexet-packages
+
+  # copy appimage entrypoint script
   - cp ../../AppRun ./AppRun
   - chmod a+x ./AppRun
+
+  # copy lexet app
   - cp -r ../../src ./lexet
+
+  # copy configs
   - cp -r ../../config ./config
+
   - ln -s ./emacs-snapshot ./usr/bin/emacs
   - cp ../lexet.png ./lexet.png
   - ln -s ./lexet.png ./usr/share/icons/hicolor/256x256/
