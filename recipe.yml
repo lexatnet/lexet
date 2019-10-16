@@ -38,28 +38,28 @@ ingredients:
 
 
 script:
-  # install ctags from sources
-  - cp -r ../ctags ./ctags
-  - cd ctags
-  - ./autogen.sh
-  - ./configure --prefix="${HERE}/usr/bin"
-  - make
-  - make install
-  - cd ..
-  # clear
-  - rm --recursive ctags
+  # # install ctags from sources
+  # - cp -r ../ctags ./ctags
+  # - cd ctags
+  # - ./autogen.sh
+  # - ./configure --prefix="${HERE}/usr/bin"
+  # - make
+  # - make install
+  # - cd ..
+  # # clear
+  # - rm --recursive ctags
 
-  # install hunspell from sources
-  - cp -r ../hunspell ./hunspell
-  - cd hunspell
-  - autoreconf -vfi
-  - ./configure --prefix="${HERE}/usr/bin"
-  - make
-  - make install
-  - ldconfig
-  - cd ..
-  # clear
-  - rm --recursive hunspell
+  # # install hunspell from sources
+  # - cp -r ../hunspell ./hunspell
+  # - cd hunspell
+  # - autoreconf -vfi
+  # - ./configure --prefix="${HERE}/usr/bin"
+  # - make
+  # - make install
+  # - ldconfig
+  # - cd ..
+  # # clear
+  # - rm --recursive hunspell
 
   # copy lexet packages
   - cp -r ../../lexet-packages ./lexet-packages

@@ -7,24 +7,15 @@ import tempfile
 import uuid
 import subprocess
 import time
-
-file_path = os.path.realpath(__file__)
-dir_path = os.path.dirname(file_path)
-root = os.path.abspath(
-  os.path.join(
-    dir_path,
-    os.pardir,
-    os.pardir
-  )
-)
-
+from pathlib import Path
 
 class LexetStarter():
-  def __init__(self, conf, project):
-    self.conf = conf
+  def __init__(self, config, project):
+    self.config = conf
     self.project = project
 
   def start(self, mode):
+    self.project.go_to_project_dir()
     if mode == 'text':
       self.run()
     elif mode == 'ui':
@@ -35,28 +26,51 @@ class LexetStarter():
   def run(self):
     parts = []
     parts.append(
-      os.path.join(
-        root,
-        'usr',
-        'bin',
-        'emacs',
+      str(
+        Path(
+          self.config['global']['lexet_mount_point'],
+          'usr',
+          'bin',
+          'emacs',
+        )
       )
     )
+
+    parts.append('--no-windows')
+
+    parts.append('--no-init-file')
+
+    parts.append(
+      Template('--load $config')
+      .substitute(
+        config = self.config['root']['emacs_config']
+      )
+    )
+
     logging.info('run command "{command}"'.format(command=' '.join(parts)))
     os.system(' '.join(parts))
 
   def run_x(self):
     parts = []
     parts.append(
-      os.path.join(
-        root,
-        'usr',
-        'bin',
-        'emacs',
+      str(
+        Path(
+          self.config['global']['lexet_mount_point'],
+          'usr',
+          'bin',
+          'emacs',
+        )
       )
     )
 
-    parts.append('-q --load ~/.lexet-new/.emacs')
+    parts.append('--no-init-file')
+
+    parts.append(
+      Template('--load $config')
+      .substitute(
+        config = self.config['root']['emacs_config']
+      )
+    )
 
     logging.info('run command "{command}"'.format(command=' '.join(parts)))
     os.system(' '.join(parts))

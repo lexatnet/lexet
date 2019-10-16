@@ -3,6 +3,7 @@ import os
 import sys
 import tempfile
 from string import Template
+from pathlib import Path
 import re
 
 class LexetProject():
@@ -48,7 +49,12 @@ class LexetProject():
       self.create_lexet_project_dir()
 
   def get_lexet_project_dir(self):
-    return os.path.join(
-      self.conf['environment']['root'],
-      self.conf['root']['projects_dir']
+    return str(
+      Path(
+        self.conf['root']['projects_dir'],
+        self.name
+      )
     )
+
+  def go_to_project_dir(self):
+    os.chdir(self.get_lexet_project_dir())

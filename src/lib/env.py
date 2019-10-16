@@ -20,6 +20,9 @@ class LexetEnv():
     os.environ['lexet_tags_dir'] = self.project.get_lexet_tags_dir()
     self.log_defined_variable('lexet_tags_dir', os.environ['lexet_tags_dir'])
 
+    os.environ['project_name'] = self.project.name
+    self.log_defined_variable('project_name', os.environ['project_name'])
+
     os.environ['ctags_exclude_config_path'] = self.config['root']['ctags_exclude_config']
     self.log_defined_variable('ctags_exclude_config_path', os.environ['ctags_exclude_config_path'])
 
