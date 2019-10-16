@@ -11,7 +11,7 @@ from pathlib import Path
 
 class LexetStarter():
   def __init__(self, config, project):
-    self.config = conf
+    self.config = config
     self.project = project
 
   def start(self, mode):

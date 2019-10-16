@@ -11,7 +11,13 @@ class LexetProject():
     self.conf = config
     self.path = path
     self.name = self.generate_project_name(path)
-    logging.info('project name "{name}"'.format(name = self.name))
+    logging.info(
+      Template('project name "$name"')
+      .substitute(
+        name = self.name
+      )
+    )
+    self.create_project_dirs()
 
   def generate_project_name(self, path):
     return self.strip(
@@ -53,8 +59,14 @@ class LexetProject():
       Path(
         self.conf['root']['projects_dir'],
         self.name
-      )
+      ).expanduser()
     )
 
   def go_to_project_dir(self):
-    os.chdir(self.get_lexet_project_dir())
+    logging.info(
+      Template('open project folder "$project"')
+      .substitute(
+        project = self.path
+      )
+    )
+    os.chdir(self.path)
