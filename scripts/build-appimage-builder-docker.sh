@@ -12,17 +12,17 @@ get_script_dir () {
 }
 
 
-build_lexet_image() {
+build_appimage_builder_image() {
   local dir=$(get_script_dir)
   source $dir/../config/config.sh
 
   docker build \
          --build-arg build_root=$build_root \
-         --build-arg build_script=$build_script \
-         --build-arg entrypoint_script=$entrypoint_script \
-         --tag $image_tag \
-         --file $docker_file \
+         --build-arg build_script=$appimage_builder_build_script \
+         --build-arg entrypoint_script=$appimage_builder_entrypoint_script \
+         --tag $appimage_builder_image_tag \
+         --file $appimage_builder_docker_file \
          $root
 }
 
-build_lexet_image
+build_appimage_builder_image

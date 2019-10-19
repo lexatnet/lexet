@@ -3,3 +3,5 @@ node_modules
 .vagrant
 npm-debug.log
 TAGS
+__pycache__
+build

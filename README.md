@@ -11,20 +11,33 @@ Emacs build with useful utils configured for speed and comfortable writing code 
 
 
 # Download
-clone or download this repo to the place where you would prefer to put lexet execution files
+clone or download this repo to the place where you would prefer to put lexet building files
 
 
 
-# Install
-creation symlinks in exec paths
+# Build AppImage Builder Docker Image
 ```
-make install
+make build-appimage-builder
+
 ```
 
-prepare lexet environment in ~/.lexet
+
+
+# Build AppImage
+
 ```
-make init
+make build-appimage
 ```
+You could move AppImage to directory which you prefere to store AppImages
+
+
+
+# Run Lexet
+
+``` bash
+<path-to-AppImage> <options>
+```
+Use -h to get available options
 
 
 
@@ -37,39 +50,17 @@ cd <path to your local lexet repo>
 ```
 update files
 ```
-git push
+git pull
 ```
-clear lexet data
-```
-rm -rf ~/.lexet
-```
-reinitialize
-```
-make init
-```
+and walk through Build AppImage steps
 
 
 
 # Uninstall
-```
-make uninstall
-```
+- Remove Lexet AppImage
+- Remove Lexet Home folder : ```~/.lexet```(default)
 
 
-
-# Run
-to run in console version
-```
-lexet <path-to-project>
-```
-to run UI version
-```
-lexetx <path-to-project>
-```
-or
-```
-lexetxs <path-to-project>
-```
 
 # Usage
 
@@ -396,20 +387,14 @@ lexetxs <path-to-project>
 
 
 ## Formatting
-| Action title                    | Shortcut   |
-| ------------------------------- | :--------: |
-| uppercase word                  | M-u        |
-| lowercase word                  | M-l        |
-| capitalize word                 | M-c        |
-| uppercase selection             | C-x C-u    |
-| lowercase selection             | C-x C-l    |
-| join string with previous       | M-^        |
-| toggle name menu                | C-c c      |
-| toggle name case snake<->camel  | C-c c t    |
-| change name case ->camel        | C-c c c    |
-| change name case ->snake        | C-c c s    |
-|                                 |            |
-|                                 |            |
+| Action title              | Shortcut   |
+| ------------------------- | :--------: |
+| uppercase word            | M-u        |
+| lowercase word            | M-l        |
+| capitalize word           | M-c        |
+| uppercase selection       | C-x C-u    |
+| lowercase selection       | C-x C-l    |
+| join string with previous | M-^        |
 
 
 

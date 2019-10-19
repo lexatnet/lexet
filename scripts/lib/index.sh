@@ -28,6 +28,7 @@ lib_index() {
   source $dir/install_node.sh
   source $dir/add_user.sh
   source $dir/incremental_tags_generation.sh
+  source $dir/create_lexet_desktop_file.sh
   echo 'Libs loaded.'
 }
 

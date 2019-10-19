@@ -1,8 +1,17 @@
+
 ;;; package --- Summary
 ;;; Commentary:
 ;;; Code:
 (add-to-list 'load-path (getenv "lexet_packages_dir"))
 (setq package-user-dir (getenv "lexet_vendor_packages_dir"))
+;; (add-hook 'after-init-hook
+;;           '(lambda () (setq debug-on-error t)))
+;; (add-hook 'after-init-hook
+;;           '(lambda () (setq debug-ignored-errors t)))
+;; (add-hook 'after-init-hook
+;;           '(lambda () (setq debug-on-message "wrong argument type")))
+
+
 
 (menu-bar-mode 0)
 (tool-bar-mode 0)
@@ -12,9 +21,6 @@
 (setq column-number-mode t)
 (setq tags-revert-without-query 1)
 (setq inhibit-startup-screen t)
-
-(put 'upcase-region 'disabled nil)
-(put 'downcase-region 'disabled nil)
 
 (setq-default frame-title-format (format "lexet - %s@%s" (getenv "project_name") "%f"))
 
@@ -201,6 +207,20 @@
   :ensure t
   :hook ((js-mode . ac-js2-mode)))
 
+;; TypeScript
+(use-package typescript-mode
+  :ensure t
+  :mode (("\\.ts\\'" . typescript-mode)
+         ("\\.tsx\\'" . typescript-mode)))
+
+(use-package vue-mode
+  :ensure t
+  :config
+  (add-to-list 'auto-mode-alist '("\\.vue\\'" . vue-mode))
+  (setq mmm-js-mode-enter-hook (lambda () (setq syntax-ppss-table nil)))
+  (setq mmm-typescript-mode-enter-hook (lambda () (setq syntax-ppss-table nil)))
+  )
+
 (use-package web-mode
   :ensure t
   :config
@@ -234,7 +254,9 @@
   ;(set-face-background 'highlight-indent-guides-odd-face "#000000")
   ;(set-face-background 'highlight-indent-guides-even-face "#262626")
   ;(set-face-foreground 'highlight-indent-guides-character-face "#585858")
-  (add-hook 'prog-mode-hook 'highlight-indent-guides-mode))
+  (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+  (add-hook 'text-mode-hook 'highlight-indent-guides-mode)
+  (add-hook 'html-mode-hook 'highlight-indent-guides-mode))
 
 (use-package neotree
   :ensure t
@@ -765,11 +787,6 @@
 (use-package dockerfile-mode
    :ensure t
    :mode (("Dockerfile\\'" . dockerfile-mode)))
-
-(use-package string-inflection
-   :ensure t
-   :commands string-inflection-toggle
-   :bind ("C-c l" . string-inflection-toggle))
 
 (use-package lexet-hydra-multiple-cursors
   ;; :load-path (lambda ()  (getenv "lexet_packages_dir"))

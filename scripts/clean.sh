@@ -12,16 +12,12 @@ get_script_dir () {
 }
 
 
-
-install_lexet() {
+clean() {
   local dir=$(get_script_dir)
   source $dir/../config/config.sh
 
-  echo 'Creation lexet links...'
-  ln -s ${root}/scripts/run-lexet.sh ${install_point_lexet}
-  ln -s ${root}/scripts/run-lexet-x.sh ${install_point_lexetx}
-  ln -s ${root}/scripts/run-lexet-x-ssh.sh ${install_point_lexetx_ssh}
-  echo 'Lexet links created.'
+  build_dir=$dir/../build
+  [ -d $build_dir ] && echo 'deleting build folder' && rm -rf $build_dir
 }
 
-install_lexet
+clean

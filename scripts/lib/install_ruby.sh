@@ -4,6 +4,7 @@ install_ruby() {
   local rbenv_root=''
   local init_script='/etc/profile.d/rbenv.sh'
   local args=("$@")
+  local cwd=$(pwd)
 
   while [[ $# -gt 0 ]]
   do
@@ -27,8 +28,8 @@ install_ruby() {
   done
   set -- "${args[@]}" # restore positional parameters
 
-  git clone https://github.com/sstephenson/rbenv.git $rbenv_root
-  git clone https://github.com/sstephenson/ruby-build.git $rbenv_root/plugins/ruby-build
+  git clone https://github.com/rbenv/rbenv.git $rbenv_root
+  git clone https://github.com/rbenv/ruby-build.git $rbenv_root/plugins/ruby-build
   $rbenv_root/plugins/ruby-build/install.sh
   echo '# rbenv setup' > $init_script
   echo "export RBENV_ROOT=${rbenv_root}" >> $init_script
@@ -47,4 +48,5 @@ install_ruby() {
   gem install rubocop
   gem install rubocop-rspec
   gem install ruby-lint
+  cd $cwd
 }
