@@ -2,9 +2,11 @@
 
 install_ruby() {
   local rbenv_root=''
+  local init_rbenv_root=$rbenv_root
   local init_script='/etc/profile.d/rbenv.sh'
   local args=("$@")
   local cwd=$(pwd)
+  local prefix=/usr/local/share/
 
   while [[ $# -gt 0 ]]
   do
@@ -16,8 +18,18 @@ install_ruby() {
         shift # past argument
         shift # past value
         ;;
+      --init-rbenv-root)
+        init_rbenv_root=$2
+        shift # past argument
+        shift # past value
+        ;;
       --init-script)
         init_script=$2
+        shift # past argument
+        shift # past value
+        ;;
+      --prefix)
+        prefix=$2
         shift # past argument
         shift # past value
         ;;
@@ -30,16 +42,19 @@ install_ruby() {
 
   git clone https://github.com/rbenv/rbenv.git $rbenv_root
   git clone https://github.com/rbenv/ruby-build.git $rbenv_root/plugins/ruby-build
-  $rbenv_root/plugins/ruby-build/install.sh
+  PREFIX=$prefix $rbenv_root/plugins/ruby-build/install.sh
   echo '# rbenv setup' > $init_script
-  echo "export RBENV_ROOT=${rbenv_root}" >> $init_script
+  echo "export RBENV_ROOT=${init_rbenv_root}" >> $init_script
   echo 'export PATH="$RBENV_ROOT/bin:$PATH"' >> $init_script
   echo 'eval "$(rbenv init -)"' >> $init_script # or /etc/profile
 
   #install for non-login bash sesionsru
   #echo "source $init_script" >> /etc/bash.bashrc
 
-  source $init_script
+  export RBENV_ROOT=${rbenv_root}
+  export PATH="$RBENV_ROOT/bin:$PATH"
+  eval "$(rbenv init -)"
+
 
   RUBY_VERSION=$(rbenv install -l | sed -n '/^[[:space:]]*[0-9]\{1,\}\.[0-9]\{1,\}\.[0-9]\{1,\}[[:space:]]*$/ h;${g;p;}')
   rbenv install $RUBY_VERSION

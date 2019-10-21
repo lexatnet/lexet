@@ -29,6 +29,11 @@ lib_index() {
   source $dir/add_user.sh
   source $dir/incremental_tags_generation.sh
   source $dir/create_lexet_desktop_file.sh
+  source $dir/install_utils.sh
+  source $dir/install_nvm.sh
+  source $dir/install_node.sh
+  source $dir/install_ctags.sh
+  source $dir/install_hunspell.sh
   echo 'Libs loaded.'
 }
 

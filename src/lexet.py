@@ -37,6 +37,7 @@ class Lexet():
     home_path = self.args.home.pop()
     home = LexetHome(self.config, home_path)
     if not home.exists():
+      logging.info('lexet root doesn\'t exists')
       home.create()
 
   def configure(self):

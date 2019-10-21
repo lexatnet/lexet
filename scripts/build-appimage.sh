@@ -19,6 +19,8 @@ build_lexet_appimage() {
   build_dir=$dir/../build
   [ -d $build_dir ] || mkdir $build_dir
 
+  local entrypoint=$through_point/${appimage_builder_entrypoint_script_name}
+
   docker run \
          --volume $root/build:$through_point/ \
          --volume $root/recipe.yml:$through_point/recipe.yml:ro \
@@ -27,9 +29,11 @@ build_lexet_appimage() {
          --volume $root/packages:$through_point/lexet-packages:ro \
          --volume $root/config:$through_point/config:ro \
          --volume $root/scripts/lib:$through_point/scripts:ro \
+         --volume $appimage_builder_entrypoint_script_external:$entrypoint:ro \
          -e through_point=$through_point \
          --user $(id -u ${USER}):$(id -g ${USER}) \
          --rm \
+         --entrypoint $entrypoint \
          $appimage_builder_image_tag
 }
 

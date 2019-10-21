@@ -32,6 +32,8 @@ config_lexet_environment() {
   lexet_home_dir_name=home
   entrypoint_init=entrypoint-init-lexet.sh
   entrypoint_run_lexet=entrypoint-run-lexet.sh
+  appimage_builder_entrypoint_script_name=appimage-builder-entrypoint.sh
+  
 
   #Docker Build
   lexet_docker_file=$root/docker/Dockerfile
@@ -40,7 +42,8 @@ config_lexet_environment() {
   build_root=/build
   appimage_builder_build_script=${build_root}/docker/appimage-builder-build-script.sh
   entrypoint_script=${build_root}/docker/entrypoint.sh
-  appimage_builder_entrypoint_script=${build_root}/docker/appimage-builder-entrypoint.sh
+  appimage_builder_entrypoint_script=${build_root}/docker/${appimage_builder_entrypoint_script_name}
+  appimage_builder_entrypoint_script_external=${root}/docker/${appimage_builder_entrypoint_script_name}
   dist_point=${build_root}
 
   nvm_root=$through_point/env/nvm

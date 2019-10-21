@@ -31,37 +31,24 @@ ingredients:
     - libwebkit2gtk-4.0-37 2.24.4-0ubuntu0.18.04.1
     - libegl1 1.0.0-2ubuntu2.3
   script:
+    - cwd=$(pwd)
+    - [ -d ${cwd}/.home ] || mkdir --verbose ${cwd}/.home
     - [ -f ./mu.codewith.editor.png ] || wget -c https://raw.githubusercontent.com/mu-editor/mu/master/conf/mu.codewith.editor.png
     - [ -f ./lexet.png ] || cp ./mu.codewith.editor.png ./lexet.png
-    - [ -d ctags ] || git clone https://github.com/universal-ctags/ctags.git
-    - [ -d hunspell ] || git clone https://github.com/hunspell/hunspell.git
 
 
 script:
   - cwd=$(pwd)
   - echo "current directory = '${cwd}'"
-  # # install ctags from sources
-  # - cp -r ../ctags ./ctags
-  # - cd ctags
-  # - ./autogen.sh
-  # - ./configure --prefix="${cwd}/usr/bin"
-  # - make
-  # - make install
-  # - cd ..
-  # # clear
-  # - rm --recursive ctags
+
+  # import sripts lib
+  - source $through_point/scripts/index.sh
+
+  # install ctags from sources
+  - install_ctags --prefix "${cwd}/usr" --local-repo-cache ../ctags --local-repo ./ctags
 
   # # install hunspell from sources
-  # - cp -r ../hunspell ./hunspell
-  # - cd hunspell
-  # - autoreconf -vfi
-  # - ./configure --prefix="${cwd}/usr/bin"
-  # - make
-  # - make install
-  # - ldconfig
-  # - cd ..
-  # # clear
-  # - rm --recursive hunspell
+  # - install_hunspell --prefix "${cwd}/usr/bin" --local-repo-cache ../hunspell --local-repo ./hunspell
 
   # copy lexet packages
   - cp -r ../../lexet-packages ./lexet-packages
@@ -73,11 +60,8 @@ script:
   - [ -d ${cwd}/env ] || mkdir --verbose ${cwd}/env
   - [ -d ${cwd}/init ] || mkdir --verbose ${cwd}/init
 
-  # import sripts lib
-  - source $through_point/scripts/index.sh
-
   # install utils
-  - $through_point/scripts/install-utils.sh --root ${HERE}
+  - install_utils --root ${cwd} --home ${cwd}/../.home
 
   # copy lexet app
   - cp -r ../../src ./lexet

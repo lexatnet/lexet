@@ -163,8 +163,8 @@
   :config
   :init
   (defun lexet-php-mode-init ())
-  (eval-after-load 'php-mode
-    '(require 'php-ext))
+  ;; (eval-after-load 'php-mode
+  ;;   '(require 'php-ext))
   :hook ((php-mode . php-enable-default-coding-style)
          (php-mode . lexet-php-mode-init)))
 

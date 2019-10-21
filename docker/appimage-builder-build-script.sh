@@ -47,6 +47,9 @@ install_utils(){
   apt-get install -y libyaml-dev
   apt-get install -y libxml2-dev
 
+  apt-get install -y libssl-dev
+  apt-get install -y libreadline-dev
+
   rm -rf /var/lib/apt/lists/*
 }
 

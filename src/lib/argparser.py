@@ -1,4 +1,4 @@
-
+import os
 import argparse
 
 class LexetArgumentParser():
@@ -15,14 +15,14 @@ from console or UI versions of emacs.
       '-H', '--home',
       action='store',
       dest='home',
-      default=['~/.lexet-new'],
+      default=['~/.lexet'],
       nargs=1
     )
     parser.add_argument(
       '-c', '--config',
       action='store',
       dest='config',
-      default=['~/lexet-new/config'],
+      default=['~/.lexet/config'],
       nargs=1
     )
     parser.add_argument(
@@ -45,6 +45,7 @@ from console or UI versions of emacs.
       '-p', '--project',
       action='store',
       dest='project',
-      nargs=1
+      nargs=1,
+      default=[os.getcwd()]
     )
     return parser.parse_args(argsList)
