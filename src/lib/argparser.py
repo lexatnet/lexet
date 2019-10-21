@@ -39,7 +39,7 @@ from console or UI versions of emacs.
       dest='mode',
       nargs=1,
       choices=['text', 'ui', 'uis'],
-      default='ui'
+      default=['ui']
     )
     parser.add_argument(
       '-p', '--project',
