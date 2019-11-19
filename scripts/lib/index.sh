@@ -34,6 +34,7 @@ lib_index() {
   source $dir/install_node.sh
   source $dir/install_ctags.sh
   source $dir/install_hunspell.sh
+  source $dir/copy_libs.sh
   echo 'Libs loaded.'
 }
 

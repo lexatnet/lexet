@@ -156,17 +156,23 @@
   :init
   :bind (
          :map ac-complete-mode-map
-         ("C-c c" . ac-complete-with-helm)))
+              ("C-c c" . ac-complete-with-helm)))
+
+(use-package geben
+  :ensure t)
 
 (use-package php-mode
   :ensure t
   :config
   :init
-  (defun lexet-php-mode-init ())
+  (defun lexet-php-mode-init ()
+    (setq c-basic-offset lexet-indent))
   ;; (eval-after-load 'php-mode
   ;;   '(require 'php-ext))
-  :hook ((php-mode . php-enable-default-coding-style)
-         (php-mode . lexet-php-mode-init)))
+  :hook (
+         (php-mode . php-enable-default-coding-style)
+         (php-mode . lexet-php-mode-init)
+         ))
 
 (use-package ac-php
   :ensure t
@@ -227,6 +233,7 @@
   (add-to-list 'auto-mode-alist '("\\.tpl\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.hbs\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.twig\\'" . web-mode))
   ;; (add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
   ;; (setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'")))
   )
@@ -449,6 +456,10 @@
 ;;           (setq flycheck-eslintrc eslintrc)))))
 
 ;; (add-hook 'flycheck-mode-hook 'search-eslint-rc)
+
+(use-package flycheck-phpstan
+  :ensure t
+  :after (php-mode flycheck))
 
 (use-package ruby-mode
   :mode (("\\.\\(?:cap\\|gemspec\\|irbrc\\|gemrc\\|rake\\|rb\\|ru\\|thor\\)\\'" . ruby-mode)

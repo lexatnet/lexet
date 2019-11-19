@@ -28,6 +28,7 @@
 (defun lexet-indentation-init ()
     "Indent configuration."
     (setq lexet-indent 2)
+    (setq c-basic-offset lexet-indent)
     (setq-default indent-tabs-mode nil)
     (setq default-tab-width lexet-indent)
     (setq tab-width lexet-indent)

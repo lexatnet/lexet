@@ -146,8 +146,8 @@
            (file-name-as-directory
             (concat
              (file-name-as-directory
-              (getenv "through_point"))
-             "/lib"))
+              (getenv "LEXET_MOUNT_POINT"))
+             "/scripts"))
            "incremental_tags_generation.sh")))
   (set-process-sentinel
      (start-process

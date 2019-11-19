@@ -23,9 +23,8 @@ build_lexet_appimage() {
 
   docker run \
          --volume $root/build:$through_point/ \
-         --volume $root/recipe.yml:$through_point/recipe.yml:ro \
+         --volume $root/recipe-test.yml:$through_point/recipe.yml:ro \
          --volume $root/scripts/AppRun.sh:$through_point/AppRun:ro \
-         --volume $root/scripts/lib/incremental_tags_generation.sh:$through_point/incremental_tags_generation.sh:ro \
          --volume $root/src:$through_point/src:ro \
          --volume $root/packages:$through_point/lexet-packages:ro \
          --volume $root/config:$through_point/config:ro \

@@ -7,6 +7,9 @@ docker-push:
 build-appimage:
 	./scripts/build-appimage.sh
 
+build-appimage-test:
+	./scripts/build-appimage-test.sh
+
 clean:
 	./scripts/clean.sh
 
@@ -16,5 +19,5 @@ test-alpine:
 test-centos:
 	./scripts/test-centos.sh
 
-test-bionic:
+test-ubuntu-bionic:
 	./scripts/test-ubuntu-bionic.sh

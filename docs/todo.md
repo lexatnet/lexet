@@ -21,3 +21,8 @@
 # TODO: add automatic installation necessary rubocop for particular ruby version
 # TODO: init default installation for eslint
 # TODO: Migrate autocomplete to company mode
+# TODO: Add debugger
+# TODO: Add xml prettyprint
+# TODO: Fix appimage missing libs
+# TODO: change php-ext to php-skeleton
+# TODO: add vlf package

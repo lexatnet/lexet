@@ -32,7 +32,7 @@ class LexetProject():
     reg_exp = re.compile(
       Template('(^$search)|($search$$)')
       .substitute(
-        search = search
+        search = re.escape(search)
       )
     )
     return reg_exp.sub('', string)

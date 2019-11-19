@@ -15,7 +15,6 @@ get_script_dir () {
 
 dir=$(get_script_dir)
 source $dir/../config/config.sh
-source $dir/init-project.sh
 
 docker run \
        --label "label=test-bionic" \

@@ -1,10 +1,23 @@
 app: lexet
+# binpath: true
+# union: true
+blacklisted:
+  skip:
+    - libgcc_s.so.1
+    - libexpat.so.1
+    - libgtk-3.so.0
+    - libSM.so.6
+    - libasound.so.2
+    - libGL.so.1
+    - libEGL.so.1
+    # - libstdc++.so.6
 ingredients:
   dist: bionic
   sources:
     - deb http://archive.ubuntu.com/ubuntu/ bionic main universe
     - deb http://archive.ubuntu.com/ubuntu/ bionic-updates universe
     - deb http://archive.ubuntu.com/ubuntu bionic main
+    - deb http://archive.ubuntu.com/ubuntu bionic-updates main amd64
     - deb http://archive.ubuntu.com/ubuntu bionic-updates main
     - deb http://archive.ubuntu.com/ubuntu bionic-security main
     - deb http://archive.ubuntu.com/ubuntu/ bionic main restricted
@@ -19,6 +32,26 @@ ingredients:
   ppas:
     - ubuntu-elisp/ppa
   packages:
+    # libs
+    # ---------------
+    # - libgbm1
+    - libxcb-dri2-0
+    - libxcb-dri3-0
+    - libglapi-mesa
+    - libxcb-present0
+    - libxcb-sync1
+    - libxcb-xfixes0
+    - libxshmfence1
+    - libegl-mesa0
+    - libexpat1
+    - libegl1
+    - libgtk-3-0
+    - build-essential
+    - libsm6
+    - libasound2
+    - libgl1
+    # tools
+    # ---------------
     - python3-venv
     - python3-pip
     - python3
@@ -26,20 +59,30 @@ ingredients:
     - emacs-snapshot
     - pylint3
     - shellcheck
+
   pretend:
     - libgbm1 19.0.8-0ubuntu0~18.04.2
-    - libwebkit2gtk-4.0-37 2.24.4-0ubuntu0.18.04.1
-    - libegl1 1.0.0-2ubuntu2.3
+    # - libwebkit2gtk-4.0-37 2.24.4-0ubuntu0.18.04.1
+    # - libegl1 1.0.0-2ubuntu2.3
   script:
     - cwd=$(pwd)
     - [ -d ${cwd}/.home ] || mkdir --verbose ${cwd}/.home
-    - [ -f ./mu.codewith.editor.png ] || wget -c https://raw.githubusercontent.com/mu-editor/mu/master/conf/mu.codewith.editor.png
+    - [ -f ./mu.codewith.editor.png ] || wget --continue https://raw.githubusercontent.com/mu-editor/mu/master/conf/mu.codewith.editor.png
     - [ -f ./lexet.png ] || cp ./mu.codewith.editor.png ./lexet.png
+    - [ -f ./composer.phar ] || wget --continue --output-document=composer.phar https://getcomposer.org/composer.phar && chmod a+x ./composer.phar
+    - [ -f ./phpcs.phar ] || wget --continue --output-document=phpcs.phar https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar && chmod a+x ./phpcs.phar
+    - [ -f ./phpcbf.phar ] || wget --continue --output-document=phpcbf.phar https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar && chmod a+x ./phpcbf.phar
 
 
 script:
   - cwd=$(pwd)
   - echo "current directory = '${cwd}'"
+
+  - cp ../composer.phar ${cwd}/usr/bin/composer
+  - cp ../phpcs.phar ${cwd}/usr/bin/phpcs
+  - cp ../phpcbf.phar ${cwd}/usr/bin/phpcbf
+
+  - ln -s ./usr/bin/php7.2 ./usr/bin/php
 
   # import sripts lib
   - source $through_point/scripts/index.sh
@@ -60,8 +103,17 @@ script:
   - [ -d ${cwd}/env ] || mkdir --verbose ${cwd}/env
   - [ -d ${cwd}/init ] || mkdir --verbose ${cwd}/init
 
+  # create scripts
+  - [ -d ${cwd}/scripts ] || mkdir --verbose ${cwd}/scripts
+  - cp ${cwd}/../../incremental_tags_generation.sh ${cwd}/scripts/incremental_tags_generation.sh
+  - chmod a+x ${cwd}/scripts/incremental_tags_generation.sh
+
   # install utils
   - install_utils --root ${cwd} --home ${cwd}/../.home
+
+  # copy libs
+  - copy_libs --src /usr/lib/x86_64-linux-gnu --destination ${cwd}/usr/lib/x86_64-linux-gnu --lib libgtk-3.so.0 --lib libasound.so.2 --lib mesa/libGL.so.1
+  - copy_libs --src /lib/x86_64-linux-gnu --destination ${cwd}/lib/x86_64-linux-gnu --lib libgcc_s.so.1 --lib libexpat.so.1
 
   # copy lexet app
   - cp -r ../../src ./lexet
