@@ -55,7 +55,9 @@ ingredients:
     - python3-venv
     - python3-pip
     - python3
+    - pylint3
     - php-cli
+    - php-phar
     - emacs-snapshot
     - pylint3
     - shellcheck
@@ -82,7 +84,7 @@ script:
   - cp ../phpcs.phar ${cwd}/usr/bin/phpcs
   - cp ../phpcbf.phar ${cwd}/usr/bin/phpcbf
 
-  - ln -s ./usr/bin/php7.2 ./usr/bin/php
+  - ln -s ./php7.2 ${cwd}/usr/bin/php
 
   # import sripts lib
   - source $through_point/scripts/index.sh
@@ -125,8 +127,8 @@ script:
   - ln -s ./emacs-snapshot ./usr/bin/emacs
 
   # prepare icon
-  - cp ../lexet.png ./lexet.png
-  - ln -s ./lexet.png ./usr/share/icons/hicolor/256x256/
+  - cp ${cwd}/../lexet.png ${cwd}/lexet.png
+  - ln -rs ${cwd}/lexet.png ${cwd}/usr/share/icons/hicolor/256x256/
 
   # build desktop file
   - create_lexet_desktop_file --name ./lexet.desktop
