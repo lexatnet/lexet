@@ -16,36 +16,51 @@ from console or UI versions of emacs.
       action='store',
       dest='home',
       default=['~/.lexet'],
-      nargs=1
+      nargs=1,
+      help='''
+Path to lexet local files. Default: ~/.lexet
+'''
     )
     parser.add_argument(
       '-c', '--config',
       action='store',
       dest='config',
       default=['~/.lexet/config'],
-      nargs=1
+      nargs=1,
+      help='''
+Path to config. Default: ~/.lexet/config
+'''
     )
     parser.add_argument(
       '-a', '--action',
       action='store',
       dest='action',
       nargs=1,
-      choices=['install', 'build', 'run'],
-      default=['run']
+      choices=['run'],
+      default=['run'],
+      help='''
+For future extensions of functionality. Default: run
+'''
     )
     parser.add_argument(
       '-m', '--mode',
       action='store',
       dest='mode',
       nargs=1,
-      choices=['text', 'ui', 'uis'],
-      default=['ui']
+      choices=['text', 'ui'],
+      default=['ui'],
+      help='''
+Allows to run application in console mode. Default: ui
+'''
     )
     parser.add_argument(
       '-p', '--project',
       action='store',
       dest='project',
       nargs=1,
-      default=[os.getcwd()]
+      default=[os.getcwd()],
+      help='''
+Path to working directory which you want to open. Default: current working directory
+'''
     )
     return parser.parse_args(argsList)

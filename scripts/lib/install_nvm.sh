@@ -35,8 +35,11 @@ install_nvm(){
   cd $nvm_root
   git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`
 
-  echo "export NVM_DIR=${init_nvm_root}" >>  $init_script
-  echo "[ -s \"${init_nvm_root}/nvm.sh\" ] && \. \"${init_nvm_root}/nvm.sh\"" >>  $init_script
+  cat > ${init_script} <<EOF
+export NVM_DIR=${init_nvm_root}
+[ -s "${init_nvm_root}/nvm.sh" ] && \. "${init_nvm_root}/nvm.sh"
+[ -s "${init_nvm_root}/bash_completion" ] && \. "${init_nvm_root}/bash_completion"  # This loads nvm bash_completion
+EOF
 
   export NVM_DIR=${nvm_root}
   [ -s ${nvm_root}/nvm.sh ] && \. ${nvm_root}/nvm.sh

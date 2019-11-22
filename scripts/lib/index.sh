@@ -35,6 +35,12 @@ lib_index() {
   source $dir/install_ctags.sh
   source $dir/install_hunspell.sh
   source $dir/copy_libs.sh
+  source $dir/install_gulp.sh
+  source $dir/install_prettier.sh
+  source $dir/install_jscs.sh
+  source $dir/install_eslint.sh
+  source $dir/install_jshint.sh
+  source $dir/install_bower.sh
   echo 'Libs loaded.'
 }
 

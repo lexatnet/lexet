@@ -1,34 +1,10 @@
-# lexet
+# Lexet
 Emacs build with useful utils configured for speed and comfortable writing code from console or UI versions of emacs.
 
 
 
-# Dependencies
-- docker
-- make
-- ssh
-
-
-
 # Download
-clone or download this repo to the place where you would prefer to put lexet building files
-
-
-
-# Build AppImage Builder Docker Image
-```
-make build-appimage-builder
-
-```
-
-
-
-# Build AppImage
-
-```
-make build-appimage
-```
-You could move AppImage to directory which you prefere to store AppImages
+You can download latest AppImage version from [releases](releases) page.
 
 
 
@@ -41,24 +17,56 @@ Use -h to get available options
 
 
 
+# Tips
+If you want run Lexet as
+
+``` bash
+lexet <options>
+```
+For comfortable starting from console recommended I've recommend to chose one of the way you preferred:
+
+## Create symlink
+root necessary
+``` bash
+[sudo] ln -s <path-to-AppImage> /usr/local/bin/lexet
+```
+
+## Patch PATH
+move AppImage to `~/bin`
+``` bash
+mkdir ~/bin
+mv <path-to-AppImage> ~/bin/lexet
+```
+update your `~/.bashrc` by following lines
+``` bash
+export PATH="$HOME/bin:$PATH"
+```
+
+
+
 # Update
-override lexet execution files by new version
-for example if you have local cloned repo
-go to your local repo:
-```
-cd <path to your local lexet repo>
-```
-update files
-```
-git pull
-```
-and walk through Build AppImage steps
+Download new AppImage and override old one by it.
 
 
 
 # Uninstall
 - Remove Lexet AppImage
-- Remove Lexet Home folder : ```~/.lexet```(default)
+- Remove Lexet Home folder : `~/.lexet`(default)
+- Remove links on AppImage(if you created links somewhere)
+
+
+# CLI arguments
+
+`<path-to-AppImage>` [-h] [-H HOME] [-c CONFIG] [-a {install,build,run}]
+                [-m {text,ui}] [-p PROJECT]
+
+optional arguments:
+  -h, --help  Shows help message
+  -H `<HOME>`, --home `<HOME>` Path to lexet local files. Default: `~/.lexet`
+  -c `<CONFIG>`, --config `<CONFIG>` Path to config. Default: `~/.lexet/config`
+  -a {run}, --action {run} For future extensions of functionality. Default: `run`
+  -m {text,ui}, --mode {text,ui} Allows to run application in console mode. Default: `ui`
+  -p `<PROJECT>`, --project `<PROJECT>` Path to working directory which you want to open. Default: `current working directory`.
 
 
 
@@ -486,8 +494,26 @@ and walk through Build AppImage steps
 this section for developers
 
 ## Build
+
+### Dependencies
+- docker
+- make
+- ssh
+
 to build docker image execute folowing commands:
+
+# Build AppImage Builder Docker Image
 ```
-make build
+make build-appimage-builder
+
 ```
+
+
+# Build AppImage
+
+```
+make build-appimage
+```
+You could move AppImage to directory which you prefere to store AppImages
+
 
