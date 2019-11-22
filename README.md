@@ -61,12 +61,18 @@ Download new AppImage and override old one by it.
                 [-m {text,ui}] [-p PROJECT]
 
 optional arguments:
-  -h, --help  Shows help message
-  -H `<HOME>`, --home `<HOME>` Path to lexet local files. Default: `~/.lexet`
-  -c `<CONFIG>`, --config `<CONFIG>` Path to config. Default: `~/.lexet/config`
-  -a {run}, --action {run} For future extensions of functionality. Default: `run`
-  -m {text,ui}, --mode {text,ui} Allows to run application in console mode. Default: `ui`
-  -p `<PROJECT>`, --project `<PROJECT>` Path to working directory which you want to open. Default: `current working directory`.
+
+-h, --help  Shows help message
+
+-H `<HOME>`, --home `<HOME>` Path to lexet local files. Default: `~/.lexet`
+
+-c `<CONFIG>`, --config `<CONFIG>` Path to config. Default: `~/.lexet/config`
+
+-a {run}, --action {run} For future extensions of functionality. Default: `run`
+
+-m {text,ui}, --mode {text,ui} Allows to run application in console mode. Default: `ui`
+
+-p `<PROJECT>`, --project `<PROJECT>` Path to working directory which you want to open. Default: `current working directory`.
 
 
 
