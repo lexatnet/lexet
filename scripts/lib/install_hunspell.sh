@@ -3,7 +3,9 @@
 install_hunspell(){
   local local_repo_cache='./ctags'
   local local_repo=''
-  local prefix='/usr/local/share'
+  local exec_prefix='/usr/local/share'
+  local libs_prefix='/usr/local/lib'
+  local sysconfdir='/etc'
   local args=("$@")
   local cwd=$(pwd)
 
@@ -19,11 +21,22 @@ install_hunspell(){
         local_repo_cache=$2
         shift # past value
         ;;
-      --prefix)
-        prefix=$2
+      --exec-prefix)
+        exec_prefix=$2
         shift # past argument
         shift # past value
         ;;
+      --libs-prefix)
+        libs_prefix=$2
+        shift # past argument
+        shift # past value
+        ;;
+      --sysconfdir)
+        sysconfdir=$2
+        shift # past argument
+        shift # past value
+        ;;
+      
       *)    # unknown option
         shift # past argument
         ;;
@@ -36,7 +49,10 @@ install_hunspell(){
   cp -r $local_repo_cache $local_repo
   cd $local_repo
   autoreconf -vfi
-  PREFIX=$prefix ./configure
+  ./configure \
+    --prefix=$libs_prefix \
+    --exec-prefix=$exec_prefix \
+    --sysconfdir=$sysconfdir
   make
   make install
   ldconfig

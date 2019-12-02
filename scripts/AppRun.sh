@@ -13,6 +13,8 @@ export LEXET_MOUNT_POINT="${HERE}"
 export LEXET_PATH="${HERE}/lexet"
 export LEXET_CONFIGS="${HERE}/config"
 
+export PHP_INI_SCAN_DIR="${HERE}/etc/php/7.2/cli/conf.d/"
+
 appimage_python3="${HERE}"/usr/bin/python3
 
 export PYTHONPATH="${HERE}"/usr/lib/python3/dist-packages/

@@ -1,8 +1,8 @@
 FROM ubuntu:bionic
 
 ARG build_root=/build
-ARG build_script=$build_root/appimage-builder-entrypoint.sh
-ARG entrypoint_script=lexet
+ARG build_script=$build_root/appimage-builder-build-script.sh
+ARG entrypoint_script=$build_root/appimage-builder-entrypoint.sh
 
 COPY ./docker $build_root/docker
 COPY ./config/config.sh $build_root/config/config.sh

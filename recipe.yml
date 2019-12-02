@@ -57,7 +57,11 @@ ingredients:
     - python3
     - pylint3
     - php-cli
+    - php-dev
+    - php-zip
     - php-phar
+    - php-xml
+    - php-mbstring
     - emacs-snapshot
     - pylint3
     - shellcheck
@@ -86,6 +90,20 @@ script:
 
   - ln -s ./php7.2 ${cwd}/usr/bin/php
 
+  # - extensions_dir=$(${cwd}/usr/bin/php -i | grep extension_dir | sed 's/extension_dir//' | sed 's/=>//' | awk '{print $1}')
+  - extensions_dir=/usr/lib/php/20170718
+  - cat > ${cwd}/etc/php/7.2/cli/conf.d/php.ini <<EOF
+  - extension_dir=\${LEXET_MOUNT_POINT}${extensions_dir}
+  - extension = phar.so
+  - extension = xmlwriter.so
+  - extension = json.so
+  - extension = tokenizer.so
+  - extension = simplexml.so
+  - extension = iconv.so
+  - extension = mbstring.so
+  - EOF
+
+
   # import sripts lib
   - source $through_point/scripts/index.sh
 
@@ -93,7 +111,7 @@ script:
   - install_ctags --prefix "${cwd}/usr" --local-repo-cache ../ctags --local-repo ./ctags
 
   # # install hunspell from sources
-  # - install_hunspell --prefix "${cwd}/usr/bin" --local-repo-cache ../hunspell --local-repo ./hunspell
+  #- install_hunspell --exec-prefix "${cwd}/usr" --libs-prefix "${cwd}/usr" --sysconfdir "${cwd}/etc" --local-repo-cache ../hunspell --local-repo ./hunspell
 
   # copy lexet packages
   - cp -r ../../lexet-packages ./lexet-packages

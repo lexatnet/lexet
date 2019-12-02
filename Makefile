@@ -7,6 +7,9 @@ docker-push:
 build-appimage:
 	./scripts/build-appimage.sh
 
+appimage-builder-bash:
+	./scripts/appimage-builder-bash.sh
+
 build-appimage-test:
 	./scripts/build-appimage-test.sh
 

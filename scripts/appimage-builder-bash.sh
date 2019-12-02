@@ -12,7 +12,7 @@ get_script_dir () {
 }
 
 
-build_lexet_appimage() {
+lexet_appimage_builder_bash() {
   local dir=$(get_script_dir)
   source $dir/../config/config.sh
 
@@ -32,11 +32,12 @@ build_lexet_appimage() {
          --volume $root/scripts/lib:$through_point/scripts:ro \
          --volume $appimage_builder_entrypoint_script_external:$entrypoint:ro \
          -e through_point=$through_point \
-         -e LEXET_MOUNT_POINT=$through_point \
          --user $(id -u ${USER}):$(id -g ${USER}) \
+         --interactive \
+         --tty \
          --rm \
-         --entrypoint $entrypoint \
+         --entrypoint bash \
          $appimage_builder_image_tag
 }
 
-build_lexet_appimage
+lexet_appimage_builder_bash

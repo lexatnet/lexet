@@ -49,6 +49,10 @@ install_ruby() {
 export RBENV_ROOT=${init_rbenv_root}
 export PATH="\$RBENV_ROOT/bin:\$PATH"
 eval "\$(rbenv init -)"
+ruby_lib="$(rbenv which ruby | grep versions | sed 's/bin\/ruby/lib/')"
+ruby_load_path="$(rbenv which ruby | grep versions | sed 's/bin\/ruby/lib\/ruby\/2\.6\.0/')"
+export LOAD_PATH="$ruby_load_path/:\$LOAD_PATH"
+#export LD_LIBRARY_PATH="$ruby_lib:$LD_LIBRARY_PATH"
 EOF
 
 
@@ -67,5 +71,15 @@ EOF
   gem install rubocop
   gem install rubocop-rspec
   gem install ruby-lint
+
+  #rbenv rehash
+
+  substritution_init_rbenv_root=$(echo ${init_rbenv_root} |  sed 's/\//\\\//g' |  sed 's/\$/\\\$/g')
+  substritution_rbenv_root=$(echo ${rbenv_root} |  sed 's/\//\\\//g' |  sed 's/\$/\\\$/g')
+
+  grep -rl ${rbenv_root} ${rbenv_root}/shims | xargs -i@ sed -i "s/${substritution_rbenv_root}/${substritution_init_rbenv_root}/" @
+
+  grep -rl ${rbenv_root} ${rbenv_root}/versions  --exclude-dir=lib --exclude=ruby | xargs -i@ sed -i "s/${substritution_rbenv_root}\/.*\/ruby/\/usr\/bin\/env ruby/" @
+
   cd $cwd
 }

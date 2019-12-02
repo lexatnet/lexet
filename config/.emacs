@@ -799,6 +799,19 @@
    :ensure t
    :mode (("Dockerfile\\'" . dockerfile-mode)))
 
+(use-package tide
+  :ensure t
+  :after (typescript-mode company flycheck)
+  :hook ((typescript-mode . tide-setup)
+         (typescript-mode . tide-hl-identifier-mode)
+         (before-save . tide-format-before-save)))
+
+(use-package company
+  :ensure t
+  :config
+  (add-hook 'after-init-hook 'global-company-mode))
+
+
 (use-package lexet-hydra-multiple-cursors
   ;; :load-path (lambda ()  (getenv "lexet_packages_dir"))
   ;; :after (multiple-cursors hydra)
