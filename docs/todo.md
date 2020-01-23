@@ -2,7 +2,6 @@
 # TODO: configure debugger tools for ruby
 # TODO: configure debugger tools for php
 # TODO: add camelCase snake case switcher feature
-# TODO: add ssh config for git connections from magit
 # TODO: add prettier
 # TODO: fix python installation (available only python3 python2.7 installed but not available in PATH)
 # TODO: manage Hydra for smartparens (move more commands in hydra)
@@ -24,3 +23,4 @@
 # TODO: fix project incremental indexation indexation (tags file empty)
 # TODO: fix php ( smartparens
 # TODO: fix php flycheck
+# TODO: add opened files as source

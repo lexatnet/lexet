@@ -65,6 +65,9 @@ ingredients:
     - emacs-snapshot
     - pylint3
     - shellcheck
+    - hunspell
+    - hunspell-en-us
+    - hunspell-ru
 
   pretend:
     - libgbm1 19.0.8-0ubuntu0~18.04.2

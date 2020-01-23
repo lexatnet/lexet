@@ -96,7 +96,7 @@
       (lexet-run-file-indexation file-name)))
 
 (defun lexet-relative-project-file-to-absolute-project-file (file-name)
-  (concat default-directory file-name))
+  (expand-file-name file-name))
 
 (defun lexet-list-to-file (file list)
   (append-to-file
@@ -147,7 +147,7 @@
             (concat
              (file-name-as-directory
               (getenv "LEXET_MOUNT_POINT"))
-             "/scripts"))
+             "scripts"))
            "incremental_tags_generation.sh")))
   (set-process-sentinel
      (start-process

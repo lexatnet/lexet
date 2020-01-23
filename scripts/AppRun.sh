@@ -8,6 +8,7 @@ export EMACSDATA=$EMACSPATH/etc
 export EMACSDOC=$EMACSPATH/etc
 export EMACSLOADPATH=$EMACSPATH/site-lisp:$EMACSPATH/lisp:$EMACSPATH/lisp/emacs-lisp
 export INFOPATH=./local/share/info
+export DICPATH=${HERE}/usr/share/hunspell
 
 export LEXET_MOUNT_POINT="${HERE}"
 export LEXET_PATH="${HERE}/lexet"

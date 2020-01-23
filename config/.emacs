@@ -92,7 +92,9 @@
          (text-mode . flyspell-mode))
   :bind (
          :map flyspell-mode-map
-         ("C-;" . helm-flyspell-correct)))
+              ("C-;" . helm-flyspell-correct))
+  :config
+  (setq ispell-program-name "hunspell"))
 
 (use-package helm-flyspell
   :ensure t
