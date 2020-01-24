@@ -39,7 +39,8 @@
     (setq sh-basic-offset lexet-indent)
     (setq sh-indentation lexet-indent)
     (setq python-indent-offset lexet-indent)
-    (setq sql-indent-offset lexet-indent))
+    (setq sql-indent-offset lexet-indent)
+    (setq css-indent-offset lexet-indent))
 
 
 (provide 'lexet-indentation)
