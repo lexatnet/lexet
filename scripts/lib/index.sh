@@ -41,6 +41,7 @@ lib_index() {
   source $dir/install_eslint.sh
   source $dir/install_jshint.sh
   source $dir/install_bower.sh
+  source $dir/install_ruby_from_sources.sh
   echo 'Libs loaded.'
 }
 

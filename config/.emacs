@@ -1,4 +1,3 @@
-
 ;;; package --- Summary
 ;;; Commentary:
 ;;; Code:
@@ -10,8 +9,6 @@
 ;;           '(lambda () (setq debug-ignored-errors t)))
 ;; (add-hook 'after-init-hook
 ;;           '(lambda () (setq debug-on-message "wrong argument type")))
-
-
 
 (menu-bar-mode 0)
 (tool-bar-mode 0)
@@ -142,24 +139,6 @@
          ("C-c h n" . hlt-next-highlight)
          ("C-c h p" . hlt-previous-highlight)))
 
-(use-package auto-complete
-  :ensure t
-  :config
-  (require 'auto-complete-config)
-  (ac-config-default)
-  (global-auto-complete-mode t)
-  (setq ac-disable-faces nil)
-  ;; (setq ac-auto-start 3)
-  )
-
-(use-package ac-helm
-  :ensure t
-  :after (helm auto-complete)
-  :init
-  :bind (
-         :map ac-complete-mode-map
-              ("C-c c" . ac-complete-with-helm)))
-
 (use-package geben
   :ensure t)
 
@@ -184,7 +163,7 @@
          ;; go back
          ("C-t" . ac-php-location-stack-back))
   :config
-  (setq ac-sources (append ac-sources '(ac-source-php)))
+  (add-to-list 'company-backends 'company-ac-php-backend)
   (ac-php-core-eldoc-setup ))
 
 (use-package yasnippet
@@ -213,7 +192,10 @@
 
 (use-package ac-js2
   :ensure t
-  :hook ((js-mode . ac-js2-mode)))
+  :after (company)
+  :hook ((js-mode . ac-js2-mode))
+  :config
+  (add-to-list 'company-backends 'ac-js2-company))
 
 ;; TypeScript
 (use-package typescript-mode
@@ -341,7 +323,7 @@
 
 (use-package helm-projectile
   :ensure t
-  ;; :after (projectile helm)
+  :after (projectile helm)
   :config
   (setq projectile-completion-system 'helm)
   (helm-projectile-on))
@@ -351,17 +333,6 @@
   :bind (("C-^" . er/expand-region)))
 
 (setq path-to-ctags "ctags") ;; <- your ctags path here
-
-(defun create-tags (dir-name)
-    "Create tags file."
-    (interactive "DDirectory: ")
-    (setq ctags-exclude-config-path (getenv "ctags_exclude_config_path"))
-    (setq ctags-command
-          (format "%s -e -f TAGS --recurse --exclude=@%s %s"
-                  path-to-ctags
-                  ctags-exclude-config-path
-                  (directory-file-name dir-name)))
-    (shell-command ctags-command))
 
 (eval-after-load "sql"
   '(load-library "sql-indent"))
@@ -775,11 +746,11 @@
         ("C-x t M-t" . treemacs-find-tag)))
 
 (use-package treemacs-evil
-  :after treemacs evil
+  :after (treemacs evil)
   :ensure t)
 
 (use-package treemacs-projectile
-  :after treemacs projectile
+  :after (treemacs projectile)
   :ensure t)
 
 (use-package powerline
@@ -810,6 +781,17 @@
 
 (use-package company
   :ensure t
+  :config
+  (add-hook 'after-init-hook 'global-company-mode))
+
+(use-package helm-company
+  :ensure t
+  :after (helm company)
+  :bind (
+         :map company-mode-map
+         ("C-:" 'helm-company)
+         :map company-active-map
+         ("C-:" 'helm-company))
   :config
   (add-hook 'after-init-hook 'global-company-mode))
 

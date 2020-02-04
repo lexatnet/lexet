@@ -63,11 +63,11 @@ EOF
   # echo "NPM_CONFIG_PREFIX=$NPM_CONFIG_PREFIX"
   # echo "NVM_NPM_CONFIG_PREFIX_ENV=$NVM_NPM_CONFIG_PREFIX_ENV"
 
-  install_ruby \
-    --rbenv-root $root/env/rbenv \
-    --init-script $root/init/rbenv.sh \
-    --prefix $root \
-    --init-rbenv-root $app_run_rbenv_dir
+  # install_ruby \
+  #   --rbenv-root $root/env/rbenv \
+  #   --init-script $root/init/rbenv.sh \
+  #   --prefix $root \
+  #   --init-rbenv-root $app_run_rbenv_dir
 
   cd $cwd
 }

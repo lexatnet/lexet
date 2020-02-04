@@ -68,6 +68,7 @@ ingredients:
     - hunspell
     - hunspell-en-us
     - hunspell-ru
+    - ruby-full
 
   pretend:
     - libgbm1 19.0.8-0ubuntu0~18.04.2
@@ -86,6 +87,15 @@ ingredients:
 script:
   - cwd=$(pwd)
   - echo "current directory = '${cwd}'"
+  # - export PATH=usr/bin/:$PATH
+  # - export LD_LIBRARY_PATH=${cwd}/usr/lib/x86_64-linux-gnu/:${cwd}/lib/x86_64-linux-gnu/:${cwd}/usr/lib/:${cwd}/lib/:$LD_LIBRARY_PATH
+  # - export LOAD_PATH=${cwd}/usr/lib/ruby/2.5.0:$LOAD_PATH
+
+  # # install ruby packages
+  # - ruby ./usr/bin/gem install bundler
+  # - ruby ./usr/bin/gem install rubocop
+  # - ruby ./usr/bin/gem install rubocop-rspec
+  # - ruby ./usr/bin/gem install ruby-lint
 
   - cp ../composer.phar ${cwd}/usr/bin/composer
   - cp ../phpcs.phar ${cwd}/usr/bin/phpcs
@@ -111,10 +121,10 @@ script:
   - source $through_point/scripts/index.sh
 
   # install ctags from sources
+  - install_ruby_from_sources --prefix "${cwd}/usr" --local-repo-cache ../ruby --local-repo ./ruby
   - install_ctags --prefix "${cwd}/usr" --local-repo-cache ../ctags --local-repo ./ctags
 
-  # # install hunspell from sources
-  #- install_hunspell --exec-prefix "${cwd}/usr" --libs-prefix "${cwd}/usr" --sysconfdir "${cwd}/etc" --local-repo-cache ../hunspell --local-repo ./hunspell
+  # install ruby from sources
 
   # copy lexet packages
   - cp -r ../../lexet-packages ./lexet-packages
