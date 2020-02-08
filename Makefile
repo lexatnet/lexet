@@ -1,3 +1,4 @@
+
 build-appimage-builder:
 	./scripts/build-appimage-builder-docker.sh
 
@@ -6,6 +7,9 @@ docker-push:
 
 build-appimage:
 	./scripts/build-appimage.sh
+
+build-appimage-with-log:
+	./scripts/build-appimage.sh |& tee build.log
 
 appimage-builder-bash:
 	./scripts/appimage-builder-bash.sh

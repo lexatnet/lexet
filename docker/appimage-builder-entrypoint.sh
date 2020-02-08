@@ -13,3 +13,7 @@ wget -O - https://raw.githubusercontent.com/${PKG2AIREPO}/${PKG2AICOMMIT}/pkg2ap
   PKG2AIREPO=$PKG2AIREPO \
   ARCH=x86_64 \
   bash -s -- ./recipe.yml
+
+# wget -O - https://raw.githubusercontent.com/AppImage/pkg2appimage/master/pkg2appimage |\
+#   ARCH=x86_64 \
+#   bash -s -- ./recipe.yml

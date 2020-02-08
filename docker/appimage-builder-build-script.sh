@@ -50,6 +50,10 @@ install_utils(){
   apt-get install -y libssl-dev
   apt-get install -y libreadline-dev
 
+  apt-get install -y build-essential
+  apt-get install -y ruby
+  apt-get install -y bison
+
   rm -rf /var/lib/apt/lists/*
 }
 
