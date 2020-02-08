@@ -38,8 +38,12 @@ install_ruby_from_sources(){
   autoreconf --install
   ./configure --prefix=${prefix}
   make
+  make check
   make install
   cd ..
+
+  replace_paths_in_file "$APP_DIR/usr/bin/ruby" $APP_DIR/usr .
+
   # clear
   rm --recursive $local_repo
   # restore working directory

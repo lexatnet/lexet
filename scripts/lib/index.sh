@@ -24,6 +24,7 @@ lib_index() {
   source $dir/generate_lexet_user_profile.sh
   source $dir/normalize_path.sh
   source $dir/get_script_dir.sh
+  source $dir/patch_usr.sh
   source $dir/install_ruby.sh
   source $dir/install_node.sh
   source $dir/add_user.sh
