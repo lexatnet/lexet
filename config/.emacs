@@ -205,8 +205,7 @@
   :config
   (add-to-list 'auto-mode-alist '("\\.vue\\'" . vue-mode))
   (setq mmm-js-mode-enter-hook (lambda () (setq syntax-ppss-table nil)))
-  (setq mmm-typescript-mode-enter-hook (lambda () (setq syntax-ppss-table nil)))
-  )
+  (setq mmm-typescript-mode-enter-hook (lambda () (setq syntax-ppss-table nil))))
 
 (use-package web-mode
   :ensure t
@@ -214,10 +213,7 @@
   (add-to-list 'auto-mode-alist '("\\.tpl\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.hbs\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.twig\\'" . web-mode))
-  ;; (add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
-  ;; (setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'")))
-  )
+  (add-to-list 'auto-mode-alist '("\\.twig\\'" . web-mode)))
 
 (use-package scss-mode
   :ensure t
@@ -779,7 +775,7 @@
 (use-package company
   :ensure t
   :config
-  ((after-init-hook . global-company-mode)
+  (global-company-mode))
 
 (use-package helm-company
   :ensure t
