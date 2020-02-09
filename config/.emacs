@@ -152,8 +152,7 @@
   ;;   '(require 'php-ext))
   :hook (
          (php-mode . php-enable-default-coding-style)
-         (php-mode . lexet-php-mode-init)
-         ))
+         (php-mode . lexet-php-mode-init)))
 
 (use-package ac-php
   :ensure t
@@ -184,19 +183,16 @@
   :ensure t
   :config
   (add-hook 'js-mode-hook 'js2-minor-mode)
-  ;; (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
   (add-to-list 'interpreter-mode-alist '("node" . js2-mode))
-  ;; (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-jsx-mode))
-  ;; (add-to-list 'auto-mode-alist '("\\.jsx\\'" . js2-jsx-mode))
   (add-to-list 'interpreter-mode-alist '("node" . js2-jsx-mode))
   (setq js2-indent-switch-body t))
 
-(use-package ac-js2
-  :ensure t
-  :after (company)
-  :hook ((js-mode . ac-js2-mode))
-  :config
-  (add-to-list 'company-backends 'ac-js2-company))
+;; (use-package ac-js2
+;;   :ensure t
+;;   :after (company)
+;;   :hook ((js-mode . ac-js2-mode))
+;;   :config
+;;   (add-to-list 'company-backends 'ac-js2-company))
 
 ;; TypeScript
 (use-package typescript-mode
@@ -362,26 +358,26 @@
 
 (use-package etags)
 
-(use-package ac-etags
-  :ensure t
-  ;; :after (etags)
-  :custom
-  (ac-etags-requires 1)
-  :hook ((c-mode-common . lexet-ac-setup-source-etags)
-         (json-mode . lexet-ac-setup-source-etags)
-         (emacs-lisp-mode . lexet-ac-setup-source-etags)
-         (lisp-mode . lexet-ac-setup-source-etags)
-         (lisp-interaction-mode . lexet-ac-setup-source-etags)
-         (python-mode . lexet-ac-setup-source-etags)
-         (js-mode . lexet-ac-setup-source-etags)
-         (ruby-mode . lexet-ac-setup-source-etags)
-         (php-mode . lexet-ac-setup-source-etags)
-         (sh-mode . lexet-ac-setup-source-etags))
-  :init
-  (ac-etags-setup)
-  (defun lexet-ac-setup-source-etags ()
-    (print "lexet-ac-setup-source-etags call")
-    (setq ac-sources (append ac-sources '(ac-source-etags)))))
+;; (use-package ac-etags
+;;   :ensure t
+;;   ;; :after (etags)
+;;   :custom
+;;   (ac-etags-requires 1)
+;;   :hook ((c-mode-common . lexet-ac-setup-source-etags)
+;;          (json-mode . lexet-ac-setup-source-etags)
+;;          (emacs-lisp-mode . lexet-ac-setup-source-etags)
+;;          (lisp-mode . lexet-ac-setup-source-etags)
+;;          (lisp-interaction-mode . lexet-ac-setup-source-etags)
+;;          (python-mode . lexet-ac-setup-source-etags)
+;;          (js-mode . lexet-ac-setup-source-etags)
+;;          (ruby-mode . lexet-ac-setup-source-etags)
+;;          (php-mode . lexet-ac-setup-source-etags)
+;;          (sh-mode . lexet-ac-setup-source-etags))
+;;   :init
+;;   (ac-etags-setup)
+;;   (defun lexet-ac-setup-source-etags ()
+;;     (print "lexet-ac-setup-source-etags call")
+;;     (setq ac-sources (append ac-sources '(ac-source-etags)))))
 
 (use-package flycheck
   :ensure t
@@ -783,18 +779,16 @@
 (use-package company
   :ensure t
   :config
-  (add-hook 'after-init-hook 'global-company-mode))
+  ((after-init-hook . global-company-mode)
 
 (use-package helm-company
   :ensure t
   :after (helm company)
   :bind (
          :map company-mode-map
-         ("C-:" 'helm-company)
+         ("C-:" . helm-company)
          :map company-active-map
-         ("C-:" 'helm-company))
-  :config
-  (add-hook 'after-init-hook 'global-company-mode))
+         ("C-:" . helm-company)))
 
 
 (use-package lexet-hydra-multiple-cursors
