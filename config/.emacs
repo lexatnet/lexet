@@ -1,6 +1,8 @@
 ;;; package --- Summary
 ;;; Commentary:
 ;;; Code:
+
+
 (add-to-list 'load-path (getenv "lexet_packages_dir"))
 (setq package-user-dir (getenv "lexet_vendor_packages_dir"))
 ;; (add-hook 'after-init-hook
@@ -22,8 +24,10 @@
 (setq-default frame-title-format (format "lexet - %s@%s" (getenv "project_name") "%f"))
 
 (setq lexet-temporary-directory (getenv "lexet_tmp_dir"))
+
 (setq backup-directory-alist
       `((".*" . ,lexet-temporary-directory)))
+
 (setq auto-save-file-name-transforms
       `((".*" ,lexet-temporary-directory t)))
 
@@ -40,7 +44,8 @@
         async
         sql-indent
         use-package
-        winum))
+        winum)
+      )
 
 (require 'package)
 
@@ -64,7 +69,8 @@
 (eval-when-compile
   ;; Following line is not needed if use-package.el is in ~/.emacs.d
   ;; (add-to-list 'load-path "<path where use-package is installed>")
-  (require 'use-package))
+  (require 'use-package)
+  )
 
 (use-package el-get
   :ensure t)
@@ -76,22 +82,29 @@
   :ensure t
   :config
   (require 'helm-config)
-  :bind (("M-x" . helm-M-x)))
+  :bind (
+         ("M-x" . helm-M-x)
+         )
+  )
 
 ;; enable flspell-mode for text modes
 (use-package flyspell
-  :hook ((emacs-lisp-mode . flyspell-prog-mode)
+  :hook (
+         (emacs-lisp-mode . flyspell-prog-mode)
          (python-mode . flyspell-prog-mode)
          (js-mode . flyspell-prog-mode)
          (ruby-mode . flyspell-prog-mode)
          (php-mode . flyspell-prog-mode)
          (sh-mode . flyspell-prog-mode)
-         (text-mode . flyspell-mode))
+         (text-mode . flyspell-mode)
+         )
   :bind (
          :map flyspell-mode-map
-              ("C-;" . helm-flyspell-correct))
+              ("C-;" . helm-flyspell-correct)
+              )
   :config
-  (setq ispell-program-name "hunspell"))
+  (setq ispell-program-name "hunspell")
+  )
 
 (use-package helm-flyspell
   :ensure t
@@ -102,10 +115,15 @@
 
 (use-package highlight-symbol
   :ensure t
-  :hook ((prog-mode . highlight-symbol-mode)
-         (text-mode . highlight-symbol-mode))
-  :bind (("M-<right>" . highlight-symbol-next)
-         ("M-<left>" . highlight-symbol-prev)))
+  :hook (
+         (prog-mode . highlight-symbol-mode)
+         (text-mode . highlight-symbol-mode)
+         )
+  :bind (
+         ("M-<right>" . highlight-symbol-next)
+         ("M-<left>" . highlight-symbol-prev)
+         )
+  )
 
 ;; (use-package zones)
 
@@ -133,11 +151,7 @@
       (progn
         (message selection)
         (hlt-highlight-regexp-region (point-min) (point-max) selection))))
-
-  :bind (("C-c h a" . hlt-unhighlight-all-prop)
-         ("C-c h s" . highlight-region-in-buffer)
-         ("C-c h n" . hlt-next-highlight)
-         ("C-c h p" . hlt-previous-highlight)))
+  )
 
 (use-package geben
   :ensure t)
@@ -290,23 +304,7 @@
 (use-package git-gutter
   :ensure t
   :init
-  (global-git-gutter-mode t)
-  :bind (
-         ;; Show current hunk
-         ("C-c g u" . git-gutter:popup-hunk)
-
-         ;; Jump to next/previous hunk
-         ("C-c g p" . git-gutter:previous-hunk)
-         ("C-c g n" . git-gutter:next-hunk)
-
-         ;; Stage current hunk
-         ("C-c g s" . git-gutter:stage-hunk)
-
-         ;; Revert current hunk
-         ("C-c g r" . git-gutter:revert-hunk)
-
-         ;; Mark current hunk
-         ("C-c g m" . git-gutter:mark-hunk)))
+  (global-git-gutter-mode t))
 
 (use-package projectile
   :ensure t
@@ -428,15 +426,14 @@
   :after (php-mode flycheck))
 
 (use-package ruby-mode
-  :mode (("\\.\\(?:cap\\|gemspec\\|irbrc\\|gemrc\\|rake\\|rb\\|ru\\|thor\\)\\'" . ruby-mode)
-         ("\\(?:Brewfile\\|Capfile\\|Gemfile\\(?:\\.[a-zA-Z0-9._-]+\\)?\\|[rR]akefile\\)\\'" . ruby-mode))
+  :mode (
+         ("\\.\\(?:cap\\|gemspec\\|irbrc\\|gemrc\\|rake\\|rb\\|ru\\|thor\\)\\'" . ruby-mode)
+         ("\\(?:Brewfile\\|Capfile\\|Gemfile\\(?:\\.[a-zA-Z0-9._-]+\\)?\\|[rR]akefile\\)\\'" . ruby-mode)
+         )
   :interpreter ("ruby" . ruby-mode))
 
 (use-package multiple-cursors
-  :ensure t
-  :bind (("C-c m n" . mc/mark-next-like-this)
-         ("C-c m p" . mc/mark-previous-like-this)
-         ("C-c m a" . mc/mark-all-like-this)))
+  :ensure t)
 
 ;; (electric-pair-mode t)
 (use-package smartparens
@@ -446,10 +443,6 @@
   ;; keybinding management
   (
    :map smartparens-mode-map
-   ("C-M-f" . sp-forward-sexp)
-   ("C-M-b" . sp-backward-sexp)
-   ("C-M-d" . sp-down-sexp)
-   ("C-M-a" . sp-backward-down-sexp)
    ("C-S-d" . sp-beginning-of-sexp)
    ("C-S-a" . sp-end-of-sexp)
 
@@ -460,7 +453,6 @@
    ("C-M-n" . sp-forward-hybrid-sexp)
    ("C-M-p" . sp-backward-hybrid-sexp)
 
-   ("C-M-k" . sp-kill-sexp)
    ("C-M-w" . sp-copy-sexp)
 
    ("M-<delete>" . sp-unwrap-sexp)
@@ -482,8 +474,7 @@
 
    ("M-F" . sp-forward-symbol)
    ("M-B" . sp-backward-symbol)
-
-   ("C-\"" . sp-change-inner))
+   )
 
   :config
   ;;;;;;;;;;;;;;;;;;
@@ -545,22 +536,6 @@
 
   (bind-key "C-c f" (lambda () (interactive) (sp-beginning-of-sexp 2)) smartparens-mode-map)
   (bind-key "C-c b" (lambda () (interactive) (sp-beginning-of-sexp -2)) smartparens-mode-map)
-
-  (bind-key "C-M-s"
-            (defhydra smartparens-hydra ()
-              "Smartparens"
-              ("d" sp-down-sexp "Down")
-              ("e" sp-up-sexp "Up")
-              ("u" sp-backward-up-sexp "Up")
-              ("a" sp-backward-down-sexp "Down")
-              ("f" sp-forward-sexp "Forward")
-              ("b" sp-backward-sexp "Backward")
-              ("r" sp-rewrap-sexp "Re-wrap")
-              ("s" sp-splice-sexp "Un-wrap")
-              ("o" sp-change-inner "Override")
-              ("k" sp-kill-sexp "Kill" :color blue)
-              ("q" nil "Quit" :color blue))
-            smartparens-mode-map)
 
   (bind-key "H-t" 'sp-prefix-tag-object smartparens-mode-map)
   (bind-key "H-p" 'sp-prefix-pair-object smartparens-mode-map)
@@ -746,36 +721,58 @@
   :after (treemacs projectile)
   :ensure t)
 
+(use-package treemacs-icons-dired
+  :after (treemacs dired)
+  :ensure t
+  :config
+  (treemacs-icons-dired-mode)
+  )
+
+(use-package treemacs-magit
+  :after (treemacs magit)
+  :ensure t
+  )
+
 (use-package powerline
-  :ensure t)
+  :ensure t
+  )
 
 (use-package smart-mode-line
   :ensure t
   :config
   (setq sml/no-confirm-load-theme t)
-  (sml/setup))
+  (sml/setup)
+  )
 
 (use-package smart-mode-line-powerline-theme
    :ensure t
    :after (powerline smart-mode-line)
    :config
-   (sml/apply-theme 'powerline))
+   (sml/apply-theme 'powerline)
+   )
 
 (use-package dockerfile-mode
    :ensure t
-   :mode (("Dockerfile\\'" . dockerfile-mode)))
+   :mode (
+          ("Dockerfile\\'" . dockerfile-mode)
+          )
+   )
 
 (use-package tide
   :ensure t
   :after (typescript-mode company flycheck)
-  :hook ((typescript-mode . tide-setup)
+  :hook (
+         (typescript-mode . tide-setup)
          (typescript-mode . tide-hl-identifier-mode)
-         (before-save . tide-format-before-save)))
+         (before-save . tide-format-before-save)
+         )
+  )
 
 (use-package company
   :ensure t
   :config
-  (global-company-mode))
+  (global-company-mode)
+  )
 
 (use-package helm-company
   :ensure t
@@ -784,46 +781,82 @@
          :map company-mode-map
          ("C-:" . helm-company)
          :map company-active-map
-         ("C-:" . helm-company)))
-
+         ("C-:" . helm-company)
+         )
+  )
 
 (use-package lexet-hydra-multiple-cursors
   ;; :load-path (lambda ()  (getenv "lexet_packages_dir"))
-  ;; :after (multiple-cursors hydra)
+  :after (multiple-cursors hydra)
   ;; :requires (multiple-cursors hydra)
   ;; :hook ((prog-mode . highlight-symbol-mode)
   ;;        (text-mode . highlight-symbol-mode))
   :config
-  (lexet-hydra-multiple-cursors-init))
+  (lexet-hydra-multiple-cursors-init)
+  )
+
+(use-package lexet-hydra-highlight
+  :after (highlight hydra)
+  :config
+  (lexet-hydra-highlight-init)
+  )
+
+(use-package lexet-hydra-git-gutter
+  :after (git-gutter hydra)
+  :config
+  (lexet-hydra-git-gutter-init)
+  )
+
+(use-package lexet-hydra-smartparens
+  :after (smartparens hydra)
+  :config
+  (lexet-hydra-smartparens-init)
+  )
 
 (use-package lexet-bindings
   :config
-  (lexet-bindings-init))
+  (lexet-bindings-init)
+  )
 
 (use-package lexet-project-indexation
   :config
-  (lexet-project-indexation-init "alinement"))
+  (lexet-project-indexation-init "alinement")
+  )
 
 (use-package lexet-indentation
   :config
-  (lexet-indentation-init))
+  (lexet-indentation-init)
+  )
 
 (use-package lexet-move-region
-  :bind (("M-<up>" . move-line-region-up)
-         ("M-<down>" . move-line-region-down)))
+  :bind (
+         ("M-<up>" . move-line-region-up)
+         ("M-<down>" . move-line-region-down)
+         )
+  )
 
 (use-package lexet-toggle-window-split
-  :bind (("C-x |" . toggle-window-split)))
+  :bind (
+         ("C-x |" . toggle-window-split)
+         )
+  )
 
 (use-package lexet-reverse-input-method
   :config
-  (cfg:reverse-input-method 'russian-computer))
+  (cfg:reverse-input-method 'russian-computer)
+  )
 
 (use-package lexet-use-eslint-from-node-modules
-  :hook ((flycheck-mode . lexet/use-eslint-from-node-modules)))
+  :hook (
+         (flycheck-mode . lexet/use-eslint-from-node-modules)
+         )
+  )
 
 (use-package lexet-back-to-indentation-or-beginning
-  :bind (("<home>" . back-to-indentation-or-beginning)))
+  :bind (
+         ("<home>" . back-to-indentation-or-beginning)
+         )
+  )
 
 (provide '.emacs)
 ;;; .emacs ends here

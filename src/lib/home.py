@@ -34,6 +34,7 @@ class LexetHome():
   def init_config(self):
     self.copy_config_template()
     self.copy_emacs_config()
+    self.copy_ctags_exclude()
     self.create_lexet_vendor_packages_dir()
     self.create_lexet_tmp_dir()
 
@@ -67,6 +68,22 @@ class LexetHome():
       ),
       Path(
         self.config['root']['emacs_config']
+      ).expanduser(),
+    )
+
+  def copy_ctags_exclude(self):
+    logging.info(
+      Template('copy emacs config template to "$config"')
+      .substitute(
+        config = self.config['root']['ctags_exclude_config']
+      )
+    )
+    copyfile(
+      Path(
+        self.config['init']['ctags_exclude_src']
+      ),
+      Path(
+        self.config['root']['ctags_exclude_config']
       ).expanduser(),
     )
 

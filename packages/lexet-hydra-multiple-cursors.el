@@ -26,11 +26,76 @@
 ;;; Code:
 
 (defun lexet-hydra-multiple-cursors-init ()
-    "Create lexet hydra multiple cursors."
-    (defhydra lexet-hydra-multiple-cursors-key-map (global-map "<f2>")
-      "zoom"
-      ("g" text-scale-increase "in")
-      ("l" text-scale-decrease "out")))
+  "Create lexet hydra multiple cursors."
+  (defhydra hydra-lexet-hydra-multiple-cursors (:color teal)
+    "multiple cursors"
+    ("l"
+     (lambda ()
+       (interactive)
+       (call-interactively 'mc/edit-lines)
+       )
+     "edit lines" :exit t)
+    ("a"
+     (lambda ()
+       (interactive)
+       (call-interactively 'mc/mark-all-like-this)
+       (hydra-lexet-hydra-multiple-cursors/body)
+       )
+     "all like this")
+    ("n"
+     (lambda ()
+       (interactive)
+       (call-interactively 'mc/mark-next-like-this)
+       (hydra-lexet-hydra-multiple-cursors/body)
+       )
+     "next like this")
+    ("N"
+     (lambda ()
+       (interactive)
+       (call-interactively 'mc/skip-to-next-like-this)
+       (hydra-lexet-hydra-multiple-cursors/body)
+       )
+     "skip next")
+    ("M-n"
+     (lambda ()
+       (interactive)
+       (call-interactively 'mc/unmark-next-like-this)
+       (hydra-lexet-hydra-multiple-cursors/body)
+       )
+     "unmark next")
+    ("p"
+     (lambda ()
+       (interactive)
+       (call-interactively 'mc/mark-previous-like-this)
+       (hydra-lexet-hydra-multiple-cursors/body)
+       )
+     "previous like this")
+
+    ("P"
+     (lambda ()
+       (interactive)
+       (call-interactively 'mc/skip-to-previous-like-this)
+       (hydra-lexet-hydra-multiple-cursors/body)
+       )
+     "skip previous")
+    ("M-p"
+     (lambda ()
+       (interactive)
+       (call-interactively 'mc/unmark-previous-like-this)
+       (hydra-lexet-hydra-multiple-cursors/body)
+       )
+     "unmark previous")
+    ("d"
+     (lambda ()
+       (interactive)
+       (call-interactively 'mc/mark-all-dwim)
+       (hydra-lexet-hydra-multiple-cursors/body)
+       )
+     "mark dwim")
+    ("q" nil "exit"))
+
+  (global-set-key (kbd "C-c m") 'hydra-lexet-hydra-multiple-cursors/body)
+  )
 
 
 (provide 'lexet-hydra-multiple-cursors)

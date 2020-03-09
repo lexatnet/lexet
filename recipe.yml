@@ -68,7 +68,7 @@ ingredients:
     - hunspell
     - hunspell-en-us
     - hunspell-ru
-    - ruby-full
+    # - ruby-full
 
   pretend:
     - libgbm1 19.0.8-0ubuntu0~18.04.2
@@ -99,7 +99,7 @@ script:
 
   # # install ruby packages
   # - ruby ./usr/bin/gem install bundler
-  # - ruby ./usr/bin/gem install rubocop
+  # - ruby ./usr/bin/bundler rubocop
   # - ruby ./usr/bin/gem install rubocop-rspec
   # - ruby ./usr/bin/gem install ruby-lint
 
@@ -126,10 +126,10 @@ script:
 
 
   # install ctags from sources
-  # - install_ruby_from_sources --prefix "${cwd}/usr" --local-repo-cache ../ruby --local-repo ./ruby
   - install_ctags --prefix "${cwd}/usr" --local-repo-cache ../ctags --local-repo ./ctags
 
   # install ruby from sources
+  - install_ruby_from_sources --prefix "${cwd}/usr" --local-repo-cache ../ruby --local-repo ./ruby
 
   # copy lexet packages
   - cp -r ../../lexet-packages ./lexet-packages

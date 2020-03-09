@@ -24,3 +24,6 @@
 # TODO: fix php ( smartparens
 # TODO: fix php flycheck
 # TODO: add opened files as source
+# TODO: add by project exclude ctags
+# TODO: scrolling line by line
+# TODO: keep cursor line due scrolling

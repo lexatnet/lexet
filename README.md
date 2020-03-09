@@ -367,6 +367,7 @@ optional arguments:
 ## Work with git gutter
 | Action title         | Shortcut   |
 | -------------------- | :--------: |
+| gutter menu          | C-c g      |
 | pop hunk             | C-c g u    |
 | revert current       | C-c g r    |
 | jump next hunk       | C-c g n    |
@@ -415,9 +416,8 @@ optional arguments:
 ## Multicursor
 | Action title                 | Shortcut   |
 | ---------------------------- | :--------: |
-| mark next like selected      | C-c m n    |
-| mark previous like selected  | C-c m p    |
-| mark all like selected       | C-c m a    |
+| multicursor menu             | C-c m      |
+|                              |            |
 
 
 
@@ -477,22 +477,21 @@ optional arguments:
 ### Pairs
 | Action title                                                                        | Shortcut        |
 | ----------------------------------------------------------------------------------- | :-------------: |
-| show Hydra menu                                                                     | C-M-s           |
-| jump to pair forward                                                                | C-M-f           |
-| jump to pair backward                                                               | C-M-b           |
+| show Hydra menu                                                                     | C-c s           |
+| Change inner (override)                                                             | C-c s o         |
+| Kill expression                                                                     | C-c s k         |
+| jump to pair forward                                                                | C-c s f         |
+| jump to pair backward                                                               | C-c s b         |
+| jump to begining wrapping delimiter                                                 | C-c s u         |
+| jump to begining current expression                                                 | C-c s d         |
+| Jump to end wrapping delimiter                                                      | C-M-e           |
+| Jump to end current expression                                                      | C-S-a           |
 | Remove the wrapping pair from the this expression.                                  | M-D             |
 | Jump to the beginning of current expression, that is after the opening delimiter.   | C-S-d           |
 | Jump to the end of current expression, that is before the closing delimiter         | C-S-a           |
-| Kill expression                                                                     | C-M-k           |
 | Copy expression                                                                     | C-M-w           |
-| jump to begining wrapped delimiter                                                  | C-M-d           |
-| jump to begining wrapping delimiter                                                 | C-M-u           |
-| Jump to end wrapping delimiter                                                      | C-M-e           |
-| jump to begining current expression                                                 | C-S-d           |
-| Jump to end current expression                                                      | C-S-a           |
 | Remove the wrapping pair from the following expression                              | M-<delete>      |
 | Remove the wrapping pair from the previous expression                               | M-<backspace>   |
-| Change inner                                                                        | C-"             |
 |                                                                                     |                 |
 
 

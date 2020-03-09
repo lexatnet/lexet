@@ -38,3 +38,4 @@ project_name_separator = .
 config_src = ${global:lexet_path}/config
 config = ${environment:root}/config
 emacs_config_src = ${global:lexet_configs}/.emacs
+ctags_exclude_src = ${global:lexet_configs}/ctags-exclude.list

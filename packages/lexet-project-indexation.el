@@ -37,11 +37,12 @@
 
 
 (defun lexet-exclude (fn)
-  (if (remove nil (mapcar (lambda (m) (string-match m fn)) (read-lines (getenv "ctags_exclude_config_path")))) nil fn))
+  "Is file in excluded list? FN - as file name."
+  (if (remove nil (mapcar (lambda (m) (string-match m fn)) (lexet-read-lines (getenv "ctags_exclude_config_path")))) nil fn))
 
 
 (defun lexet-create-project-files-list ()
-  "Return list of files in lexet project directory"
+  "Return list of files in lexet project directory."
   (mapcar 'lexet-exclude (directory-files-recursively default-directory "")))
 
 
@@ -57,18 +58,26 @@
       ))
 
 (defun lexet-run-file-indexation (file)
+  "Indexation of certain FILE."
   (let* ((tag-file-name (lexet-generate-tags-filename file))
          (tag-file-directory (file-name-directory tag-file-name)))
-    (make-directory tag-file-directory t)
-    (set-process-sentinel
-     (start-process
-      (format "[lexet] lexet process indexation of %s" file)
-      "[lexet] tags index"
-      "ctags" "-e" "-f"  tag-file-name  (concat default-directory file))
-     `(lambda (process event)
-       (print (format "[lexet] Process: tag file '%s'" ,tag-file-name))
-       (print (format "[lexet] Process: %s had the event '%s'" process event))
-       (lexet-add-tags-file ,tag-file-name)))))
+    (if (lexet-exclude file)
+      (progn
+        ;; file indexation
+        (message "[lexet] Indexation file %s" file)
+        (make-directory tag-file-directory t)
+        (set-process-sentinel
+         (start-process
+          (format "[lexet] lexet process indexation of %s" file)
+          "[lexet] tags index"
+          "ctags" "-e" "-f"  tag-file-name  (concat default-directory file))
+         `(lambda (process event)
+            (print (format "[lexet] Process: tag file '%s'" ,tag-file-name))
+            (print (format "[lexet] Process: %s had the event '%s'" process event))
+            (lexet-add-tags-file ,tag-file-name))))
+      (progn
+        ;; skip file indexation
+        (message "[lexet] Indexation skiped file in ignore list %s" file)))))
 
 
 (defun lexet-run-project-indexation ()
@@ -169,7 +178,8 @@
 
 
 (defun lexet-project-indexation-init (indexation-strategy)
-  "Run project indexation."
+  "Run project indexation.
+INDEXATION-STRATEGY"
   (if (boundp 'lexet-tags-root)
       (progn
         (if (file-exists-p lexet-tags-root)
