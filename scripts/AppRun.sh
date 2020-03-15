@@ -10,6 +10,8 @@ export EMACSLOADPATH=$EMACSPATH/site-lisp:$EMACSPATH/lisp:$EMACSPATH/lisp/emacs-
 export INFOPATH=./local/share/info
 export DICPATH=${HERE}/usr/share/hunspell
 
+export RUBYLIB=${HERE}/usr/lib/ruby/2.8.0/x86_64-linux/:${HERE}/usr/lib/ruby/2.8.0/
+
 export LEXET_MOUNT_POINT="${HERE}"
 export LEXET_PATH="${HERE}/lexet"
 export LEXET_CONFIGS="${HERE}/config"

@@ -91,11 +91,11 @@ script:
   # import sripts lib
   - source $through_point/scripts/index.sh
 
-  - patch_usr
+  # - patch_usr
 
-  - export PATH=usr/bin/:$PATH
-  - export LD_LIBRARY_PATH=${cwd}/usr/lib/x86_64-linux-gnu/:${cwd}/lib/x86_64-linux-gnu/:${cwd}/usr/lib/:${cwd}/lib/:$LD_LIBRARY_PATH
-  - export LOAD_PATH=${cwd}/usr/lib/ruby/2.5.0:$LOAD_PATH
+  # - export PATH=usr/bin/:$PATH
+  # - export LD_LIBRARY_PATH=${cwd}/usr/lib/x86_64-linux-gnu/:${cwd}/lib/x86_64-linux-gnu/:${cwd}/usr/lib/:${cwd}/lib/:$LD_LIBRARY_PATH
+  # - export LOAD_PATH=${cwd}/usr/lib/ruby/2.5.0:$LOAD_PATH
 
   # # install ruby packages
   # - ruby ./usr/bin/gem install bundler
@@ -130,6 +130,7 @@ script:
 
   # install ruby from sources
   - install_ruby_from_sources --prefix "${cwd}/usr" --local-repo-cache ../ruby --local-repo ./ruby
+  - patch_usr --search "${cwd}/usr"
 
   # copy lexet packages
   - cp -r ../../lexet-packages ./lexet-packages

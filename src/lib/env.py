@@ -8,6 +8,9 @@ class LexetEnv():
     self.project = project
 
   def set(self):
+    os.environ['lexet_root'] = self.config['environment']['root']
+    self.log_defined_variable('lexet_root', os.environ['lexet_root'])
+
     os.environ['lexet_vendor_packages_dir'] = self.config['root']['vendor_packages_dir']
     self.log_defined_variable('lexet_vendor_packages_dir', os.environ['lexet_vendor_packages_dir'])
 

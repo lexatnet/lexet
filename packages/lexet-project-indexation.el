@@ -38,7 +38,20 @@
 
 (defun lexet-exclude (fn)
   "Is file in excluded list? FN - as file name."
-  (if (remove nil (mapcar (lambda (m) (string-match m fn)) (lexet-read-lines (getenv "ctags_exclude_config_path")))) nil fn))
+  (if
+      (remove nil
+              (mapcar
+               (lambda (m) (string-match m fn))
+               (append
+                (lexet-read-lines (getenv "ctags_exclude_config_path"))
+                '(
+                  (concat
+                   (getenv "lexet_root")
+                   "/.*"
+                   )
+                  ))
+               ))
+      nil fn))
 
 
 (defun lexet-create-project-files-list ()
@@ -47,7 +60,9 @@
 
 
 (defun lexet-generate-tags-filename (file)
-  (concat  (file-name-as-directory lexet-tags-root) (file-relative-name file)))
+  (concat
+   (file-name-as-directory lexet-tags-root)
+   (file-relative-name file)))
 
 
 (defun lexet-add-tags-file (file)

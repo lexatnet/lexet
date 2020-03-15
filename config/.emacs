@@ -1,7 +1,7 @@
 ;;; package --- Summary
 ;;; Commentary:
 ;;; Code:
-
+(setq user-emacs-directory (getenv "lexet_root"))
 
 (add-to-list 'load-path (getenv "lexet_packages_dir"))
 (setq package-user-dir (getenv "lexet_vendor_packages_dir"))
@@ -256,39 +256,6 @@
   (add-hook 'text-mode-hook 'highlight-indent-guides-mode)
   (add-hook 'html-mode-hook 'highlight-indent-guides-mode))
 
-(use-package neotree
-  :ensure t
-  :config
-  (defun neotree-project-dir ()
-  "Open NeoTree using the git root."
-  (interactive)
-  (let ((project-dir (projectile-project-root))
-        (file-name (buffer-file-name)))
-    (if project-dir
-        (if (neotree-toggle)
-            (progn
-              (neotree-dir project-dir)
-              (neotree-find file-name)))
-      (message "Could not find git project root."))))
-  ;; (setq neo-window-width 40)
-  ;; (setq neo-window-fixed-size nil)
-  ;; (setq neo-smart-open t)
-
-
-  ;; colors for neotree configuration
-  ;; (custom-set-faces
-  ;;  '(col-highlight ((t (:background "#262626"))))
-  ;;  '(hl-line ((t (:background "#262626"))))
-  ;;  '(lazy-highlight ((t (:background "#000000" :foreground "white" :underline t))))
-  ;;  '(neo-dir-link-face ((t (:foreground "cyan"))))
-  ;;  '(neo-file-link-face ((t (:foreground "white")))))
-  ;; (custom-set-variables)
-
-  ;; (global-set-key [f8] 'neotree-toggle)
-
-  :bind(([f8] . neotree-project-dir))
-  )
-
 (use-package magit
   :ensure t
   :bind(("C-x g" . magit-status)))
@@ -297,8 +264,6 @@
   :ensure t
   :config
   (global-undo-tree-mode t)
-  ;; (global-set-key (kbd "C-<") 'undo)
-  ;; (global-set-key (kbd "C-<") 'redo)
   )
 
 (use-package git-gutter
@@ -713,9 +678,9 @@
         ("C-x t C-t" . treemacs-find-file)
         ("C-x t M-t" . treemacs-find-tag)))
 
-(use-package treemacs-evil
-  :after (treemacs evil)
-  :ensure t)
+;; (use-package treemacs-evil
+;;   :after (treemacs evil)
+;;   :ensure t)
 
 (use-package treemacs-projectile
   :after (treemacs projectile)
