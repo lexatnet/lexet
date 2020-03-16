@@ -1,24 +1,36 @@
 ;;; package --- Summary
 ;;; Commentary:
 ;;; Code:
-(setq user-emacs-directory (getenv "lexet_root"))
+
+(setq user-emacs-directory (getenv "lexet_project_dir"))
 
 (add-to-list 'load-path (getenv "lexet_packages_dir"))
+
 (setq package-user-dir (getenv "lexet_vendor_packages_dir"))
+
 ;; (add-hook 'after-init-hook
 ;;           '(lambda () (setq debug-on-error t)))
+
 ;; (add-hook 'after-init-hook
 ;;           '(lambda () (setq debug-ignored-errors t)))
+
 ;; (add-hook 'after-init-hook
 ;;           '(lambda () (setq debug-on-message "wrong argument type")))
 
 (menu-bar-mode 0)
+
 (tool-bar-mode 0)
+
 (delete-selection-mode t)
+
 (global-auto-revert-mode t)
+
 (defalias 'yes-or-no-p 'y-or-n-p)
+
 (setq column-number-mode t)
+
 (setq tags-revert-without-query 1)
+
 (setq inhibit-startup-screen t)
 
 (setq-default frame-title-format (format "lexet - %s@%s" (getenv "project_name") "%f"))
@@ -35,11 +47,9 @@
 (global-hl-line-mode +1)
 (set-face-attribute 'hl-line nil :inherit nil :background "#4d4927")
 
-;base list of packages
+;; base list of packages
 (setq package-list
       '(
-        js2-mode
-        helm-flycheck
         el-get
         async
         sql-indent
@@ -49,19 +59,19 @@
 
 (require 'package)
 
-;(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") )
+;; (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") )
+;; (add-to-list  'package-archives '("marmalade" . "https://marmalade-repo.org/packages/") )
 (add-to-list  'package-archives '("melpa" . "https://melpa.org/packages/") )
 (add-to-list  'package-archives '("gnu" . "https://elpa.gnu.org/packages/") )
-;(add-to-list  'package-archives '("marmalade" . "https://marmalade-repo.org/packages/") )
 
 (package-initialize)
 
-; fetch the list of packages available
+;; fetch the list of packages available
 (unless package-archive-contents
  (package-refresh-contents))
 ;; (package-refresh-contents)
 
-; install the missing packages
+;; install the missing packages
 (dolist (package package-list)
   (unless (package-installed-p package)
     (package-install package)))
@@ -84,6 +94,14 @@
   (require 'helm-config)
   :bind (
          ("M-x" . helm-M-x)
+         )
+  )
+
+(use-package helm-flycheck
+  :ensure t
+  :after (helm flycheck)
+  :bind (
+         ("C-c ! h" . helm-flycheck)
          )
   )
 
