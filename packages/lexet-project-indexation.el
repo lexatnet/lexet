@@ -43,14 +43,16 @@
               (mapcar
                (lambda (m) (string-match m fn))
                (append
-                (lexet-read-lines (getenv "ctags_exclude_config_path"))
-                '(
-                  (concat
+                (lexet-read-lines
+                 (getenv "ctags_exclude_config_path"))
+                `(
+                  ,(concat
                    (getenv "lexet_root")
                    "/.*"
                    )
-                  ))
-               ))
+                  )
+                ))
+              )
       nil fn))
 
 
