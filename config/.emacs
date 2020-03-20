@@ -37,6 +37,8 @@
 
 (setq lexet-temporary-directory (getenv "lexet_tmp_dir"))
 
+(setq path-to-ctags "ctags") ;; <- your ctags path here
+
 (setq backup-directory-alist
       `((".*" . ,lexet-temporary-directory)))
 
@@ -44,6 +46,7 @@
       `((".*" ,lexet-temporary-directory t)))
 
 (load-theme 'tango-dark)
+
 (global-hl-line-mode +1)
 (set-face-attribute 'hl-line nil :inherit nil :background "#4d4927")
 
@@ -61,8 +64,9 @@
 
 ;; (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") )
 ;; (add-to-list  'package-archives '("marmalade" . "https://marmalade-repo.org/packages/") )
-(add-to-list  'package-archives '("melpa" . "https://melpa.org/packages/") )
-(add-to-list  'package-archives '("gnu" . "https://elpa.gnu.org/packages/") )
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") )
+(add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/") )
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
 
 (package-initialize)
 
@@ -93,16 +97,14 @@
   :config
   (require 'helm-config)
   :bind (
-         ("M-x" . helm-M-x)
-         )
+         ("M-x" . helm-M-x))
   )
 
 (use-package helm-flycheck
   :ensure t
   :after (helm flycheck)
   :bind (
-         ("C-c ! h" . helm-flycheck)
-         )
+         ("C-c ! h" . helm-flycheck))
   )
 
 ;; enable flspell-mode for text modes
@@ -114,12 +116,10 @@
          (ruby-mode . flyspell-prog-mode)
          (php-mode . flyspell-prog-mode)
          (sh-mode . flyspell-prog-mode)
-         (text-mode . flyspell-mode)
-         )
+         (text-mode . flyspell-mode))
   :bind (
          :map flyspell-mode-map
-              ("C-;" . helm-flyspell-correct)
-              )
+              ("C-;" . helm-flyspell-correct))
   :config
   (setq ispell-program-name "hunspell")
   )
@@ -129,21 +129,27 @@
   :after (helm flyspell)
   :bind (
          :map flyspell-mode-map
-         ("M-S" . helm-flyspell-correct)))
+              ("M-S" . helm-flyspell-correct))
+  )
 
 (use-package highlight-symbol
   :ensure t
   :hook (
          (prog-mode . highlight-symbol-mode)
-         (text-mode . highlight-symbol-mode)
-         )
+         (text-mode . highlight-symbol-mode))
   :bind (
          ("M-<right>" . highlight-symbol-next)
-         ("M-<left>" . highlight-symbol-prev)
-         )
+         ("M-<left>" . highlight-symbol-prev))
   )
 
-;; (use-package zones)
+(use-package org
+  :ensure t
+  :defer t
+  )
+
+(use-package zones
+  :ensure t
+  )
 
 (use-package highlight
   :ensure t
@@ -172,7 +178,8 @@
   )
 
 (use-package geben
-  :ensure t)
+  :ensure t
+  )
 
 (use-package php-mode
   :ensure t
@@ -184,7 +191,8 @@
   ;;   '(require 'php-ext))
   :hook (
          (php-mode . php-enable-default-coding-style)
-         (php-mode . lexet-php-mode-init)))
+         (php-mode . lexet-php-mode-init))
+  )
 
 (use-package ac-php
   :ensure t
@@ -195,21 +203,26 @@
          ("C-t" . ac-php-location-stack-back))
   :config
   (add-to-list 'company-backends 'company-ac-php-backend)
-  (ac-php-core-eldoc-setup ))
+  (ac-php-core-eldoc-setup)
+  )
 
 (use-package yasnippet
   :ensure t
   :commands (yas-minor-mode)
-  :hook ((prog-mode . yas-minor-mode))
+  :hook (
+         (prog-mode . yas-minor-mode))
   :config
-  (yas-reload-all))
+  (yas-reload-all)
+  )
 
 (use-package yasnippet-snippets
   :ensure t
-  :after (yasnippet))
+  :after (yasnippet)
+  )
 
 (use-package json-mode
-  :ensure t)
+  :ensure t
+  )
 
 (use-package js2-mode
   :ensure t
@@ -219,43 +232,51 @@
   (add-to-list 'interpreter-mode-alist '("node" . js2-jsx-mode))
   (setq js2-indent-switch-body t))
 
-;; (use-package ac-js2
-;;   :ensure t
-;;   :after (company)
-;;   :hook ((js-mode . ac-js2-mode))
-;;   :config
-;;   (add-to-list 'company-backends 'ac-js2-company))
+(use-package ac-js2
+  :ensure t
+  :after (company)
+  ;; :hook ((js-mode . ac-js2-mode))
+  :config
+  (add-to-list 'company-backends 'ac-js2-company)
+  )
 
 ;; TypeScript
 (use-package typescript-mode
   :ensure t
-  :mode (("\\.ts\\'" . typescript-mode)
-         ("\\.tsx\\'" . typescript-mode)))
+  :mode (
+         ("\\.ts\\'" . typescript-mode)
+         ("\\.tsx\\'" . typescript-mode))
+  )
 
 (use-package vue-mode
   :ensure t
+  :mode (
+         ("\\.vue\\'" . vue-mode))
   :config
-  (add-to-list 'auto-mode-alist '("\\.vue\\'" . vue-mode))
   (setq mmm-js-mode-enter-hook (lambda () (setq syntax-ppss-table nil)))
-  (setq mmm-typescript-mode-enter-hook (lambda () (setq syntax-ppss-table nil))))
+  (setq mmm-typescript-mode-enter-hook (lambda () (setq syntax-ppss-table nil)))
+  )
 
 (use-package web-mode
   :ensure t
-  :config
-  (add-to-list 'auto-mode-alist '("\\.tpl\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.hbs\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.twig\\'" . web-mode)))
+  :mode (
+         ("\\.tpl\\'" . web-mode)
+         ("\\.html\\'" . web-mode)
+         ("\\.hbs\\'" . web-mode)
+         ("\\.twig\\'" . web-mode))
+  )
 
 (use-package scss-mode
   :ensure t
-  :config
-  :mode (("\\.scss\\'" . scss-mode)))
+  :mode (
+         ("\\.scss\\'" . scss-mode))
+  )
 
 (use-package yaml-mode
   :ensure t
   :config
-  :mode (("\\.yml\\'" . yaml-mode)))
+  :mode (
+         ("\\.yml\\'" . yaml-mode)))
 
 (use-package highlight-indent-guides
   :ensure t
@@ -276,7 +297,9 @@
 
 (use-package magit
   :ensure t
-  :bind(("C-x g" . magit-status)))
+  :bind(
+        ("C-x g" . magit-status))
+  )
 
 (use-package undo-tree
   :ensure t
@@ -287,26 +310,30 @@
 (use-package git-gutter
   :ensure t
   :init
-  (global-git-gutter-mode t))
+  (global-git-gutter-mode t)
+  )
 
 (use-package projectile
   :ensure t
   :config
-  (projectile-global-mode)
-  (setq projectile-switch-project-action 'neotree-projectile-action))
+  (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+  (projectile-mode +1)
+  )
 
 (use-package helm-projectile
   :ensure t
   :after (projectile helm)
   :config
   (setq projectile-completion-system 'helm)
-  (helm-projectile-on))
+  (helm-projectile-on)
+  )
 
 (use-package expand-region
   :ensure t
-  :bind (("C-^" . er/expand-region)))
-
-(setq path-to-ctags "ctags") ;; <- your ctags path here
+  :bind (
+         ("C-^" . er/expand-region))
+  )
 
 (eval-after-load "sql"
   '(load-library "sql-indent"))
@@ -335,32 +362,12 @@
 
 (use-package etags)
 
-;; (use-package ac-etags
-;;   :ensure t
-;;   ;; :after (etags)
-;;   :custom
-;;   (ac-etags-requires 1)
-;;   :hook ((c-mode-common . lexet-ac-setup-source-etags)
-;;          (json-mode . lexet-ac-setup-source-etags)
-;;          (emacs-lisp-mode . lexet-ac-setup-source-etags)
-;;          (lisp-mode . lexet-ac-setup-source-etags)
-;;          (lisp-interaction-mode . lexet-ac-setup-source-etags)
-;;          (python-mode . lexet-ac-setup-source-etags)
-;;          (js-mode . lexet-ac-setup-source-etags)
-;;          (ruby-mode . lexet-ac-setup-source-etags)
-;;          (php-mode . lexet-ac-setup-source-etags)
-;;          (sh-mode . lexet-ac-setup-source-etags))
-;;   :init
-;;   (ac-etags-setup)
-;;   (defun lexet-ac-setup-source-etags ()
-;;     (print "lexet-ac-setup-source-etags call")
-;;     (setq ac-sources (append ac-sources '(ac-source-etags)))))
-
 (use-package flycheck
   :ensure t
   :config
   ;; turn on flychecking globally
   (global-flycheck-mode)
+
   (setq flycheck-check-syntax-automatically '(mode-enabled save))
   ;; disable jshint since we prefer eslint checking
   (setq-default flycheck-disabled-checkers
@@ -378,7 +385,8 @@
 
   (setq-default flycheck-disabled-checkers
                 (append flycheck-disabled-checkers
-                        '(ruby-rubylint))))
+                        '(ruby-rubylint)))
+  )
 
 ;; (defun search-eslint-rc ()
 ;;   "search eslint configurations in parent dirs and set it for flycheck"
@@ -406,17 +414,20 @@
 
 (use-package flycheck-phpstan
   :ensure t
-  :after (php-mode flycheck))
+  :after (php-mode flycheck)
+  )
 
 (use-package ruby-mode
   :mode (
          ("\\.\\(?:cap\\|gemspec\\|irbrc\\|gemrc\\|rake\\|rb\\|ru\\|thor\\)\\'" . ruby-mode)
          ("\\(?:Brewfile\\|Capfile\\|Gemfile\\(?:\\.[a-zA-Z0-9._-]+\\)?\\|[rR]akefile\\)\\'" . ruby-mode)
          )
-  :interpreter ("ruby" . ruby-mode))
+  :interpreter ("ruby" . ruby-mode)
+  )
 
 (use-package multiple-cursors
-  :ensure t)
+  :ensure t
+  )
 
 ;; (electric-pair-mode t)
 (use-package smartparens
@@ -631,15 +642,19 @@
 	 (sh-mode . hs-minor-mode)
 	 (js-mode . hs-minor-mode)
 	 (json-mode . hs-minor-mode)
-	 (ruby-mode . hs-minor-mode)))
+	 (ruby-mode . hs-minor-mode))
+  )
 
 (use-package markdown-mode
   :ensure t
   :commands (markdown-mode gfm-mode)
-  :init (setq markdown-command "multimarkdown")
-  :mode (("README\\.md\\'" . gfm-mode)
+  :init
+  (setq markdown-command "multimarkdown")
+  :mode (
+         ("README\\.md\\'" . gfm-mode)
          ("\\.markdown\\'" . markdown-mode)
-         ("\\.md\\'" . markdown-mode)))
+         ("\\.md\\'" . markdown-mode))
+  )
 
 (use-package treemacs
   :disabled
@@ -687,15 +702,6 @@
   ;;      (treemacs-git-mode 'extended))
   ;;     (`(t . _)
   ;;      (treemacs-git-mode 'simple))))
-  :bind (
-         :map global-map
-        ("C-c t b"       . treemacs-select-window)
-        ("C-c t 1"   . treemacs-delete-other-windows)
-        ("C-c t t"   . treemacs)
-        ("C-c t B"   . treemacs-bookmark)
-        ("C-c t f f" . treemacs-find-file)
-        ("C-c t f t" . treemacs-find-tag)
-        )
   )
 
 ;; (use-package treemacs-evil
@@ -739,8 +745,7 @@
 (use-package dockerfile-mode
    :ensure t
    :mode (
-          ("Dockerfile\\'" . dockerfile-mode)
-          )
+          ("Dockerfile\\'" . dockerfile-mode))
    )
 
 (use-package tide
@@ -771,31 +776,33 @@
   )
 
 (use-package lexet-hydra-multiple-cursors
-  ;; :load-path (lambda ()  (getenv "lexet_packages_dir"))
   :after (multiple-cursors hydra)
-  ;; :requires (multiple-cursors hydra)
-  ;; :hook ((prog-mode . highlight-symbol-mode)
-  ;;        (text-mode . highlight-symbol-mode))
-  :config
-  (lexet-hydra-multiple-cursors-init)
+  :bind (
+         ("C-c m" . hydra-lexet-hydra-multiple-cursors/body))
   )
 
 (use-package lexet-hydra-highlight
   :after (highlight hydra)
-  :config
-  (lexet-hydra-highlight-init)
+  :bind (
+         ("C-c t" . hydra-lexet-hydra-higlight/body))
+  )
+
+(use-package lexet-hydra-treemacs
+  :after (treemacs hydra)
+  :bind (
+         ("C-c t" . hydra-lexet-hydra-treemacs/body))
   )
 
 (use-package lexet-hydra-git-gutter
   :after (git-gutter hydra)
-  :config
-  (lexet-hydra-git-gutter-init)
+  :bind (
+         ("C-c g" . hydra-lexet-hydra-git-gutter/body))
   )
 
 (use-package lexet-hydra-smartparens
   :after (smartparens hydra)
-  :config
-  (lexet-hydra-smartparens-init)
+  :bind (
+         ("C-c s" . hydra-lexet-hydra-smartparens/body))
   )
 
 (use-package lexet-bindings
@@ -816,14 +823,12 @@
 (use-package lexet-move-region
   :bind (
          ("M-<up>" . move-line-region-up)
-         ("M-<down>" . move-line-region-down)
-         )
+         ("M-<down>" . move-line-region-down))
   )
 
 (use-package lexet-toggle-window-split
   :bind (
-         ("C-x |" . toggle-window-split)
-         )
+         ("C-x |" . lexet-toggle-window-split))
   )
 
 (use-package lexet-reverse-input-method
@@ -833,14 +838,12 @@
 
 (use-package lexet-use-eslint-from-node-modules
   :hook (
-         (flycheck-mode . lexet/use-eslint-from-node-modules)
-         )
+         (flycheck-mode . lexet/use-eslint-from-node-modules))
   )
 
 (use-package lexet-back-to-indentation-or-beginning
   :bind (
-         ("<home>" . back-to-indentation-or-beginning)
-         )
+         ("<home>" . back-to-indentation-or-beginning))
   )
 
 (provide '.emacs)

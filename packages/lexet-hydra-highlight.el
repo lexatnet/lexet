@@ -21,46 +21,54 @@
 
 ;;; Commentary:
 
-;; Put a description of the package here
+;; Create lexet highlight hydra menu.
+;; defines function hydra-lexet-hydra-highlight
+;; which could be binded by global-set-key:
+
+;; (global-set-key (kbd "C-c h") 'hydra-lexet-hydra-higlight/body)
+
+;; or with use-paackage:
+
+;; (use-package hydra-lexet-hydra-higlight
+;;   :after (treemacs hydra)
+;;   :bind (
+;;          ("C-c h" . hydra-lexet-hydra-higlight/body))
+;;   )
+
 
 ;;; Code:
 
-(defun lexet-hydra-highlight-init ()
-    "Create lexet highlight hydra."
-    (defhydra hydra-lexet-hydra-higlight (:color teal)
-      "highlight"
-      ("a"
-       (lambda ()
-         (interactive)
-         (call-interactively 'hlt-unhighlight-all-prop)
-         )
-       "unhighlight all" :exit t)
-      ("s"
-       (lambda ()
-         (interactive)
-         (call-interactively 'highlight-region-in-buffer)
-         )
-       "highlight region in buffer" :exit t)
-      ("n"
-       (lambda ()
-         (interactive)
-         (call-interactively 'hlt-next-highlight)
-         (hydra-lexet-hydra-higlight/body)
-         )
-       "highlight next" :exit t)
+(defhydra hydra-lexet-hydra-higlight ()
+  "highlight"
+  ("a"
+   (lambda ()
+     (interactive)
+     (call-interactively 'hlt-unhighlight-all-prop)
+     )
+   "unhighlight all" :exit t)
+  ("s"
+   (lambda ()
+     (interactive)
+     (call-interactively 'highlight-region-in-buffer)
+     )
+   "highlight region in buffer" :exit t)
+  ("n"
+   (lambda ()
+     (interactive)
+     (call-interactively 'hlt-next-highlight)
+     (hydra-lexet-hydra-higlight/body)
+     )
+   "highlight next" :exit t)
 
-      ("p"
-       (lambda ()
-         (interactive)
-         (call-interactively 'hlt-previous-highlight)
-         (hydra-lexet-hydra-higlight/body)
-         )
-       "highlight previous" :exit t)
+  ("p"
+   (lambda ()
+     (interactive)
+     (call-interactively 'hlt-previous-highlight)
+     (hydra-lexet-hydra-higlight/body)
+     )
+   "highlight previous" :exit t)
 
-      ("q" nil "exit"))
-
-    (global-set-key (kbd "C-c h") 'hydra-lexet-hydra-higlight/body)
-    )
+  ("q" nil "exit"))
 
 
 (provide 'lexet-hydra-highlight)

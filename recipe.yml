@@ -130,7 +130,7 @@ script:
 
   # install ruby from sources
   - install_ruby_from_sources --prefix "${cwd}/usr" --local-repo-cache ../ruby --local-repo ./ruby
-  - patch_usr --search "${cwd}/usr"
+  - patch_usr --search "#!${cwd}/usr/bin/"
 
   # copy lexet packages
   - cp -r ../../lexet-packages ./lexet-packages

@@ -21,111 +21,113 @@
 
 ;;; Commentary:
 
-;; Put a description of the package here
+;; Create lexet smartparens hydra menu.
+;; defines function hydra-lexet-hydra-smartparens
+;; which could be binded by global-set-key:
+
+;; (global-set-key (kbd "C-c s") 'hydra-lexet-hydra-smartparens/body)
+
+;; or with use-package:
+
+;; (use-package lexet-hydra-smartparens
+;;   :after (smartparens hydra)
+;;   :bind (
+;;          ("C-c s" . hydra-lexet-hydra-smartparens/body))
+;;   )
 
 ;;; Code:
 
+(defhydra hydra-lexet-hydra-smartparens ()
+  "Smartparens"
 
-;; (bind-key "C-M-s")
-
-
-(defun lexet-hydra-smartparens-init ()
-  "Create lexet smartparens hydra."
-
-  (defhydra hydra-lexet-hydra-smartparens ()
-    "Smartparens"
-
-    ("d"
-     (lambda ()
-       (interactive)
-       (call-interactively 'sp-down-sexp)
-       (hydra-lexet-hydra-smartparens/body)
-       )
-     "Down")
-
-    ("u"
-     (lambda ()
-       (interactive)
-       (call-interactively 'sp-up-sexp)
-       (hydra-lexet-hydra-smartparens/body)
-       )
-     "Up")
-
-    ("U"
-     (lambda ()
-       (interactive)
-       (call-interactively 'sp-backward-up-sexp)
-       (hydra-lexet-hydra-smartparens/body)
-       )
-     "Up")
-
-    ("D"
-     (lambda ()
-       (interactive)
-       (call-interactively 'sp-backward-down-sexp)
-       (hydra-lexet-hydra-smartparens/body)
-       )
-     "Down")
-
-    ("f"
-     (lambda ()
-       (interactive)
-       (call-interactively 'sp-forward-sexp)
-       (hydra-lexet-hydra-smartparens/body)
-       )
-     "Forward")
-
-    ("b"
-     (lambda ()
-       (interactive)
-       (call-interactively 'sp-backward-sexp)
-       (hydra-lexet-hydra-smartparens/body)
-       )
-     "Backward"
+  ("d"
+   (lambda ()
+     (interactive)
+     (call-interactively 'sp-down-sexp)
+     (hydra-lexet-hydra-smartparens/body)
      )
+   "Down")
 
-    ("r"
-     (lambda ()
-       (interactive)
-       (call-interactively 'sp-rewrap-sexp)
-       (hydra-lexet-hydra-smartparens/body)
-       )
-     "Re-wrap"
+  ("u"
+   (lambda ()
+     (interactive)
+     (call-interactively 'sp-up-sexp)
+     (hydra-lexet-hydra-smartparens/body)
      )
+   "Up")
 
-    ("s"
-     (lambda ()
-       (interactive)
-       (call-interactively 'sp-splice-sexp)
-       (hydra-lexet-hydra-smartparens/body)
-       )
-     "Un-wrap"
+  ("U"
+   (lambda ()
+     (interactive)
+     (call-interactively 'sp-backward-up-sexp)
+     (hydra-lexet-hydra-smartparens/body)
      )
+   "Up")
 
-    ("o"
-     (lambda ()
-       (interactive)
-       (call-interactively 'sp-change-inner)
-       (hydra-lexet-hydra-smartparens/body)
-       )
-     "Override"
+  ("D"
+   (lambda ()
+     (interactive)
+     (call-interactively 'sp-backward-down-sexp)
+     (hydra-lexet-hydra-smartparens/body)
      )
+   "Down")
 
-    ("k"
-     (lambda ()
-       (interactive)
-       (call-interactively 'sp-kill-sexp)
-       (hydra-lexet-hydra-smartparens/body)
-       )
-     "Kill"
-     :color blue
+  ("f"
+   (lambda ()
+     (interactive)
+     (call-interactively 'sp-forward-sexp)
+     (hydra-lexet-hydra-smartparens/body)
      )
+   "Forward")
 
-    ("q" nil "Quit" :color blue)
-    )
+  ("b"
+   (lambda ()
+     (interactive)
+     (call-interactively 'sp-backward-sexp)
+     (hydra-lexet-hydra-smartparens/body)
+     )
+   "Backward"
+   )
 
-  (global-set-key (kbd "C-c s") 'hydra-lexet-hydra-smartparens/body)
-  )
+  ("r"
+   (lambda ()
+     (interactive)
+     (call-interactively 'sp-rewrap-sexp)
+     (hydra-lexet-hydra-smartparens/body)
+     )
+   "Re-wrap"
+   )
+
+  ("s"
+   (lambda ()
+     (interactive)
+     (call-interactively 'sp-splice-sexp)
+     (hydra-lexet-hydra-smartparens/body)
+     )
+   "Un-wrap"
+   )
+
+  ("o"
+   (lambda ()
+     (interactive)
+     (call-interactively 'sp-change-inner)
+     (hydra-lexet-hydra-smartparens/body)
+     )
+   "Override"
+   )
+
+  ("k"
+   (lambda ()
+     (interactive)
+     (call-interactively 'sp-kill-sexp)
+     (hydra-lexet-hydra-smartparens/body)
+     )
+   "Kill"
+   :color blue
+   )
+
+  ("q"
+   nil "Quit" :color blue))
 
 
 (provide 'lexet-hydra-smartparens)

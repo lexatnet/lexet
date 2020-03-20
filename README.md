@@ -174,6 +174,7 @@ optional arguments:
 ### Highlight
 | Action title                      | Shortcut     |
 | --------------------------------- | :----------: |
+| highlight menu                    | C-c h        |
 | highlight regions match selected  | C-c h s      |
 | next highligted region            | C-c h n      |
 | previous highlighted region       | C-c h p      |
@@ -249,24 +250,6 @@ optional arguments:
 
 
 
-### Dired Mod
-| Action title       | Shortcut   |
-| ------------------ | :--------: |
-| open dired browser | C-x d      |
-| help               | ?          |
-| move up            | up         |
-| move down          | down       |
-| open file/dir      | return     |
-| refresh            | g          |
-| create dir         | +          |
-| copy               | C          |
-| rename             | R          |
-| delete             | d          |
-| chmod              | M          |
-| jum to file        | j          |
-
-
-
 ### Work with file browsing
 | Action title        | Shortcut   |
 | ------------------- | :--------: |
@@ -275,92 +258,102 @@ optional arguments:
 
 
 #### Work with file browser
-| Action title                                       | Shortcut              |
-| -------------------------------------------------- | :-------------------: |
-| exit file browser                                  | q                     |
-| move up to previous line                           | p                     |
-| move down to next line                             | n                     |
-| move up to previous directory line                 | <                     |
-| move down to next directory line                   | >                     |
-| move to next marked file                           | M-}                   |
-| move to previous marked file                       | M-{                   |
-| move up to previous subdirectory                   | M-C-p                 |
-| move down to next subdirectory                     | M-C-n                 |
-| move to parent directory                           | ^                     |
-| move to first child subdirectory                   | M-C-d                 |
-|                                                    |                       |
-| visit current file                                 | f                     |
-| view current file                                  | v                     |
-| visit current file in other window                 | o                     |
-| create a new sub-directory                         | +                     |
-| compare file at point with the one at mark         | =                     |
-|                                                    |                       |
-| mark a file or subdirectory for later commands     | m                     |
-| unmark a file or all files of a subdirectory       | u                     |
-| unmark all marked files in a buffer                | M-delete              |
-| mark files with a given extension                  | * .                   |
-| mark all directories                               | * /                   |
-| mark all symlinks                                  | * @                   |
-| mark all executables                               | * *                   |
-| invert marking                                     | t                     |
-| mark all files in the current subdir               | * s                   |
-| mark file names matching a regular expression      | * %                   |
-| change the marks to a different character          | * c                   |
-| mark files for which Elisp expression returns      | t * (                 |
-|                                                    |                       |
-| insert a subdirectory into this buffer             | i                     |
-| remove marked files from the listing               | k                     |
-| remove a subdir listing                            | C-u k                 |
-| re-read all directories (retains all marks)        | g                     |
-| toggle sorting of current subdir by name/date      | s                     |
-| edit ls switches                                   | C-u s                 |
-| recover marks, hidden lines, and such (undo)       | C-_                   |
-| hide all subdirectories                            | M-$                   |
-| hide or unhide subdirectory                        | $                     |
-|                                                    |                       |
-| copy file(s)                                       | C                     |
-| rename a file or move files to another directory   | R                     |
-| change ownership of file(s)                        | O                     |
-| change the group of the file(s)                    | G                     |
-| change mode of file(s)                             | M                     |
-| print file(s)                                      | P                     |
-| convert filename(s) to lower case                  | % l                   |
-| convert filename(s) to upper case                  | % u                   |
-| delete marked (as opposed to flagged) file(s)      | D                     |
-| compress or uncompress file(s)                     | Z                     |
-| run info on file                                   | I (DX)                |
-| make symbolic link(s)                              | S                     |
-| make relative symbolic link(s)                     | Y                     |
-| make hard link(s)                                  | H                     |
-| search files for a regular expression              | A                     |
-| regexp query replace on marked files               | Q                     |
-| byte-compile file(s)                               | B                     |
-| load file(s)                                       | L                     |
-| shell command on file(s)                           | !                     |
-| asynchronous shell command on file(s)              | &                     |
-|                                                    |                       |
-| flag file for deletion                             | d                     |
-| flag all backup files (file names ending in ˜)     | ~                     |
-| flag all auto-save files                           | #                     |
-| flag various intermediate files                    | % &                   |
-| flag numeric backups (ending in .˜1˜, .˜2˜, etc.)  | .                     |
-| execute the deletions requested (flagged files)    | x                     |
-| flag files matching a regular expression           | % d                   |
-|                                                    |                       |
-| mark filenames matching a regular expression       | % m                   |
-| copy marked files by regexp                        | % C                   |
-| rename marked files by regexp                      | % R                   |
-| hardlink                                           | % H                   |
-| symlink                                            | % S                   |
-| symlink, with relative paths                       | % Y                   |
-| mark for deletion                                  | % d                   |
-|                                                    |                       |
-| dired file(s) whose name matches a pattern         | M-x find-name-dired   |
-| dired file(s) that contain pattern                 | M-x find-grep-dired   |
-| dired file(s) based on find output                 | M-x find-dired        |
-|                                                    |                       |
-| dired help                                         | h                     |
-| dired summary (short help) and error log           | ?                     |
+| Action title                                          | Shortcut              |
+| ----------------------------------------------------- | :-------------------: |
+| exit file browser                                     | q                     |
+| move up to previous line                              | p, up                 |
+| move down to next line                                | n, down               |
+| move up to previous directory line                    | <                     |
+| move down to next directory line                      | >                     |
+| move to next marked file                              | M-}                   |
+| move to previous marked file                          | M-{                   |
+| move up to previous subdirectory                      | M-C-p                 |
+| move down to next subdirectory                        | M-C-n                 |
+| move to parent directory                              | ^                     |
+| move to first child subdirectory                      | M-C-d                 |
+| jump to file                                          | j                     |
+|                                                       |                       |
+| visit current file                                    | f, return             |
+| view current file                                     | v                     |
+| visit current file in other window                    | o                     |
+| create a new sub-directory                            | +                     |
+| compare file at point with the one at mark            | =                     |
+|                                                       |                       |
+| mark a file or subdirectory for later commands        | m                     |
+| unmark a file or all files of a subdirectory          | u                     |
+| unmark all marked files in a buffer                   | M-delete              |
+| mark files with a given extension                     | * .                   |
+| mark all directories                                  | * /                   |
+| mark all symlinks                                     | * @                   |
+| mark all executables                                  | * *                   |
+| invert marking                                        | t                     |
+| mark all files in the current subdir                  | * s                   |
+| mark file names matching a regular expression         | * %                   |
+| change the marks to a different character             | * c                   |
+| mark files for which Elisp expression returns         | t * (                 |
+|                                                       |                       |
+| insert a subdirectory into this buffer                | i                     |
+| remove marked files from the listing                  | k                     |
+| remove a subdir listing                               | C-u k                 |
+| re-read all directories (retains all marks), refresh  | g                     |
+| toggle sorting of current subdir by name/date         | s                     |
+| edit ls switches                                      | C-u s                 |
+| recover marks, hidden lines, and such (undo)          | C-_                   |
+| hide all subdirectories                               | M-$                   |
+| hide or unhide subdirectory                           | $                     |
+|                                                       |                       |
+| copy file(s)                                          | C                     |
+| rename a file or move files to another directory      | R                     |
+| change ownership of file(s)                           | O                     |
+| change the group of the file(s)                       | G                     |
+| change mode of file(s)                                | M                     |
+| print file(s)                                         | P                     |
+| convert filename(s) to lower case                     | % l                   |
+| convert filename(s) to upper case                     | % u                   |
+| delete marked (as opposed to flagged) file(s)         | D                     |
+| compress or uncompress file(s)                        | Z                     |
+| run info on file                                      | I (DX)                |
+| make symbolic link(s)                                 | S                     |
+| make relative symbolic link(s)                        | Y                     |
+| make hard link(s)                                     | H                     |
+| search files for a regular expression                 | A                     |
+| regexp query replace on marked files                  | Q                     |
+| byte-compile file(s)                                  | B                     |
+| load file(s)                                          | L                     |
+| shell command on file(s)                              | !                     |
+| asynchronous shell command on file(s)                 | &                     |
+|                                                       |                       |
+| flag file for deletion                                | d                     |
+| flag all backup files (file names ending in ˜)        | ~                     |
+| flag all auto-save files                              | #                     |
+| flag various intermediate files                       | % &                   |
+| flag numeric backups (ending in .˜1˜, .˜2˜, etc.)     | .                     |
+| execute the deletions requested (flagged files)       | x                     |
+| flag files matching a regular expression              | % d                   |
+|                                                       |                       |
+| mark filenames matching a regular expression          | % m                   |
+| copy marked files by regexp                           | % C                   |
+| rename marked files by regexp                         | % R                   |
+| hardlink                                              | % H                   |
+| symlink                                               | % S                   |
+| symlink, with relative paths                          | % Y                   |
+| mark for deletion                                     | % d                   |
+|                                                       |                       |
+| dired file(s) whose name matches a pattern            | M-x find-name-dired   |
+| dired file(s) that contain pattern                    | M-x find-grep-dired   |
+| dired file(s) based on find output                    | M-x find-dired        |
+|                                                       |                       |
+| dired help                                            | h                     |
+| dired summary (short help) and error log              | ?                     |
+
+
+
+## Work with tree
+| Action title         | Shortcut   |
+| -------------------- | :--------: |
+| menu                 | C-c t      |
+| toggle tree          | C-c t t    |
+| focus tree           | C-c t b    |
 
 
 
@@ -417,19 +410,23 @@ optional arguments:
 | Action title                 | Shortcut   |
 | ---------------------------- | :--------: |
 | multicursor menu             | C-c m      |
-|                              |            |
+| next like this               | C-c m n    |
+| skip next                    | C-c m N    |
 
 
 
 ## Work with Projectile
-| Action title                          | Shortcut   |
-| ------------------------------------- | :--------: |
-| Help                                  | C-c p C-h  |
-| Find file                             | C-c p f    |
-| Run grep on the files in the project. | C-c p s g  |
-|                                       |            |
+| Action title                                            | Shortcut   |
+| ------------------------------------------------------- | :--------: |
+| Help                                                    | C-c p C-h  |
+| Switch project                                          | C-C p p    |
+| Find file                                               | C-c p f    |
+| Display a list of all files in all known projects.      | C-c p F    |
+| Run grep on the files in the project.                   | C-c p s g  |
+| Display a list of all project buffers currently open.   | C-c p b    |
+|                                                         |            |
 
-[Here](Https://Projectile.Readthedocs.Io/En/Latest/Usage/) Detailed Map key bindings
+[Here](https://docs.projectile.mx/en/latest/usage/) Detailed Map key bindings
 
 
 

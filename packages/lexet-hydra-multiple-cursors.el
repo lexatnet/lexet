@@ -21,82 +21,98 @@
 
 ;;; Commentary:
 
-;; Put a description of the package here
+;; Create lexet multiple-cursors hydra menu.
+;; defines function hydra-lexet-hydra-multiple-cursors
+;; which could be binded by global-set-key:
+
+;; (global-set-key (kbd "C-c m") 'hydra-lexet-hydra-multiple-cursors/body)
+
+;; or with use-package:
+
+;; (use-package lexet-hydra-multiple-cursors
+;;   :after (multiple-cursors hydra)
+;;   :bind (
+;;          ("C-c m" . hydra-lexet-hydra-multiple-cursors/body))
+;;   )
 
 ;;; Code:
 
-(defun lexet-hydra-multiple-cursors-init ()
-  "Create lexet hydra multiple cursors."
-  (defhydra hydra-lexet-hydra-multiple-cursors (:color teal)
-    "multiple cursors"
-    ("l"
-     (lambda ()
-       (interactive)
-       (call-interactively 'mc/edit-lines)
-       )
-     "edit lines" :exit t)
-    ("a"
-     (lambda ()
-       (interactive)
-       (call-interactively 'mc/mark-all-like-this)
-       (hydra-lexet-hydra-multiple-cursors/body)
-       )
-     "all like this")
-    ("n"
-     (lambda ()
-       (interactive)
-       (call-interactively 'mc/mark-next-like-this)
-       (hydra-lexet-hydra-multiple-cursors/body)
-       )
-     "next like this")
-    ("N"
-     (lambda ()
-       (interactive)
-       (call-interactively 'mc/skip-to-next-like-this)
-       (hydra-lexet-hydra-multiple-cursors/body)
-       )
-     "skip next")
-    ("M-n"
-     (lambda ()
-       (interactive)
-       (call-interactively 'mc/unmark-next-like-this)
-       (hydra-lexet-hydra-multiple-cursors/body)
-       )
-     "unmark next")
-    ("p"
-     (lambda ()
-       (interactive)
-       (call-interactively 'mc/mark-previous-like-this)
-       (hydra-lexet-hydra-multiple-cursors/body)
-       )
-     "previous like this")
+(defhydra hydra-lexet-hydra-multiple-cursors ()
+  "multiple cursors"
 
-    ("P"
-     (lambda ()
-       (interactive)
-       (call-interactively 'mc/skip-to-previous-like-this)
-       (hydra-lexet-hydra-multiple-cursors/body)
-       )
-     "skip previous")
-    ("M-p"
-     (lambda ()
-       (interactive)
-       (call-interactively 'mc/unmark-previous-like-this)
-       (hydra-lexet-hydra-multiple-cursors/body)
-       )
-     "unmark previous")
-    ("d"
-     (lambda ()
-       (interactive)
-       (call-interactively 'mc/mark-all-dwim)
-       (hydra-lexet-hydra-multiple-cursors/body)
-       )
-     "mark dwim")
-    ("q" nil "exit"))
+  ("l"
+   (lambda ()
+     (interactive)
+     (call-interactively 'mc/edit-lines)
+     )
+   "edit lines" :exit t)
 
-  (global-set-key (kbd "C-c m") 'hydra-lexet-hydra-multiple-cursors/body)
-  )
+  ("a"
+   (lambda ()
+     (interactive)
+     (call-interactively 'mc/mark-all-like-this)
+     (hydra-lexet-hydra-multiple-cursors/body)
+     )
+   "all like this")
 
+  ("n"
+   (lambda ()
+     (interactive)
+     (call-interactively 'mc/mark-next-like-this)
+     (hydra-lexet-hydra-multiple-cursors/body)
+     )
+   "next like this")
+
+  ("N"
+   (lambda ()
+     (interactive)
+     (call-interactively 'mc/skip-to-next-like-this)
+     (hydra-lexet-hydra-multiple-cursors/body)
+     )
+   "skip next")
+
+  ("M-n"
+   (lambda ()
+     (interactive)
+     (call-interactively 'mc/unmark-next-like-this)
+     (hydra-lexet-hydra-multiple-cursors/body)
+     )
+   "unmark next")
+
+  ("p"
+   (lambda ()
+     (interactive)
+     (call-interactively 'mc/mark-previous-like-this)
+     (hydra-lexet-hydra-multiple-cursors/body)
+     )
+   "previous like this")
+
+  ("P"
+   (lambda ()
+     (interactive)
+     (call-interactively 'mc/skip-to-previous-like-this)
+     (hydra-lexet-hydra-multiple-cursors/body)
+     )
+   "skip previous")
+
+  ("M-p"
+   (lambda ()
+     (interactive)
+     (call-interactively 'mc/unmark-previous-like-this)
+     (hydra-lexet-hydra-multiple-cursors/body)
+     )
+   "unmark previous")
+
+  ("d"
+   (lambda ()
+     (interactive)
+     (call-interactively 'mc/mark-all-dwim)
+     (hydra-lexet-hydra-multiple-cursors/body)
+     )
+   "mark dwim")
+
+  ("q"
+   nil "exit"))
 
 (provide 'lexet-hydra-multiple-cursors)
 ;;; lexet-hydra-multiple-cursors.el ends here

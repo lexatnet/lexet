@@ -21,64 +21,70 @@
 
 ;;; Commentary:
 
-;; Put a description of the package here
+;; Create lexet git-gutter hydra menu.
+;; defines function hydra-lexet-hydra-git-gutter
+;; which could be binded by global-set-key:
+
+;; (global-set-key (kbd "C-c g") 'hydra-lexet-hydra-git-gutter/body)
+
+;; or with use-paackage:
+
+;; (use-package lexet-hydra-git-gutter
+;;   :after (git-gutter hydra)
+;;   :bind (
+;;          ("C-c g" . hydra-lexet-hydra-git-gutter/body))
+;;   )
 
 ;;; Code:
 
-(defun lexet-hydra-git-gutter-init ()
-  "Create lexet git-gutter hydra."
-  (defhydra hydra-lexet-hydra-git-gutter (:color teal)
-    "git gutter"
-    ;; Show current hunk
-    ("u"
-     (lambda ()
-       (interactive)
-       (call-interactively 'git-gutter:popup-hunk)
-       )
-     "Show current hunk")
-    ;; Jump to next/previous hunk
-    ("n"
-     (lambda ()
-       (interactive)
-       (call-interactively 'git-gutter:next-hunk)
-       )
-     "Jump to next hunk")
-    ("p"
-     (lambda ()
-       (interactive)
-       (call-interactively 'git-gutter:previous-hunk)
-       )
-     "Jump to previous hunk")
-    ;; Stage current hunk
-    ("s"
-     (lambda ()
-       (interactive)
-       (call-interactively 'git-gutter:stage-hunk)
-       (hydra-lexet-hydra-git-gutter/body)
-       )
-     "Stage current hunk" :exit t)
-    ;; Revert current hunk
-    ("r"
-     (lambda ()
-       (interactive)
-       (call-interactively 'git-gutter:revert-hunk)
-       (hydra-lexet-hydra-git-gutter/body)
-       )
-     "Revert current hunk" :exit t)
-    ;; Mark current hunk
-    ("m"
-     (lambda ()
-       (interactive)
-       (call-interactively 'git-gutter:mark-hunk)
-       (hydra-lexet-hydra-git-gutter/body)
-       )
-     "Mark current hunk" :exit t)
+(defhydra hydra-lexet-hydra-git-gutter ()
+  "git gutter"
+  ;; Show current hunk
+  ("u"
+   (lambda ()
+     (interactive)
+     (call-interactively 'git-gutter:popup-hunk)
+     )
+   "Show current hunk")
+  ;; Jump to next/previous hunk
+  ("n"
+   (lambda ()
+     (interactive)
+     (call-interactively 'git-gutter:next-hunk)
+     )
+   "Jump to next hunk")
+  ("p"
+   (lambda ()
+     (interactive)
+     (call-interactively 'git-gutter:previous-hunk)
+     )
+   "Jump to previous hunk")
+  ;; Stage current hunk
+  ("s"
+   (lambda ()
+     (interactive)
+     (call-interactively 'git-gutter:stage-hunk)
+     (hydra-lexet-hydra-git-gutter/body)
+     )
+   "Stage current hunk" :exit t)
+  ;; Revert current hunk
+  ("r"
+   (lambda ()
+     (interactive)
+     (call-interactively 'git-gutter:revert-hunk)
+     (hydra-lexet-hydra-git-gutter/body)
+     )
+   "Revert current hunk" :exit t)
+  ;; Mark current hunk
+  ("m"
+   (lambda ()
+     (interactive)
+     (call-interactively 'git-gutter:mark-hunk)
+     (hydra-lexet-hydra-git-gutter/body)
+     )
+   "Mark current hunk" :exit t)
 
-    ("q" nil "exit"))
-
-  (global-set-key (kbd "C-c g") 'hydra-lexet-hydra-git-gutter/body)
-  )
-
+  ("q" nil "exit"))
 
 (provide 'lexet-hydra-git-gutter)
 ;;; lexet-hydra-git-gutter.el ends here
