@@ -198,7 +198,7 @@ optional arguments:
 | copy              | M-w        |
 | cut               | C-w        |
 | paste             | C-y        |
-| paste next        | M-y        |
+| select paste      | M-y        |
 
 
 
@@ -490,6 +490,17 @@ optional arguments:
 | Remove the wrapping pair from the following expression                              | M-<delete>      |
 | Remove the wrapping pair from the previous expression                               | M-<backspace>   |
 |                                                                                     |                 |
+
+
+### Helm
+| Action title                  | shortcut       |
+| ----------------------------- | -------------- |
+| Buffers menu                  | C-x b          |
+| Process list                  | C-x c p        |
+|                               |                |
+| correct word menu             | C-;            |
+| buffer errors list            | C-c c          |
+|                               |                |
 
 
 # Development

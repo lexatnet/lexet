@@ -94,17 +94,27 @@
 
 (use-package helm
   :ensure t
-  :config
-  (require 'helm-config)
+  :init
+  (message "[lexet] helm init")
+  (helm-mode t)
   :bind (
-         ("M-x" . helm-M-x))
+         ("M-x" . helm-M-x)
+         ("C-x C-f" . helm-find-files)
+         ("C-x f" . helm-recentf)
+         ("M-y" . helm-show-kill-ring)
+         ("C-x b" . helm-buffers-list))
+  :config
+  (message "[lexet] helm config")
+  (require 'helm-config)
+  :catch (lambda (keyword err)
+           (message "[lexet] error helm %s" (error-message-string err)))
   )
 
 (use-package helm-flycheck
   :ensure t
   :after (helm flycheck)
   :bind (
-         ("C-c ! h" . helm-flycheck))
+         ("C-c c" . helm-flycheck))
   )
 
 ;; enable flspell-mode for text modes
@@ -283,14 +293,14 @@
   :config
   (setq highlight-indent-guides-method 'fill)
   (setq highlight-indent-guides-responsive nil)
-  ;(setq highlight-indent-guides-auto-enabled nil)
-  ;(setq highlight-indent-guides-responsive 'top)
+  ;; (setq highlight-indent-guides-auto-enabled nil)
+  ;; (setq highlight-indent-guides-responsive 'top)
   (setq highlight-indent-guides-auto-odd-face-perc 2)
   (setq highlight-indent-guides-auto-even-face-perc 0)
-  ;(setq highlight-indent-guides-auto-character-face-perc 20)
-  ;(set-face-background 'highlight-indent-guides-odd-face "#000000")
-  ;(set-face-background 'highlight-indent-guides-even-face "#262626")
-  ;(set-face-foreground 'highlight-indent-guides-character-face "#585858")
+  (setq highlight-indent-guides-auto-character-face-perc 20)
+  ;; (set-face-background 'highlight-indent-guides-odd-face "#000000")
+  ;; (set-face-background 'highlight-indent-guides-even-face "#262626")
+  ;; (set-face-foreground 'highlight-indent-guides-character-face "#585858")
   (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
   (add-hook 'text-mode-hook 'highlight-indent-guides-mode)
   (add-hook 'html-mode-hook 'highlight-indent-guides-mode))
@@ -325,7 +335,7 @@
   :ensure t
   :after (projectile helm)
   :config
-  (setq projectile-completion-system 'helm)
+  ;; (setq projectile-completion-system 'helm)
   (helm-projectile-on)
   )
 
@@ -657,9 +667,7 @@
   )
 
 (use-package treemacs
-  :disabled
   :ensure t
-  :defer t
   ;; :init
   ;; (with-eval-after-load 'winum
   ;;   (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
@@ -784,7 +792,7 @@
 (use-package lexet-hydra-highlight
   :after (highlight hydra)
   :bind (
-         ("C-c t" . hydra-lexet-hydra-higlight/body))
+         ("C-c h" . hydra-lexet-hydra-higlight/body))
   )
 
 (use-package lexet-hydra-treemacs
