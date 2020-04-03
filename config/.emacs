@@ -194,6 +194,11 @@
 (use-package php-mode
   :ensure t
   :config
+  :mode (
+         ;; Drupal bindings
+         ("\\.module\\'" . php-mode)
+         ("\\.install\\'" . php-mode)
+         ("\\.theme\\'" . php-mode))
   :init
   (defun lexet-php-mode-init ()
     (setq c-basic-offset lexet-indent))
