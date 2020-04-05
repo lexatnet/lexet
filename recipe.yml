@@ -91,20 +91,6 @@ script:
   # import sripts lib
   - source $through_point/scripts/index.sh
 
-  # - patch_usr
-
-  # - export PATH=usr/bin/:$PATH
-  # - export LD_LIBRARY_PATH=${cwd}/usr/lib/x86_64-linux-gnu/:${cwd}/lib/x86_64-linux-gnu/:${cwd}/usr/lib/:${cwd}/lib/:$LD_LIBRARY_PATH
-  # - export LOAD_PATH=${cwd}/usr/lib/ruby/2.5.0:$LOAD_PATH
-
-  # # install ruby packages
-  # - ruby ./usr/bin/gem install bundler
-  # - ruby ./usr/bin/bundler rubocop
-  # - ruby ./usr/bin/gem install rubocop-rspec
-  # - ruby ./usr/bin/gem install ruby-lint
-
-  # - patch_usr
-
   - cp ../composer.phar ${cwd}/usr/bin/composer
   - cp ../phpcs.phar ${cwd}/usr/bin/phpcs
   - cp ../phpcbf.phar ${cwd}/usr/bin/phpcbf
@@ -130,6 +116,13 @@ script:
 
   # install ruby from sources
   - install_ruby_from_sources --prefix "${cwd}/usr" --local-repo-cache ../ruby --local-repo ./ruby
+
+  # # install ruby packages
+  - ./usr/bin/gem install rubocop
+  - ./usr/bin/gem install rubocop-rspec
+  - ./usr/bin/gem install ruby-lint
+
+  # patch hardcoded bin paths
   - patch_usr --search "#!${cwd}/usr/bin/"
 
   # copy lexet packages
