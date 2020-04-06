@@ -4,7 +4,7 @@ Emacs build with useful utils configured for speed and comfortable writing code 
 
 
 # Download
-You can download latest AppImage version from [releases](releases) page.
+You can download latest AppImage version from [releases](https://github.com/lexatnet/lexet/releases) page.
 
 
 
