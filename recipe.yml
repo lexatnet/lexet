@@ -50,6 +50,7 @@ ingredients:
     - libsm6
     - libasound2
     - libgl1
+    - libgnutls30
     # tools
     # ---------------
     - python3-venv
@@ -69,6 +70,7 @@ ingredients:
     - hunspell-en-us
     - hunspell-ru
     # - ruby-full
+    - sbcl
 
   pretend:
     - libgbm1 19.0.8-0ubuntu0~18.04.2
@@ -116,6 +118,9 @@ script:
 
   # install ruby from sources
   - install_ruby_from_sources --prefix "${cwd}/usr" --local-repo-cache ../ruby --local-repo ./ruby
+
+  # install sbcl from sources
+  - install_sbcl --prefix "${cwd}/usr" --local-repo ./sbcl
 
   # # install ruby packages
   - ./usr/bin/gem install rubocop

@@ -26,6 +26,7 @@ lib_index() {
   source $dir/get_script_dir.sh
   source $dir/patch_usr.sh
   source $dir/install_ruby.sh
+  source $dir/install_sbcl.sh
   source $dir/install_node.sh
   source $dir/add_user.sh
   source $dir/incremental_tags_generation.sh
