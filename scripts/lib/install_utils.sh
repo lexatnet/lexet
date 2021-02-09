@@ -50,10 +50,12 @@ install_utils(){
 gulp
 eslint
 babel-eslint
+eslint-plugin-json
 jshint
 jscs
 prettier
 @prettier/plugin-xml
+node-gyp
 EOF
 
   install_node \

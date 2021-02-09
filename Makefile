@@ -2,6 +2,7 @@
 build-appimage-builder:
 	./scripts/build-appimage-builder-docker.sh
 
+
 docker-push:
 	./scripts/docker-push.sh
 
@@ -13,6 +14,9 @@ build-appimage-with-log:
 
 appimage-builder-bash:
 	./scripts/appimage-builder-bash.sh
+
+appimage-builder-bash-root:
+	./scripts/appimage-builder-bash-root.sh
 
 build-appimage-test:
 	./scripts/build-appimage-test.sh

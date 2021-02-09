@@ -25,25 +25,25 @@
 
 ;;; Code:
 
-(defun lexet-indentation-init ()
-    "Indent configuration."
-    (setq lexet-indent 2)
-    (setq c-basic-offset lexet-indent)
-    (setq-default indent-tabs-mode nil)
-    (setq default-tab-width lexet-indent)
-    (setq tab-width lexet-indent)
-    (setq js-indent-level lexet-indent)
-    (setq web-mode-markup-indent-offset lexet-indent)
-    (setq web-mode-css-indent-offset lexet-indent)
-    (setq web-mode-code-indent-offset lexet-indent)
-    (setq sh-basic-offset lexet-indent)
-    (setq sh-indentation lexet-indent)
-    (setq python-indent-offset lexet-indent)
-    (setq sql-indent-offset lexet-indent)
-    (setq css-indent-offset lexet-indent)
-    (setq sgml-basic-offset lexet-indent)
-    )
-
+(defun lexet-indentation-init (&optional lexet-indent)
+  "Indent configuration."
+  (or lexet-indent (setq lexet-indent 2))
+  (setq c-basic-offset lexet-indent)
+  (setq-default indent-tabs-mode nil)
+  (setq default-tab-width lexet-indent)
+  (setq tab-width lexet-indent)
+  (setq js-indent-level lexet-indent)
+  (setq js-switch-indent-offset lexet-indent)
+  (setq web-mode-markup-indent-offset lexet-indent)
+  (setq web-mode-css-indent-offset lexet-indent)
+  (setq web-mode-code-indent-offset lexet-indent)
+  (setq sh-basic-offset lexet-indent)
+  (setq sh-indentation lexet-indent)
+  (setq python-indent-offset lexet-indent)
+  (setq sql-indent-offset lexet-indent)
+  (setq css-indent-offset lexet-indent)
+  (setq sgml-basic-offset lexet-indent)
+  )
 
 (provide 'lexet-indentation)
 ;;; lexet-indentation.el ends here

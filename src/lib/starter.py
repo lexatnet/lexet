@@ -20,6 +20,10 @@ class LexetStarter():
       self.run()
     elif mode == 'ui':
       self.run_x()
+    elif mode == 'atom':
+      self.run_atom()
+    elif mode == 'prompt':
+       self.run_prompt()
     else:
       logging.info('undefined start mode')
 
@@ -36,7 +40,7 @@ class LexetStarter():
       )
     )
 
-    parts.append('--no-windows')
+    parts.append('--no-window-system')
 
     parts.append('--no-init-file')
 
@@ -69,6 +73,40 @@ class LexetStarter():
       Template('--load $config')
       .substitute(
         config = self.config['root']['emacs_config']
+      )
+    )
+
+    logging.info('run command "{command}"'.format(command=' '.join(parts)))
+    os.system(' '.join(parts))
+
+  def run_atom(self):
+    parts = []
+    parts.append(
+      str(
+        Path(
+          self.config['global']['lexet_mount_point'],
+          'usr',
+          'bin',
+          'atom',
+        )
+      )
+    )
+
+    parts.append('--wait')
+
+    logging.info('run command "{command}"'.format(command=' '.join(parts)))
+    os.system(' '.join(parts))
+
+  def run_prompt(self):
+    parts = []
+    parts.append(
+      str(
+        Path(
+          self.config['global']['lexet_mount_point'],
+          'usr',
+          'bin',
+          'bash',
+        )
       )
     )
 

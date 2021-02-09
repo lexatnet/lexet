@@ -38,9 +38,11 @@ copy_libs(){
     local real_file=$(readlink -f "${lib_path}")
     local name=$(basename ${real_file})
     if [[ -f "${lib_path}" ]]; then
+      echo "copy ${lib_path} to ${destination}/${lib}"
       cp "${lib_path}" "${destination}/${lib}"
     fi
     if [[ -f "${real_file}" ]]; then
+      echo "copy ${real_path} to ${destination}/${name}"
       cp "${real_file}" "${destination}/${name}"
     fi
   done;

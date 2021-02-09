@@ -47,8 +47,8 @@ For future extensions of functionality. Default: run
       action='store',
       dest='mode',
       nargs=1,
-      choices=['text', 'ui'],
-      default=['ui'],
+      choices=['text', 'ui', 'atom', 'prompt'],
+      default=['atom'],
       help='''
 Allows to run application in console mode. Default: ui
 '''
@@ -61,6 +61,16 @@ Allows to run application in console mode. Default: ui
       default=[os.getcwd()],
       help='''
 Path to working directory which you want to open. Default: current working directory
+'''
+    )
+    parser.add_argument(
+      '-w', '--workspace',
+      action='store',
+      dest='workspace',
+      nargs=1,
+      default=['default'],
+      help='''
+Name of workspace. Default: default
 '''
     )
     return parser.parse_args(argsList)

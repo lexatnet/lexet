@@ -22,6 +22,8 @@ appimage_python3="${HERE}"/usr/bin/python3
 
 export PYTHONPATH="${HERE}"/usr/lib/python3/dist-packages/
 
+export ATOM_HOME="${HOME}/.lexet/atom"
+
 if [ -d ${HERE}/init ]; then
   for i in ${HERE}/init/*.sh; do
     if [ -r $i ]; then

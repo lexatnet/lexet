@@ -29,6 +29,7 @@ ingredients:
     - deb http://security.ubuntu.com/ubuntu bionic-security universe
     - deb http://security.ubuntu.com/ubuntu bionic-security multiverse
     - deb http://archive.ubuntu.com/ubuntu/ bionic-backports main restricted universe multiverse
+    - deb https://packagecloud.io/AtomEditor/atom/any/ any main
   ppas:
     - ubuntu-elisp/ppa
   packages:
@@ -62,13 +63,16 @@ ingredients:
     - php-phar
     - php-xml
     - php-mbstring
-    - emacs-snapshot
     - pylint3
     - shellcheck
     - hunspell
     - hunspell-en-us
     - hunspell-ru
     # - ruby-full
+    # main
+    # --------------
+    - emacs-snapshot
+    - atom
 
   pretend:
     - libgbm1 19.0.8-0ubuntu0~18.04.2

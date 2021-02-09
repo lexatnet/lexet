@@ -1,4 +1,4 @@
-# TODO: automaticaly install necessary rbenvs
+# TODO: autocratically install necessary rbenvs
 # TODO: install necessary ruby gems rubocop, rubocop-rspec ryby-lint etc.
 # TODO: configure debugger tools for ruby
 # TODO: configure debugger tools for php
@@ -32,7 +32,14 @@
 # TODO: fix php flycheck
 # TODO: add opened files as source
 # TODO: add by project exclude ctags
-# TODO: scrolling line by line (add key to scroll buffer with movements while preessing now works with scroll-lock key)
+# TODO: scrolling line by line (add key to scroll buffer with movements while pressing now works with scroll-lock key)
 # TODO: add scroll-lock key to readme
 # TODO: add screenshots to readme
 # TODO: keep cursor line due scrolling
+# TODO: add eslint to flycheck
+# TODO: add libgtk-3.so.0 in appimage
+# TODO: add emacs vendor packages to appimage
+# TODO: add project level settings for indentation
+# TODO: Integrate Atom text editor
+# TODO: Integrate Atom text editor
+# TODO: Create prompt mode ( translation commands to bash )
