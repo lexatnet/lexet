@@ -17,3 +17,8 @@ prettier-atom
 split-diff
 project-manager
 platformio-atom-ide-terminal
+color-picker
+
+symbols-tree-view
+autocomplete-plus
+atom-ctags
