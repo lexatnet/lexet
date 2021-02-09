@@ -54,6 +54,8 @@ install_utils(){
   apt-get install -y ruby
   apt-get install -y bison
 
+  apt-get install -y sbcl
+
   rm -rf /var/lib/apt/lists/*
 }
 
