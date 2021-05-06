@@ -18,7 +18,9 @@ split-diff
 project-manager
 platformio-atom-ide-terminal
 color-picker
+file-icons
 
 symbols-tree-view
 autocomplete-plus
 atom-ctags
+change-case
