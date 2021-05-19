@@ -43,3 +43,4 @@
 # TODO: Integrate Atom text editor
 # TODO: Integrate Atom text editor
 # TODO: Create prompt mode ( translation commands to bash )
+# TODO: move from pkg2appimage to custom script

@@ -20,7 +20,9 @@ export PHP_INI_SCAN_DIR="${HERE}/etc/php/7.2/cli/conf.d/"
 
 appimage_python3="${HERE}"/usr/bin/python3
 
-export PYTHONPATH="${HERE}"/usr/lib/python3/dist-packages/
+export PATH=${HERE}/usr/python3/bin:$PATH
+export PYTHONPATH="${HERE}"/usr/python3/lib/python3.9
+source "${HERE}"/usr/python3/venv/bin/activate
 
 export ATOM_HOME="${HOME}/.lexet/atom"
 

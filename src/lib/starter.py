@@ -22,8 +22,8 @@ class LexetStarter():
       self.run_x()
     elif mode == 'atom':
       self.run_atom()
-    elif mode == 'prompt':
-       self.run_prompt()
+    elif mode == 'python3':
+      self.run_python3()
     else:
       logging.info('undefined start mode')
 
@@ -94,10 +94,12 @@ class LexetStarter():
 
     parts.append('--wait')
 
+
     logging.info('run command "{command}"'.format(command=' '.join(parts)))
     os.system(' '.join(parts))
 
-  def run_prompt(self):
+
+  def run_python3(self):
     parts = []
     parts.append(
       str(
@@ -105,7 +107,7 @@ class LexetStarter():
           self.config['global']['lexet_mount_point'],
           'usr',
           'bin',
-          'bash',
+          'python3',
         )
       )
     )

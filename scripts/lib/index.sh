@@ -44,6 +44,9 @@ lib_index() {
   source $dir/install_jshint.sh
   source $dir/install_bower.sh
   source $dir/install_ruby_from_sources.sh
+  source $dir/install_python3_from_sources.sh
+  source $dir/install_libffi.sh
+  source $dir/install_appimage-builder.sh
   echo 'Libs loaded.'
 }
 
