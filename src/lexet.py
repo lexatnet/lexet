@@ -14,7 +14,6 @@ from lib import LexetHome
 from lib import LexetEnv
 
 
-
 lexet_path = Path(os.environ['LEXET_PATH'])
 
 logging.basicConfig(level=logging.DEBUG)

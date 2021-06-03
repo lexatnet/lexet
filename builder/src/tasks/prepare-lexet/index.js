@@ -1,46 +1,44 @@
 const gulp = require('gulp');
+const { get } = require('lodash');
+const execa = require('execa');
 
-const { stat, mkdir }  = require('fs/promises');
+const config = require('@config')
+const lexetSrc = get(config, 'lexet.src')
+const lexetDest = get(config, 'lexet.dest')
+const appRunScriptSrc = get(config, 'lexet.appRunScriptSrc')
+const appRunScriptDest = get(config, 'lexet.appRunScriptDest')
 
 const copyLexet = async () => {
-  console.log('copyPythonSources()')
+  console.log('copylexet()')
 
-  let souldCreateLocalRepo = false
-  try {
-    await stat(localRepo)
-  } catch (e) {
-    console.log('local repo doesn\'t exists')
-    souldCreateLocalRepo = true
-  }
-
-  if (souldCreateLocalRepo) {
-    try {
-      await mkdir(localRepo, { recursive: true})
-    } catch (e) {
-      console.log('cant create local repo', e)
-    }
-
-    try {
-      console.log(await stat(localRepo))
-    } catch (e) {
-      console.log('local repo still doesn\'t exists')
-      souldCreateLocalRepo = true
-    }
-  }
-
-  const sourcesTar = `${localRepoCache}/`
-  const child = execa(
+  const cp = execa(
     'cp',
     [
       '-r',
-      pythonSrc,
-      localRepo
+      lexetSrc,
+      lexetDest
     ]
   );
-  child.stdout.pipe(process.stdout)
-  await child
+  cp.stdout.pipe(process.stdout)
+  await cp
+}
+
+const copyAppRunScript = async () => {
+  console.log('copyAppRunScript()')
+
+  const cp = execa(
+    'cp',
+    [
+      '-r',
+      appRunScriptSrc,
+      appRunScriptDest
+    ]
+  );
+  cp.stdout.pipe(process.stdout)
+  await cp
 }
 
 exports.prepareLexet = gulp.series(
-  copyLexet
+  copyLexet,
+  copyAppRunScript
 )

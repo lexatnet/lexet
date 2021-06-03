@@ -47,6 +47,7 @@ lib_index() {
   source $dir/install_python3_from_sources.sh
   source $dir/install_libffi.sh
   source $dir/install_appimage-builder.sh
+  source $dir/docker-run-gulp-builder.sh
   echo 'Libs loaded.'
 }
 

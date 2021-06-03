@@ -23,8 +23,6 @@ install_node(){
   #install for non-login bash sesions
   #echo "source $init_script" >> /etc/bash.bashrc
 
-  
-  
   # source $nvm_root/nvm.sh
   nvm ls-remote
   # source $nvm_root/nvm.sh

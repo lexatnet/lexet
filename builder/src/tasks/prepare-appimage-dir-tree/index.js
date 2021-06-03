@@ -1,35 +1,25 @@
 const gulp = require('gulp');
 const del = require('del');
+const { get } = require('lodash');
 
 const { stat, mkdir }  = require('fs/promises');
+const config = require('@config')
+const { ensureDir, mapSeries } = require('@lib')
 
-const root = '/bulder/build/AppDir'
+const root = get(config, 'appimageBuilder.appDir')
 
 const dirTree = [
+  `${root}/env`,
+  `${root}/init`,
   `${root}/bin`,
-  `${root}/lib`
+  `${root}/lib`,
+  `${root}/usr/share/icons`
 ]
 
 const prepareAppimageDirTree = async () => {
-  dirTree.each((dir) => {
-    let shouldCreateDir = false;
-    try {
-      await stat(dir)
-      console.log(`dir ${dir} found`)
-    } catch (e) {
-      console.log(`cant find ${dir}`)
-      shouldCreateDir = true
-    }
-
-    if (shouldCreateDir) {
-      try {
-        await mkdir(dir, { recursive: true})
-        console.log(`dir ${dir} created`)
-      } catch (e) {
-        console.log(`cant create dir ${dir}`, e)
-      }
-    }
-  })
+  await mapSeries(dirTree, ensureDir)
 }
+
+gulp.task('prepare-appimage-dir-tree', prepareAppimageDirTree)
 
 exports.prepareAppimageDirTree = prepareAppimageDirTree
