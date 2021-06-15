@@ -9,15 +9,14 @@ const nvmInitScriptPath = get(config, 'nvm.init')
 const appimageNvmRoot  = get(config, 'nvm.appimageNvmRoot')
 
 const installNvm = async () => {
-
-
-
-  console.log('installNvm()')
   let clone = execa.command(
     [
       `[ -d ${nvmRoot} ]`,
       `git clone https://github.com/nvm-sh/nvm.git ${nvmRoot}`
-    ].join(' || ')
+    ].join(' || '),
+    {
+      shell: '/bin/bash',
+    }
   );
   clone.stdout.pipe(process.stdout)
   await clone
@@ -108,7 +107,7 @@ const installNode = async () => {
           `source ${nvmRoot}/nvm.sh --no-use`,
           'nvm ls-remote',
           'nvm install node'
-        ] .join(' && '),
+        ].join(' && '),
         {
           // cwd: nvmRoot,
           shell: '/bin/bash',

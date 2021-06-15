@@ -95,7 +95,7 @@ docker-run-gulp-builder() {
            --volume $root/staff/builder/nvm/alias:/env/nvm/alias \
            --volume $root/staff/builder/nvm/.cache:/env/nvm/.cache \
            --volume $root/staff/builder/node_modules:/builder/node_modules \
-           --volume $root/recipe.yml:$through_point/recipe.yml:ro \
+           --volume $root/appimage-builder-recipe.yml:$through_point/recipe.yml:ro \
            --volume $root/scripts/AppRun.sh:$through_point/AppRun:ro \
            --volume $root/scripts/lib/incremental_tags_generation.sh:$through_point/incremental_tags_generation.sh:ro \
            --volume $root/src:$through_point/src:ro \

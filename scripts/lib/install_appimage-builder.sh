@@ -31,8 +31,16 @@ install_appimage-builder(){
   # done
   set -- "${args[@]}" # restore positional parameters
 
-  wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage -O /usr/local/bin/appimagetool
-  chmod +x /usr/local/bin/appimagetool
+  # wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage -O /usr/local/bin/appimagetool
+  # chmod +x /usr/local/bin/appimagetool
+
+  # Install appimagetool AppImage
+  wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage -O /opt/appimagetool
+
+  # workaround AppImage issues with Docker
+  cd /opt/; chmod +x appimagetool; sed -i 's|AI\x02|\x00\x00\x00|' appimagetool; ./appimagetool --appimage-extract
+  mv /opt/squashfs-root /opt/appimagetool.AppDir
+  ln -s /opt/appimagetool.AppDir/AppRun /usr/local/bin/appimagetool
 
   pip3 install appimage-builder
 

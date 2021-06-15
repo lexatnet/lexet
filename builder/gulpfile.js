@@ -5,6 +5,7 @@ const gulp = require('gulp');
 const { build }  = require('@tasks/build');
 const { clean }  = require('@tasks/clean');
 const { buildAppimage }  = require('@tasks/build-appimage');
+require('@tasks/experiment');
 
 gulp.task('build', build)
 gulp.task('clean', clean)

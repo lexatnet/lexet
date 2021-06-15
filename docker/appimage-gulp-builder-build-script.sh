@@ -54,6 +54,9 @@ install_utils(){
   apt-get install -y build-essential
   apt-get install -y ruby
   apt-get install -y bison
+  apt-get install -y gtk-update-icon-cache
+  apt-get install -y fuse
+  apt-get install -y libfuse-dev
 
   apt-get install -y sbcl
 

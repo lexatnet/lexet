@@ -13,7 +13,7 @@ const dirTree = [
   `${root}/init`,
   `${root}/bin`,
   `${root}/lib`,
-  `${root}/usr/share/icons`
+  `${root}/usr/share/icons/hicolor/scalable/apps`
 ]
 
 const prepareAppimageDirTree = async () => {

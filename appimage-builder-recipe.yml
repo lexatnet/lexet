@@ -6,19 +6,39 @@ AppDir:
   app_info:
     id: org.kde.kcalc
     name: lexet
-    icon: accessories-calculator
-    version: 1.0
-    exec: AppRun
+    icon: lex
+    # icon: utilities-terminal
+    version: latest
+    exec: bin/bash
+    exec_args: $@
 
   apt:
     arch: amd64
-    # sources:
+    sources:
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse'
+        key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x3b4fe6acc0b21f32'
+      - sourceline: 'deb-src http://archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse'
+
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal-updates main restricted universe multiverse'
+      - sourceline: 'deb-src http://archive.ubuntu.com/ubuntu/ focal-updates main restricted universe multiverse'
+
+      - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal-security main restricted universe multiverse'
+      - sourceline: 'deb-src http://archive.ubuntu.com/ubuntu/ focal-security main restricted universe multiverse'
+      #
+      # - sourceline: 'deb http://archive.ubuntu.com/ubuntu/ focal-backports main restricted universe multiverse'
+      # - sourceline: 'deb-src http://archive.ubuntu.com/ubuntu/ focal-backports main restricted universe multiverse'
+      #
+      # - sourceline: 'deb http://archive.canonical.com/ubuntu focal partner'
+      # - sourceline: 'deb-src http://archive.canonical.com/ubuntu focal partner'
       # - sourceline: 'deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ bionic main restricted universe multiverse'
       #   key_url: 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x3b4fe6acc0b21f32'
       # - sourceline: 'deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ bionic-updates main restricted universe multiverse'
       # - sourceline: 'deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ bionic-backports main restricted universe multiverse'
 
-    # include:
+    include:
+      - libegl1
+      - bash
+      - coreutils
       # - kcalc
       # - libpulse0
       #
@@ -27,7 +47,6 @@ AppDir:
       # - libgl1
       # - libglapi-mesa
       # - libdrm2
-      # - libegl1
       # - libxcb-shape0
       # - libxcb1
       # - libx11-xcb1

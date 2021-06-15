@@ -10,8 +10,10 @@ const localRepo = get(config, 'python3.localRepo')
 const localRepoCache = get(config, 'python3.localRepoCache')
 const srcTar = get(config, 'python3.srcTar')
 const destination = get(config, 'python3.destination')
+const executable = get(config, 'python3.executable')
+const venv = get(config, 'python3.venv')
 const pythonSrc =  `${localRepoCache}/${srcTar}`;
-
+const extractedSrc = `${localRepo}/Python-3.9.5`;
 
 const getPythonSources = async () => {
 
@@ -27,7 +29,8 @@ const getPythonSources = async () => {
     await ensureDir(localRepoCache)
     console.log('downloading python 3 sources')
     const wget = execa(
-      'wget', [
+      'wget',
+      [
         // `--directory-prefix=${localRepoCache}`,
         `--output-document=${pythonSrc}`,
           get(config, 'python3.srcUrl'),
@@ -39,9 +42,7 @@ const getPythonSources = async () => {
 }
 
 const copyPythonSources = async () => {
-  console.log('copyPythonSources()')
   await ensureDir(localRepo)
-
   const sourcesTar = `${localRepoCache}/`
   const child = execa(
     'cp',
@@ -56,7 +57,6 @@ const copyPythonSources = async () => {
 }
 
 const extractPythonSources = async () => {
-  console.log('extractPythonSources()')
   await execa.command(
     [
       'tar',
@@ -69,18 +69,17 @@ const extractPythonSources = async () => {
 
 
 const buildPython = async () => {
-  console.log('buildPython()')
-  const srcDir = `${localRepo}/Python-3.9.5`
+
   const configure =  execa.command(
     [
       './configure',
       '--enable-optimizations',
       '--with-ensurepip=install',
-      `--prefix ${get(config, 'python3.destination')}`
+      `--prefix ${destination}`
       // LDFLAGS="-L${libs}"
       // CFLAGS="${includes} -I${prefix}/includes/python3.9/iternal"
     ].join(' '),
-    { cwd: srcDir }
+    { cwd: extractedSrc }
   );
   configure.stdout.pipe(process.stdout)
   await configure
@@ -89,11 +88,11 @@ const buildPython = async () => {
 
   try {
     const make = execa(
+      'make',
       [
-        'make',
-        // '-j8'
-      ].join(' '),
-      { cwd: srcDir }
+        '-j8'
+      ],
+      { cwd: extractedSrc }
     );
     make.stdout.pipe(process.stdout)
     await make
@@ -102,9 +101,54 @@ const buildPython = async () => {
   }
 }
 
-exports.preparePython = gulp.series(
+const installPython = async () => {
+
+  try {
+    const child = execa(
+      'make',
+      [
+        'install'
+      ],
+      { cwd: extractedSrc }
+    );
+    child.stdout.pipe(process.stdout)
+    await child
+  } catch (e) {
+    console.log('cant install', e)
+  }
+}
+
+
+const setupVirtualEnvironment = async () => {
+  try {
+    const child = execa(
+      executable,
+      [
+        '-m venv',
+        venv
+      ]
+    );
+    child.stdout.pipe(process.stdout)
+    child.stderr.pipe(process.stderr),
+    {
+      shell: true,
+    }
+    await child
+  } catch (e) {
+    console.log('cant install', e)
+  }
+}
+
+const preparePython = gulp.series(
   getPythonSources,
   copyPythonSources,
   extractPythonSources,
-  buildPython
+  buildPython,
+  installPython
 );
+
+gulp.task('prepare-python', preparePython)
+gulp.task('installPython', installPython)
+gulp.task('buildPython', buildPython)
+gulp.task('setupVirtualEnvironment', setupVirtualEnvironment)
+exports.preparePython = preparePython

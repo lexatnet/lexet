@@ -1,5 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
 HERE="$(dirname "$(readlink -f "${0}")")"
+echo "HELLO!!!!!!!!!!!!!!!!!!"
 export LD_LIBRARY_PATH=${HERE}/usr/lib/x86_64-linux-gnu/:$HERE/lib/x86_64-linux-gnu/:$HERE/usr/lib/:${HERE}/lib/:$LD_LIBRARY_PATH
 export PATH=${HERE}/usr/sbin:${HERE}/usr/bin:$PATH
 export INFOPATH=./local/share/info
