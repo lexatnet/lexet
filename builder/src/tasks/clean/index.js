@@ -1,26 +1,24 @@
 const gulp = require('gulp');
 const del = require('del');
+const { get } = require('lodash');
 
-const cleanBuild = async () => {
-  await del([
-    '/build/*'
-  ],{
-    force: true
-  });
-}
+const config = require('@config')
+const buildRoot = get(config, 'buildRoot')
+
 
 const cleanStaff = async () => {
   await del([
-    '/builder/build/workspace/*',
-    '/builder/build/.cache/*',
+    `${buildRoot}/workspace/*`,
+    `${buildRoot}/.cache/*`,
     // '/home/*',
     // '/env/nvm/alias/*',
     // '/env/nvm/versions/*',
     // '/env/nvm/.cache/*',
-  ]);
+  ],{
+      force: true
+  });
 }
 
 exports.clean = gulp.series(
-  cleanBuild,
   cleanStaff
 )

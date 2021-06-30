@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 echo 'building lexet appimage'
 source /init/nvm.sh

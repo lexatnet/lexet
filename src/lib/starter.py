@@ -16,68 +16,12 @@ class LexetStarter():
 
   def start(self, mode):
     self.project.go_to_project_dir()
-    if mode == 'text':
-      self.run()
-    elif mode == 'ui':
-      self.run_x()
-    elif mode == 'atom':
+    if mode == 'atom':
       self.run_atom()
     elif mode == 'python3':
       self.run_python3()
     else:
       logging.info('undefined start mode')
-
-  def run(self):
-    parts = []
-    parts.append(
-      str(
-        Path(
-          self.config['global']['lexet_mount_point'],
-          'usr',
-          'bin',
-          'emacs',
-        )
-      )
-    )
-
-    parts.append('--no-window-system')
-
-    parts.append('--no-init-file')
-
-    parts.append(
-      Template('--load $config')
-      .substitute(
-        config = self.config['root']['emacs_config']
-      )
-    )
-
-    logging.info('run command "{command}"'.format(command=' '.join(parts)))
-    os.system(' '.join(parts))
-
-  def run_x(self):
-    parts = []
-    parts.append(
-      str(
-        Path(
-          self.config['global']['lexet_mount_point'],
-          'usr',
-          'bin',
-          'emacs',
-        )
-      )
-    )
-
-    parts.append('--no-init-file')
-
-    parts.append(
-      Template('--load $config')
-      .substitute(
-        config = self.config['root']['emacs_config']
-      )
-    )
-
-    logging.info('run command "{command}"'.format(command=' '.join(parts)))
-    os.system(' '.join(parts))
 
   def run_atom(self):
     parts = []
@@ -94,9 +38,18 @@ class LexetStarter():
 
     parts.append('--wait')
 
-
+    new_env = dict(os.environ)   # Make a copy of the current environment
+    home = str(Path(os.environ['HOME']))
+    new_env['ATOM_HOME'] = str(
+      Path(
+        home,
+        '.lexet',
+        'bin',
+        'atom',
+      )
+    )
     logging.info('run command "{command}"'.format(command=' '.join(parts)))
-    os.system(' '.join(parts))
+    subprocess.Popen(parts, env=new_env)
 
 
   def run_python3(self):

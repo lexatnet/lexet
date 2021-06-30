@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 install_appimage-builder(){
   # local nvm_root=''
@@ -42,7 +42,9 @@ install_appimage-builder(){
   mv /opt/squashfs-root /opt/appimagetool.AppDir
   ln -s /opt/appimagetool.AppDir/AppRun /usr/local/bin/appimagetool
 
-  pip3 install appimage-builder
+  # pip3 install appimage-builder
+  pip3 install git+https://github.com/AppImageCrafters/appimage-builder.git
+  # pip3 install git+https://github.com/lexatnet/appimage-builder.git@fix-double-slashes
 
   cd $cwd
 }

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 get_script_dir () {
      SOURCE="${BASH_SOURCE[0]}"
@@ -71,7 +71,14 @@ install_utils(){
     --init-script $nvm_init_script \
     --init-nvm-root $app_run_nvm_dir
 
-  apt-get install -y python3-pip python3-setuptools patchelf desktop-file-utils libgdk-pixbuf2.0-dev fakeroot strace
+  apt-get install -y \
+    python3-pip \
+    python3-setuptools \
+    patchelf \
+    desktop-file-utils \
+    libgdk-pixbuf2.0-dev \
+    fakeroot \
+    strace
   install_appimage-builder
 
   rm -rf /var/lib/apt/lists/*

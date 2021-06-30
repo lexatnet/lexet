@@ -87,9 +87,8 @@ docker-run-gulp-builder() {
     set -- "${args[@]}" # restore positional parameters
 
     docker run \
-           --volume $root/build:$through_point \
            --volume $root/builder:/builder \
-           --volume $root/staff/build:/builder/build \
+           --volume $root/staff/build:/staff/build \
            --volume $root/staff/builder/home:/home \
            --volume $root/staff/builder/nvm/versions:/env/nvm/versions \
            --volume $root/staff/builder/nvm/alias:/env/nvm/alias \
@@ -99,7 +98,6 @@ docker-run-gulp-builder() {
            --volume $root/scripts/AppRun.sh:$through_point/AppRun:ro \
            --volume $root/scripts/lib/incremental_tags_generation.sh:$through_point/incremental_tags_generation.sh:ro \
            --volume $root/src:$through_point/src:ro \
-           --volume $root/packages:$through_point/lexet-packages:ro \
            --volume $root/config:$through_point/config:ro \
            --volume $root/scripts/lib:$through_point/scripts:ro \
            $mnt_entrypoint \

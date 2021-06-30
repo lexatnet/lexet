@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 create_lexet_desktop_file(){
   local name='lexet.desktop'

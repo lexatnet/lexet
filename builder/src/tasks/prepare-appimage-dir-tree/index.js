@@ -22,4 +22,28 @@ const prepareAppimageDirTree = async () => {
 
 gulp.task('prepare-appimage-dir-tree', prepareAppimageDirTree)
 
+
+const execa = require('execa');
+const { bindOutput } = require('@lib')
+
+const createShSymlink = async () => {
+  try {
+    const child = execa(
+      'ln',
+      [
+        '--symbolic',
+        'bash',
+        `${root}/bin/sh`
+      ]
+    );
+
+    bindOutput(child)
+    await child;
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+gulp.task('createShSymlink', createShSymlink)
+
 exports.prepareAppimageDirTree = prepareAppimageDirTree

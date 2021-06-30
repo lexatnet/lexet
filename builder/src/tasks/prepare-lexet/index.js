@@ -2,7 +2,7 @@ const gulp = require('gulp');
 const { get } = require('lodash');
 const execa = require('execa');
 
-const { ensureDir } = require('@lib')
+const { ensureDir, bindOutput } = require('@lib')
 
 const config = require('@config')
 const lexetSrc = get(config, 'lexet.src')
@@ -21,7 +21,7 @@ const copyLexet = async () => {
       lexetDest
     ]
   );
-  cp.stdout.pipe(process.stdout)
+  bindOutput(cp),
   await cp
 }
 
@@ -34,7 +34,7 @@ const copyAppRunScript = async () => {
       appRunScriptDest
     ]
   );
-  cp.stdout.pipe(process.stdout)
+  bindOutput(cp)
   await cp
 }
 
@@ -47,12 +47,11 @@ const copyIcon = async () => {
       iconDest
     ]
   );
-  cp.stdout.pipe(process.stdout)
+  bindOutput(cp)
   await cp
 }
 
 gulp.task('copyIcon', copyIcon)
-
 gulp.task('copyAppRunScript', copyAppRunScript)
 
 const prepareLexet = gulp.series(
@@ -60,5 +59,7 @@ const prepareLexet = gulp.series(
   copyIcon,
   copyAppRunScript
 )
+
+gulp.task('prepareLexet', prepareLexet)
 
 exports.prepareLexet = prepareLexet

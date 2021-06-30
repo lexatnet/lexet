@@ -27,7 +27,13 @@ const ensureDir = async (dir) => {
   }
 }
 
+const bindOutput = (childProcess) => {
+  childProcess.stdout.pipe(process.stdout)
+  childProcess.stderr.pipe(process.stderr)
+}
+
 module.exports = {
   mapSeries,
-  ensureDir
+  ensureDir,
+  bindOutput,
 }

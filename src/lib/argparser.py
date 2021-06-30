@@ -47,7 +47,7 @@ For future extensions of functionality. Default: run
       action='store',
       dest='mode',
       nargs=1,
-      choices=['text', 'ui', 'atom', 'python3'],
+      choices=['atom', 'python3'],
       default=['atom'],
       help='''
 Allows to run application in console mode. Default: atom

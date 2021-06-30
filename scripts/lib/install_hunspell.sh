@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 install_hunspell(){
   local local_repo_cache='./ctags'
