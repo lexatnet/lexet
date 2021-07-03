@@ -6,6 +6,8 @@ require('./make-python');
 require('./install-python');
 require('./setup-python-packages');
 require('./patch-python-interpreter');
+require('./prepare-python-executables-packages');
+require('./create-python-symlinks');
 
 gulp.task('build-python', gulp.series(
   'configure-python',
@@ -18,5 +20,7 @@ gulp.task('prepare-python', gulp.series(
   'build-python',
   'install-python',
   'setup-python-packages',
-  'patch-python-interpreter'
+  'patch-python-interpreter',
+  'prepare-python-executables-packages',
+  'create-python-symlinks'
 ));

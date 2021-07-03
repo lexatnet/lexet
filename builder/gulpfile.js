@@ -2,18 +2,19 @@ require('module-alias/register');
 
 const gulp = require('gulp');
 
-require('@tasks/build');
 require('@tasks/clean');
-require('@tasks/build-appimage');
-require('@tasks/experiment');
-require('@tasks/prepare-atom');
+// require('@tasks/experiment');
+require('@tasks/prepare-appdir');
+require('@tasks/prepare-node');
+require('@tasks/prepare-python');
 require('@tasks/prepare-ctags');
 require('@tasks/prepare-hunspell');
+require('@tasks/prepare-atom');
+require('@tasks/prepare-lexet');
+require('@tasks/build-appimage');
 
 gulp.task('build', gulp.series(
-  'clean',
   'prepare-appdir',
-  'create-symlinks',
   'prepare-node',
   'prepare-python',
   'prepare-ctags',
