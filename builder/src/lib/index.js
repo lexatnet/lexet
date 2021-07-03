@@ -1,4 +1,5 @@
 const { stat, mkdir }  = require('fs/promises');
+const execa = require('execa');
 
 
 const mapSeries = async (iterable, action) => {
@@ -32,8 +33,30 @@ const bindOutput = (childProcess) => {
   childProcess.stderr.pipe(process.stderr)
 }
 
+
+const pipeOutput = async (proc) => {
+  bindOutput(proc)
+  return proc
+}
+
+const symlink = async (target, link) => {
+  const child = execa(
+    'ln',
+    [
+      '--symbolic',
+      target,
+      link
+    ]
+  );
+
+  bindOutput(child)
+  await child;
+}
+
 module.exports = {
   mapSeries,
   ensureDir,
   bindOutput,
+  symlink,
+  pipeOutput
 }

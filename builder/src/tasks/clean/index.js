@@ -2,8 +2,8 @@ const gulp = require('gulp');
 const del = require('del');
 const { get } = require('lodash');
 
-const config = require('@config')
-const buildRoot = get(config, 'buildRoot')
+const config = require('@config');
+const buildRoot = get(config, 'buildRoot');
 
 
 const cleanStaff = async () => {
@@ -17,8 +17,10 @@ const cleanStaff = async () => {
   ],{
       force: true
   });
-}
+};
 
-exports.clean = gulp.series(
+const clean = gulp.series(
   cleanStaff
-)
+);
+
+gulp.task('clean', clean);

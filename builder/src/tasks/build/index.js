@@ -1,19 +1,15 @@
-// require('module-alias/register')
-
 const del = require('del');
 const gulp = require('gulp');
 
-const { preparePython } = require('@tasks/prepare-python')
-const { installNvm } = require('@tasks/install-nvm')
-const { prepareLexet } = require('@tasks/prepare-lexet')
-const { buildAppimage } = require('@tasks/build-appimage')
-const { prepareAppimageDirTree } = require('@tasks/prepare-appimage-dir-tree')
+require('@tasks/prepare-python')
+require('@tasks/prepare-node')
+require('@tasks/prepare-lexet')
+require('@tasks/build-appimage')
+require('@tasks/prepare-appdir')
 
-gulp.task('install-nvm', installNvm)
-
-exports.build = gulp.series(
-  prepareAppimageDirTree,
-  preparePython,
-  prepareLexet,
-  // buildAppimage
-)
+gulp.task('build', gulp.series(
+  'prepare-appdir',
+  'prepare-python',
+  'prepare-lexet',
+  'build-appimage'
+))

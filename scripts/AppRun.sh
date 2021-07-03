@@ -3,10 +3,6 @@ HERE="$(dirname "$(readlink -f "${0}")")"
 VER=$(ls "${HERE}/usr/share/emacs/" | head -n 1)
 export LD_LIBRARY_PATH=${HERE}/usr/lib/x86_64-linux-gnu/:$HERE/lib/x86_64-linux-gnu/:$HERE/usr/lib/:${HERE}/lib/:$LD_LIBRARY_PATH
 export PATH=${HERE}/usr/sbin:${HERE}/usr/bin:$PATH
-export EMACSPATH=${HERE}/usr/share/emacs/$VER
-export EMACSDATA=$EMACSPATH/etc
-export EMACSDOC=$EMACSPATH/etc
-export EMACSLOADPATH=$EMACSPATH/site-lisp:$EMACSPATH/lisp:$EMACSPATH/lisp/emacs-lisp
 export INFOPATH=./local/share/info
 export DICPATH=${HERE}/usr/share/hunspell
 
@@ -18,11 +14,15 @@ export LEXET_CONFIGS="${HERE}/config"
 
 export PHP_INI_SCAN_DIR="${HERE}/etc/php/7.2/cli/conf.d/"
 
-appimage_python3="${HERE}"/usr/bin/python3
+# appimage_python3="${HERE}"/usr/python3/bin/python3
 
-export PATH=${HERE}/usr/python3/bin:$PATH
-export PYTHONPATH="${HERE}"/usr/python3/lib/python3.9
-source "${HERE}"/usr/python3/venv/bin/activate
+# export PATH=${HERE}/usr/python3/bin:$PATH
+export PATH="${HERE}"/usr/python3/bin:$PATH
+export PYTHONHOME="${HERE}"/usr/python3/lib/python3.9
+export PYTHONPATH=$PYTHONHOME:"${HERE}"/usr/python3/lib/python3.9/lib-dynload:"${HERE}"/usr/python3/packages
+# source "${HERE}"/usr/python3/venv/bin/activate
+
+export PATH="${HERE}"/usr/ctags/bin:$PATH
 
 export ATOM_HOME="${HOME}/.lexet/atom"
 
@@ -36,4 +36,6 @@ if [ -d ${HERE}/init ]; then
   unset i
 fi
 
-$appimage_python3 "${HERE}"/lexet/lexet.py "$@"
+# bash
+# $appimage_python3 "${HERE}"/lexet/lexet.py "$@"
+python "${HERE}"/lexet/lexet.py "$@"

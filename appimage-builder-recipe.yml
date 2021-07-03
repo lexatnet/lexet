@@ -4,9 +4,10 @@ AppDir:
   path: ./AppDir
 
   app_info:
-    id: org.kde.kcalc
+    id: net.lex-root
     name: lexet
     icon: lex
+    # icon: accessories-calculator
     # icon: utilities-terminal
     version: latest
     exec: bin/bash
@@ -44,6 +45,7 @@ AppDir:
       - coreutils
       - perl
       - make
+      - zsh
 
       - python
       - python3-venv
@@ -53,12 +55,56 @@ AppDir:
       - pylint3
       - pylint3
 
+
+      # old
+      - libxcb-dri2-0
+      - libxcb-dri3-0
+      - libglapi-mesa
+      - libxcb-present0
+      - libxcb-sync1
+      - libxcb-xfixes0
+      - libxshmfence1
+      - libegl-mesa0
+      - libexpat1
+      - libegl1
+      - libgtk-3-0
+      - build-essential
+      - libsm6
+      - libasound2
+      - libgl1
+      - libgnutls30
+      - libsqlite3-dev
+      - libbz2-dev
+      - libssl-dev
+      - zlib1g-dev
+      - uuid-dev
+      - libgdbm-dev
+      - libncurses5-dev
+
+      - git
+      - rhino
+
+      # atom requirements
+      # - libasound2
+      - libcurl4
+      - libgbm1
+      - libgcrypt20
+      # - libgtk-3-0
+      - libnotify4
+      - libnss3
+      - libglib2.0-bin
+      # - xdg-utils
+      # - libx11-xcb1
+      # - libxcb-dri3-0
+      - libxss1
+      - libxtst6
+      - libxkbfile1
       - atom
+      # - kcalc
 
       #
       # # Full bundle requirements
       # - libx11-6
-      # - libgl1
       # - libglapi-mesa
       # - libdrm2
       # - libxcb-shape0
@@ -73,9 +119,6 @@ AppDir:
       # - libxcb-glx0
       # - libxcb-shm0
       # - libglvnd0
-      # - libxcb-dri3-0
-      # - libxcb-dri2-0
-      # - libxcb-present0
 
     # exclude:
     #   - phonon4qt5
@@ -97,10 +140,12 @@ AppDir:
       APPDIR_LIBRARY_PATH: $APPDIR/lib/x86_64-linux-gnu:$APPDIR/usr/lib/x86_64-linux-gnu:$APPDIR/lib/systemd
       LEXET_MOUNT_POINT: "$APPDIR"
       LEXET_PATH: "$APPDIR/lexet"
+      LEXET_PATH: "$APPDIR/lexet"
       LEXET_CONFIGS: "$APPDIR/config"
+      ATOM_HOME: '$HOME/.appimage_atom'
 
   # test:
-  #   debian:
+  #   duse_host_x: Trueebian:
   #     image: appimagecrafters/tests-env:debian-stable
   #     command: "./AppRun"
   #     use_host_x: True

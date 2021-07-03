@@ -1,14 +1,26 @@
-require('module-alias/register')
+require('module-alias/register');
 
 const gulp = require('gulp');
 
-const { build }  = require('@tasks/build');
-const { clean }  = require('@tasks/clean');
-const { buildAppimage }  = require('@tasks/build-appimage');
+require('@tasks/build');
+require('@tasks/clean');
+require('@tasks/build-appimage');
 require('@tasks/experiment');
+require('@tasks/prepare-atom');
+require('@tasks/prepare-ctags');
+// require('@tasks/prepare-atom');
 
-gulp.task('build', build)
-gulp.task('clean', clean)
-gulp.task('build-appimage', buildAppimage)
 
-exports.default = gulp.series(clean, build)
+
+gulp.task('short-build', gulp.series(
+  // 'clean',
+  // 'prepare-appdir',
+  // 'create-symlinks',
+  // 'prepare-node',
+  // 'prepare-python',
+  // 'prepare-atom',
+  // 'prepare-lexet',
+  'build-appimage'
+));
+
+exports.default = gulp.series('clean', 'build');

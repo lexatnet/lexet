@@ -13,7 +13,6 @@ from lib import LexetStarter
 from lib import LexetHome
 from lib import LexetEnv
 
-
 lexet_path = Path(os.environ['LEXET_PATH'])
 
 logging.basicConfig(level=logging.DEBUG)
@@ -49,6 +48,7 @@ class Lexet():
       )
     )
     self.config = LexetConfig(config_path).get_config()
+
 
   def run(self):
     project_path = self.args.project.pop()

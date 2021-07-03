@@ -1,38 +1,53 @@
 const gulp = require('gulp');
-const del = require('del');
 const { get } = require('lodash');
 const execa = require('execa');
+const { pipeOutput } = require('@lib');
+const config = require('@config');
+const cwd = get(config, 'appimageBuilder.cwd');
+const appDir = get(config, 'appimageBuilder.appDir');
+const recipe = get(config, 'appimageBuilder.recipe');
 
-const config = require('@config')
-const cwd = get(config, 'appimageBuilder.cwd')
-const recipe = get(config, 'appimageBuilder.recipe')
-
-const { PassThrough } = require('stream');
-
-const buildAppimage = async () => {
+gulp.task('build-appimage-with-appimage-builder', async () => {
   try {
-    const child = execa(
+    await pipeOutput(execa(
       'appimage-builder',
       [
-        // '--appimage-extract-and-run',
         `--recipe ${recipe}`,
         '--skip-test'
       ],
       {
         shell: true,
         cwd,
-        // env: {
-        //   APPIMAGE_EXTRACT_AND_RUN:1
-        // }
       }
-    );
-
-    child.stdout.pipe(process.stdout);
-    child.stderr.pipe(process.stderr);
-    await child;
+    ));
   } catch (err) {
-    console.log(err)
+    // eslint-disable-next-line no-console
+    console.log(err);
   }
-}
+});
 
-exports.buildAppimage = buildAppimage
+
+gulp.task('build-appimage-with-appimagetool', async () => {
+  try {
+    await pipeOutput(execa(
+      'appimagetool',
+      [
+        appDir,
+      ],
+      {
+        shell: true,
+        cwd,
+        env: {
+          'ARCH': 'x86_64'
+        }
+      }
+    ));
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.log(err);
+  }
+});
+
+gulp.task('build-appimage', gulp.series(
+  'build-appimage-with-appimagetool'
+));
