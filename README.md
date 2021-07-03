@@ -1,5 +1,5 @@
 # Lexet
-Emacs build with useful utils configured for speed and comfortable writing code from console or UI versions of emacs.
+Atom editor with useful environment.
 
 
 
@@ -70,7 +70,7 @@ optional arguments:
 
 -a {run}, --action {run} For future extensions of functionality. Default: `run`
 
--m {text,ui}, --mode {text,ui} Allows to run application in console mode. Default: `ui`
+-m {atom, python}, --mode {atom, python} Allows to run application in console mode. Default: `atom`
 
 -p `<PROJECT>`, --project `<PROJECT>` Path to working directory which you want to open. Default: `current working directory`.
 

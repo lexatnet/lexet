@@ -9,7 +9,7 @@ const dirTree = [
   `${appDir}/init`,
   `${appDir}/bin`,
   `${appDir}/lib`,
-  `${appDir}/usr/share/icons/hicolor/scalable/apps`
+  `${appDir}/usr/share`
 ];
 
 gulp.task('prepare-appdir-tree', async () => {

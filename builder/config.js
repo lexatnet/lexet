@@ -1,11 +1,11 @@
-const build_root = '/staff/build';
-const appDir = `${build_root}/workspace/AppDir`;
+const buildRoot = '/staff/build';
+const appDir = `${buildRoot}/workspace/AppDir`;
 
 const python3 = {
   srcUrl: 'https://www.python.org/ftp/python/3.9.5/Python-3.9.5.tgz',
   srcTar: 'python-src.tgz',
-  localRepoCache: `${build_root}/.cache/python3/src`,
-  localRepo: `${build_root}/workspace/python3/src`,
+  localRepoCache: `${buildRoot}/.cache/python3/src`,
+  localRepo: `${buildRoot}/workspace/python3/src`,
   destination: `${appDir}/usr/python3`,
   executable: `${appDir}/usr/python3/bin/python3.9`,
   pythonPath: `${appDir}/usr/python3/lib/python3.9`,
@@ -17,16 +17,24 @@ python3.pythonSrc = `${python3.localRepoCache}/${python3.srcTar}`;
 
 const ctags = {
   srcUrl: 'https://github.com/universal-ctags/ctags.git',
-  cachePath: `${build_root}/.cache/ctags`,
-  localRepo: `${build_root}/workspace/ctags/src`,
+  cachePath: `${buildRoot}/.cache/ctags`,
+  localRepo: `${buildRoot}/workspace/ctags/src`,
   destination: `${appDir}/usr/ctags`,
 };
 ctags.srcCache = `${ctags.cachePath}/src`;
 
-const appimageBuilder = {
-  recipe: '/lexet/recipe.yml',
+const hunspell = {
+  srcUrl: 'https://github.com/hunspell/hunspell.git',
+  cachePath: `${buildRoot}/.cache/hunspell`,
+  localRepo: `${buildRoot}/workspace/hunspell/src`,
+  libDest: `${appDir}/usr/hunspell/lib`,
+  binDest: `${appDir}/usr/hunspell/bin`,
+};
+hunspell.srcCache = `${hunspell.cachePath}/src`;
+
+const appimage = {
   appDir,
-  cwd: `${build_root}/workspace`,
+  cwd: `${buildRoot}/workspace`,
 };
 
 const lexet = {
@@ -62,22 +70,18 @@ const nvm = {
 const atom = {
   binUrl: 'https://github.com/atom/atom/releases/download/v1.57.0/atom-amd64.tar.gz',
   binZip: 'atom.tar.gz',
-  binCache: `${build_root}/.cache/atom/bin`,
+  binCache: `${buildRoot}/.cache/atom/bin`,
   dest: `${appDir}/atom`,
 };
-
-const appimagetool = {
-  appDir,
-  cwd: `${build_root}/workspace`,
-};
+atom.binsPath = `${atom.binCache}/${atom.binZip}`;
 
 module.exports = {
-  buildRoot: build_root,
+  buildRoot,
   python3,
-  appimageBuilder,
+  appimage,
   lexet,
   nvm,
   atom,
-  appimagetool,
   ctags,
+  hunspell,
 };

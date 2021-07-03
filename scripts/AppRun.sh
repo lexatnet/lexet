@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 HERE="$(dirname "$(readlink -f "${0}")")"
-VER=$(ls "${HERE}/usr/share/emacs/" | head -n 1)
-export LD_LIBRARY_PATH=${HERE}/usr/lib/x86_64-linux-gnu/:$HERE/lib/x86_64-linux-gnu/:$HERE/usr/lib/:${HERE}/lib/:$LD_LIBRARY_PATH
-export PATH=${HERE}/usr/sbin:${HERE}/usr/bin:$PATH
+export LD_LIBRARY_PATH=${HERE}/usr/lib/x86_64-linux-gnu/:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=${HERE}/lib/x86_64-linux-gnu/:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=${HERE}/usr/lib/:${HERE}/lib/:$LD_LIBRARY_PATH
+export PATH=${HERE}/usr/sbin:$PATH
+export PATH=${HERE}/usr/bin:$PATH
 export INFOPATH=./local/share/info
 export DICPATH=${HERE}/usr/share/hunspell
 
@@ -23,6 +25,8 @@ export PYTHONPATH=$PYTHONHOME:"${HERE}"/usr/python3/lib/python3.9/lib-dynload:"$
 # source "${HERE}"/usr/python3/venv/bin/activate
 
 export PATH="${HERE}"/usr/ctags/bin:$PATH
+
+export PATH="${HERE}"/usr/hunspell/bin/bin:$PATH
 
 export ATOM_HOME="${HOME}/.lexet/atom"
 

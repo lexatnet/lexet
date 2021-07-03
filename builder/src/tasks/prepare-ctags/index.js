@@ -8,4 +8,9 @@ require('./install-ctags');
 
 gulp.task('prepare-ctags', gulp.series(
   'get-ctags-sources',
+  'copy-ctags-sources',
+  'autogen-ctags',
+  'configure-ctags',
+  'make-ctags',
+  'install-ctags',
 ));

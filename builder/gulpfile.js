@@ -8,18 +8,18 @@ require('@tasks/build-appimage');
 require('@tasks/experiment');
 require('@tasks/prepare-atom');
 require('@tasks/prepare-ctags');
-// require('@tasks/prepare-atom');
+require('@tasks/prepare-hunspell');
 
-
-
-gulp.task('short-build', gulp.series(
-  // 'clean',
-  // 'prepare-appdir',
-  // 'create-symlinks',
-  // 'prepare-node',
-  // 'prepare-python',
-  // 'prepare-atom',
-  // 'prepare-lexet',
+gulp.task('build', gulp.series(
+  'clean',
+  'prepare-appdir',
+  'create-symlinks',
+  'prepare-node',
+  'prepare-python',
+  'prepare-ctags',
+  'prepare-hunspell',
+  'prepare-atom',
+  'prepare-lexet',
   'build-appimage'
 ));
 

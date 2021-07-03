@@ -1,12 +1,10 @@
 const gulp = require('gulp');
 const del = require('del');
 const { get } = require('lodash');
-
 const config = require('@config');
 const buildRoot = get(config, 'buildRoot');
 
-
-const cleanStaff = async () => {
+gulp.task('clean-staff', async () => {
   await del([
     `${buildRoot}/workspace/*`,
     `${buildRoot}/.cache/*`,
@@ -17,10 +15,8 @@ const cleanStaff = async () => {
   ],{
       force: true
   });
-};
+});
 
-const clean = gulp.series(
-  cleanStaff
-);
-
-gulp.task('clean', clean);
+gulp.task('clean', gulp.series(
+  'clean-staff'
+));

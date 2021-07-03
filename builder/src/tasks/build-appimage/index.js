@@ -3,31 +3,10 @@ const { get } = require('lodash');
 const execa = require('execa');
 const { pipeOutput } = require('@lib');
 const config = require('@config');
-const cwd = get(config, 'appimageBuilder.cwd');
-const appDir = get(config, 'appimageBuilder.appDir');
-const recipe = get(config, 'appimageBuilder.recipe');
+const cwd = get(config, 'appimage.cwd');
+const appDir = get(config, 'appimage.appDir');
 
-gulp.task('build-appimage-with-appimage-builder', async () => {
-  try {
-    await pipeOutput(execa(
-      'appimage-builder',
-      [
-        `--recipe ${recipe}`,
-        '--skip-test'
-      ],
-      {
-        shell: true,
-        cwd,
-      }
-    ));
-  } catch (err) {
-    // eslint-disable-next-line no-console
-    console.log(err);
-  }
-});
-
-
-gulp.task('build-appimage-with-appimagetool', async () => {
+gulp.task('build-appimage', async () => {
   try {
     await pipeOutput(execa(
       'appimagetool',
@@ -47,7 +26,3 @@ gulp.task('build-appimage-with-appimagetool', async () => {
     console.log(err);
   }
 });
-
-gulp.task('build-appimage', gulp.series(
-  'build-appimage-with-appimagetool'
-));
