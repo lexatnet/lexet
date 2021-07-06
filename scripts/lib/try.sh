@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 try() {
   local command=$1

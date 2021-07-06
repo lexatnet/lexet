@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 install_nvm(){
   local nvm_root=''

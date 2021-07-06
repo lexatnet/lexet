@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 generate_lexet_user_profile() {
 cat <<EOL

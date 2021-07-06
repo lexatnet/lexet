@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 script_name=$( basename ${0#-} ) #- needed if sourced no path
 this_script=$( basename ${BASH_SOURCE} )

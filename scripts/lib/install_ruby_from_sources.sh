@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 install_ruby_from_sources(){
   local local_repo_cache='./ruby'

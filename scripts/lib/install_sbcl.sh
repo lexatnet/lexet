@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 install_sbcl() {
   local local_repo=''

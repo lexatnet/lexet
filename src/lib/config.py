@@ -6,6 +6,7 @@ lexet_mount_point = Path(os.environ['LEXET_MOUNT_POINT'])
 lexet_path = Path(os.environ['LEXET_PATH'])
 lexet_configs = Path(os.environ['LEXET_CONFIGS'])
 
+
 class LexetConfig():
   def __init__(self, config):
     self.conf = configparser.ConfigParser()
@@ -20,4 +21,3 @@ class LexetConfig():
 
   def get_config(self):
     return self.conf
-

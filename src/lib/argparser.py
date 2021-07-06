@@ -47,10 +47,10 @@ For future extensions of functionality. Default: run
       action='store',
       dest='mode',
       nargs=1,
-      choices=['text', 'ui', 'atom', 'prompt'],
+      choices=['atom', 'python3'],
       default=['atom'],
       help='''
-Allows to run application in console mode. Default: ui
+Allows to run application in console mode. Default: atom
 '''
     )
     parser.add_argument(

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 incremental_tags_generation() {
  local file_list=''

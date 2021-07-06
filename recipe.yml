@@ -52,19 +52,28 @@ ingredients:
     - libasound2
     - libgl1
     - libgnutls30
+    # - libffi-dev
+    - libsqlite3-dev
+    - libbz2-dev
+    - libssl-dev
+    - zlib1g-dev
+    - uuid-dev
+    - libgdbm-dev
+    - libncurses5-dev
     # tools
     # ---------------
-    - python3-venv
-    - python3-pip
-    - python3
-    - pylint3
+    # - python3-venv
+    # - python3-pip
+    # - python3
+    # - python3-dev
+    # - pylint3
+    # - pylint3
     - php-cli
     - php-dev
     - php-zip
     - php-phar
     - php-xml
     - php-mbstring
-    - pylint3
     - shellcheck
     - hunspell
     - hunspell-en-us
@@ -72,9 +81,12 @@ ingredients:
     # - ruby-full
     # main
     # --------------
-    - emacs-snapshot
+    # - emacs-snapshot
     - atom
-    - sbcl
+    # - sbcl
+    # instead makeinfo for build libffi
+    - texi2html
+    - texinfo
 
   pretend:
     - libgbm1 19.0.8-0ubuntu0~18.04.2
@@ -97,6 +109,26 @@ script:
   # import sripts lib
   - source $through_point/scripts/index.sh
 
+  # build libs from sources
+  - install_libffi --prefix "${cwd}/usr/libffi" --local-repo-cache ../libffi --local-repo ./libffi
+
+  # install python3 from sources
+  - export LD_LIBRARY_PATH=${cwd}/usr/lib/x86_64-linux-gnu/:$cwd/lib/x86_64-linux-gnu/:$cwd/usr/lib/:${cwd}/lib/:$LD_LIBRARY_PATH
+  - echo LD_LIBRARY_PATH=$LD_LIBRARY_PATH
+  - install_python3_from_sources --prefix "${cwd}/usr/python3" --local-repo-cache ../.python3 --local-repo ./python3 --src-url https://www.python.org/ftp/python/3.9.5/Python-3.9.5.tgz --libs $LD_LIBRARY_PATH --includes "-I${cwd}/usr/include/x86_64-linux-gnu"
+
+  # install python packages
+
+  - export PYTHONPATH=${cwd}/usr/python3/lib/python3.9
+  # - mkdir ${cwd}/usr/python3/venv
+  - ${cwd}/usr/python3/bin/python3 -m venv ${cwd}/usr/python3/venv
+  - source ${cwd}/usr/python3/venv/bin/activate
+  - ${cwd}/usr/python3/bin/python3 -m pip install --no-cache-dir --upgrade pip
+  - ${cwd}/usr/python3/bin/python3 -m pip install --no-cache-dir requests
+  - ${cwd}/usr/python3/bin/python3 -m pip install --no-cache-dir wheel
+  - ${cwd}/usr/python3/bin/python3 -m pip install --no-cache-dir --upgrade astroid
+  - ${cwd}/usr/python3/bin/python3 -m pip install --no-cache-dir --upgrade pylint
+  #
   - cp ../composer.phar ${cwd}/usr/bin/composer
   - cp ../phpcs.phar ${cwd}/usr/bin/phpcs
   - cp ../phpcbf.phar ${cwd}/usr/bin/phpcbf
@@ -135,7 +167,7 @@ script:
   - patch_usr --search "#!${cwd}/usr/bin/"
 
   # copy lexet packages
-  - cp -r ../../lexet-packages ./lexet-packages
+  # - cp -r ../../lexet-packages ./lexet-packages
 
   # copy appimage entrypoint script
   - cp ../../AppRun ./AppRun
@@ -152,6 +184,7 @@ script:
   # install utils
   - install_utils --root ${cwd} --home ${cwd}/../.home
 
+
   # copy libs
   - copy_libs --src /usr/lib/x86_64-linux-gnu --destination ${cwd}/usr/lib/x86_64-linux-gnu --lib libgtk-3.so.0 --lib libasound.so.2 --lib mesa/libGL.so.1
   - copy_libs --src /lib/x86_64-linux-gnu --destination ${cwd}/lib/x86_64-linux-gnu --lib libgcc_s.so.1 --lib libexpat.so.1
@@ -163,7 +196,7 @@ script:
   - cp -r ../../config ./config
 
   # create emacs link
-  - ln -s ./emacs-snapshot ./usr/bin/emacs
+  # - ln -s ./emacs-snapshot ./usr/bin/emacs
 
   # prepare icon
   - cp ${cwd}/../lexet.png ${cwd}/lexet.png
