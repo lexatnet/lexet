@@ -24,11 +24,11 @@ export PYTHONHOME="${HERE}"/usr/python3/lib/python3.9
 export PYTHONPATH=$PYTHONHOME:"${HERE}"/usr/python3/lib/python3.9/lib-dynload:"${HERE}"/usr/python3/packages
 # source "${HERE}"/usr/python3/venv/bin/activate
 
+# export ATOM_HOME="${HOME}/.lexet/atom"
+
 export PATH="${HERE}"/usr/ctags/bin:$PATH
 
 export PATH="${HERE}"/usr/hunspell/bin/bin:$PATH
-
-export ATOM_HOME="${HOME}/.lexet/atom"
 
 if [ -d ${HERE}/init ]; then
   for i in ${HERE}/init/*.sh; do

@@ -11,12 +11,6 @@ class LexetEnv():
     os.environ['lexet_root'] = self.config['environment']['root']
     self.log_defined_variable('lexet_root', os.environ['lexet_root'])
 
-    os.environ['lexet_vendor_packages_dir'] = self.config['root']['vendor_packages_dir']
-    self.log_defined_variable('lexet_vendor_packages_dir', os.environ['lexet_vendor_packages_dir'])
-
-    os.environ['lexet_packages_dir'] = self.config['root']['packages_dir']
-    self.log_defined_variable('lexet_packages_dir', os.environ['lexet_packages_dir'])
-
     os.environ['lexet_tmp_dir'] = self.config['root']['lexet_tmp_dir']
     self.log_defined_variable('lexet_tmp_dir', os.environ['lexet_tmp_dir'])
 
@@ -28,9 +22,11 @@ class LexetEnv():
 
     os.environ['lexet_project_dir'] = self.project.get_lexet_project_dir()
     self.log_defined_variable('lexet_project_dir', os.environ['lexet_project_dir'])
+    
+    os.environ['ATOM_HOME'] = self.config['root']['atom_home']
+    self.log_defined_variable('ATOM_HOME', os.environ['ATOM_HOME'])
 
-    os.environ['ctags_exclude_config_path'] = self.config['root']['ctags_exclude_config']
-    self.log_defined_variable('ctags_exclude_config_path', os.environ['ctags_exclude_config_path'])
+
 
   def log_defined_variable(self, name, value):
     logging.info(

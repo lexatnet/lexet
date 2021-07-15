@@ -72,6 +72,38 @@ const atom = {
   binZip: 'atom.tar.gz',
   binCache: `${buildRoot}/.cache/atom/bin`,
   dest: `${appDir}/atom`,
+  atomHome: `${appDir}/atom-home-template`,
+  packages: [
+    'git-blame',
+    'git-diff',
+    'linter',
+    'linter-ui-default',
+    'linter-eslint',
+    'linter-pylint',
+    // 'linter-spell', // (?)
+    'intentions',
+    'highlight-selected',
+    'minimap',
+    'minimap-selection',
+    'minimap-linter',
+    'minimap-highlight-selected',
+    'minimap-find-and-replace',
+    'minimap-git-diff',
+    'prettier-atom',
+    'split-diff',
+    'project-manager',
+    'platformio-ide-terminal',
+    'color-picker',
+    'file-icons',
+
+    'symbols-tree-view',
+    'autocomplete-plus',
+    'atom-ctags',
+    'change-case',
+    'advanced-open-file',
+  ],
+  configTemplateSrc: '/lexet/config/atom.config.template.cson',
+  configTemplateDest: `${appDir}/atom-home-template/config.cson`
 };
 atom.binsPath = `${atom.binCache}/${atom.binZip}`;
 

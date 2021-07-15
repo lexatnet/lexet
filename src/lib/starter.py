@@ -48,8 +48,9 @@ class LexetStarter():
         Path(
           self.config['global']['lexet_mount_point'],
           'usr',
-          'bin',
           'python3',
+          'bin',
+          'python3'
         )
       )
     )

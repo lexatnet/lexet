@@ -24,3 +24,4 @@ symbols-tree-view
 autocomplete-plus
 atom-ctags
 change-case
+advanced-open-file

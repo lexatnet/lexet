@@ -5,6 +5,8 @@ from pathlib import Path
 lexet_mount_point = Path(os.environ['LEXET_MOUNT_POINT'])
 lexet_path = Path(os.environ['LEXET_PATH'])
 lexet_configs = Path(os.environ['LEXET_CONFIGS'])
+home = Path(os.environ['HOME'])
+
 
 
 class LexetConfig():
@@ -16,6 +18,7 @@ class LexetConfig():
     self.conf['global']['lexet_mount_point'] = str(lexet_mount_point)
     self.conf['global']['lexet_path'] = str(lexet_path)
     self.conf['global']['lexet_configs'] = str(lexet_configs)
+    self.conf['global']['home'] = str(home)
 
     self.conf.read(config)
 

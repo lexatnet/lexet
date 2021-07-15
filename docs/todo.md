@@ -4,13 +4,10 @@
 # TODO: configure debugger tools for php
 # TODO: add prettier
 # TODO: build & install python2.7 from sources
-# TODO: build & install python3 from sources
 # TODO: fix python installation (available only python3 python2.7 installed but not available in PATH)
 # TODO: move project conception to workspace to use few projects in tree view
-# TODO: fix indexation for projects without git (error indexation)
 # TODO: add automatic installation necessary rubocop for particular ruby version
 # TODO: init default installation for eslint
-# TODO: Migrate autocomplete to company mode
 # TODO: Add xml prettyprint
 # TODO: Fix appimage missing libs
 # TODO: change php-ext to php-skeleton
@@ -18,19 +15,13 @@
 # TODO: build & install php from sources
 # TODO: fix php extension phar(missing)
 # TODO: fix project incremental indexation indexation (tags file empty)
-# TODO: fix php ( smartparens
-# TODO: fix php flycheck
 # TODO: add opened files as source
 # TODO: add by project exclude ctags
 # TODO: scrolling line by line (add key to scroll buffer with movements while pressing now works with scroll-lock key)
 # TODO: add scroll-lock key to readme
 # TODO: add screenshots to readme
 # TODO: keep cursor line due scrolling
-# TODO: add eslint to flycheck
 # TODO: add libgtk-3.so.0 in appimage
-# TODO: add emacs vendor packages to appimage
-# TODO: add project level settings for indentation
-# TODO: Integrate Atom text editor
-# TODO: Integrate Atom text editor
+# TODO: add project level settings for indentation readme
 # TODO: Create prompt mode ( translation commands to bash )
 # TODO: move from pkg2appimage to custom script
