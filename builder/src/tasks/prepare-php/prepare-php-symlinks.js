@@ -3,29 +3,15 @@ const { get } = require('lodash');
 const { ensureRelativeSymlink, mapSeries} = require('@lib');
 
 const config = require('@config');
-const binDest = get(config, 'ruby.binDest');
+const binDest = get(config, 'php.binDest');
 const appDir = get(config, 'appDir');
 
 
 const bins = [
-  'ruby',
-  'rake',
-  'gem',
-  'bundler',
-  'rubocop',
-  'ruby-lint',
-  'irb',
-  'erb',
-  'ri',
-  'ruby-parse',
-  'ruby-rewrite',
-  'typeprof',
-  'rdoc',
-  'rbs',
-  'racc',
+  'php',
 ];
 
-const prepareRubyBinSymlink = async (bin) => {
+const preparePHPBinSymlink = async (bin) => {
   try {
     const binPath = `${binDest}/bin/${bin}`;
     const linkPath = `${appDir}/bin/${bin}`;
@@ -36,6 +22,6 @@ const prepareRubyBinSymlink = async (bin) => {
   }
 };
 
-gulp.task('prepare-ruby-symlinks', async () => {
-  await mapSeries(bins, prepareRubyBinSymlink);
+gulp.task('prepare-php-symlinks', async () => {
+  await mapSeries(bins, preparePHPBinSymlink);
 });

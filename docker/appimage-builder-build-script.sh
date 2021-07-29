@@ -38,7 +38,6 @@ install_utils(){
   apt-get install -y automake
   apt-get install -y autopoint
   apt-get install -y libtool
-
   apt-get install -y gcc
   apt-get install -y make
   apt-get install -y pkg-config
@@ -47,18 +46,22 @@ install_utils(){
   apt-get install -y libjansson-dev
   apt-get install -y libyaml-dev
   apt-get install -y libxml2-dev
-
+  apt-get install -y libsqlite3-dev
+  apt-get install -y re2c
   apt-get install -y libssl-dev
   apt-get install -y libreadline-dev
-
   apt-get install -y build-essential
-  apt-get install -y ruby
   apt-get install -y bison
+
+
+  apt-get install -y ruby
   apt-get install -y gtk-update-icon-cache
   apt-get install -y fuse
   apt-get install -y libfuse-dev
 
   apt-get install -y sbcl
+
+
 
   nvm_init_script=/init/nvm.sh
   nvm_root=/env/nvm

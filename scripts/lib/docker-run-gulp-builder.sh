@@ -60,8 +60,8 @@ prepare-docker-gulp-builder-dirs() {
 docker-run-gulp-builder() {
     prepare-docker-gulp-builder-dirs
 
-    local entrypoint=$through_point/${appimage_gulp_builder_entrypoint_script_name}
-    local mnt_entrypoint="--volume $appimage_gulp_builder_entrypoint_script_external:$entrypoint:ro"
+    local entrypoint=$through_point/${appimage_builder_entrypoint_script_name}
+    local mnt_entrypoint="--volume $appimage_builder_entrypoint_script_external:$entrypoint:ro"
     local args=""
 
     while [[ $# -gt 0 ]]
@@ -106,5 +106,5 @@ docker-run-gulp-builder() {
            $args \
            --rm \
            --entrypoint $entrypoint \
-           $appimage_gulp_builder_image_tag
+           $appimage_builder_image_tag
 }

@@ -8,6 +8,7 @@ require('@tasks/prepare-appdir');
 require('@tasks/prepare-node');
 require('@tasks/prepare-python');
 require('@tasks/prepare-ruby');
+require('@tasks/prepare-php');
 require('@tasks/prepare-ctags');
 require('@tasks/prepare-hunspell');
 require('@tasks/prepare-atom');

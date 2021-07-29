@@ -9,10 +9,14 @@ const python3 = {
   localRepo: `${buildRoot}/workspace/python3/src`,
   destination: `${appDir}/usr/python3`,
   executable: `${appDir}/usr/python3/bin/python3.9`,
+  packagesDest: `${appDir}/usr/python3/packages`,
   pythonPath: `${appDir}/usr/python3/lib/python3.9`,
   venv: `${appDir}/venv`,
   packagesPrefix: `${appDir}/usr/python3/bin/python3`,
-  packagesExecPrefix: `${appDir}/usr/python3/lib/python3.9`
+  packagesExecPrefix: `${appDir}/usr/python3/lib/python3.9`,
+  packages: [
+      'pylint',
+  ],
 };
 python3.pythonSrc = `${python3.localRepoCache}/${python3.srcTar}`;
 
@@ -38,6 +42,21 @@ const ruby = {
   ],
 };
 ruby.srcCache = `${ruby.cachePath}/src`;
+
+const php = {
+  srcUrl: 'https://github.com/php/php-src.git',
+  cachePath: `${buildRoot}/.cache/php`,
+  localRepo: `${buildRoot}/workspace/php/src`,
+  // destination: `${appDir}/usr/php`,
+  libDest: `${appDir}/usr/php/lib`,
+  binDest: `${appDir}/usr/php/bin`,
+  packages: [
+      'rubocop',
+      'rubocop-rspec',
+      'php-lint',
+  ],
+};
+php.srcCache = `${php.cachePath}/src`;
 
 const hunspell = {
   srcUrl: 'https://github.com/hunspell/hunspell.git',
@@ -134,5 +153,6 @@ module.exports = {
   atom,
   ctags,
   ruby,
+  php,
   hunspell,
 };
