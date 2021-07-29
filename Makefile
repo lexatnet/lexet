@@ -8,7 +8,7 @@ build-appimage:
 	./scripts/build-appimage.sh
 
 builder-bash:
-	./scripts/gulp-builder-bash.sh
+	./scripts/builder-bash.sh
 
 build-appimage-with-log:
 	./scripts/build-appimage.sh |& tee build.log

@@ -1,0 +1,67 @@
+"*":
+  "atom-ctags":
+    buildTimeout: 60000
+    cmdArgs: "--exclude=node_modules"
+  core:
+    disabledPackages: [
+      "symbols-view"
+    ]
+    telemetryConsent: "limited"
+    themes: [
+      "one-light-ui"
+      "one-light-syntax"
+    ]
+  editor:
+    fontSize: 12
+    showIndentGuide: true
+    showInvisibles: false
+  "git-blame":
+    columnWidth: 424
+  "linter-pylint":
+    disableTimeout: true
+  "linter-ui-default": {}
+  minimap:
+    plugins:
+      "find-and-replace": true
+      "find-and-replaceDecorationsZIndex": 0
+      "git-diff": true
+      "git-diffDecorationsZIndex": 0
+      "highlight-selected": true
+      "highlight-selectedDecorationsZIndex": 0
+      linter: true
+      linterDecorationsZIndex: 0
+      selection: true
+      selectionDecorationsZIndex: 0
+  "spell-check":
+    addKnownWords: true
+    knownWords: [
+      "minimap-linter"
+      "autocomplete"
+      "flycheck"
+      "php"
+      "TODO"
+      "rubocop"
+      "eslint"
+      "init"
+      "appimage"
+      "camelCase"
+      "treemacs"
+      "config"
+      "readme"
+      "js"
+      "libs"
+      "phar"
+      "emacs"
+      "ctags"
+      "linter"
+      "minimap"
+      "pylint"
+      "xml"
+      "ide"
+      "ui"
+    ]
+  tabs:
+    enableVcsColoring: true
+  "tree-view": {}
+  welcome:
+    showOnStartup: false

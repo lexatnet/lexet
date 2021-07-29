@@ -5,14 +5,8 @@ const { pipeOutput } = require('@lib');
 const config = require('@config');
 const lexetSrc = get(config, 'lexet.src');
 const lexetDest = get(config, 'lexet.dest');
+const fs = require('fs-extra')
 
 gulp.task('copy-lexet', async () => {
-  await pipeOutput(execa(
-    'cp',
-    [
-      '-r',
-      lexetSrc,
-      lexetDest
-    ]
-  ));
+  await fs.copy(lexetSrc, lexetDest);
 });

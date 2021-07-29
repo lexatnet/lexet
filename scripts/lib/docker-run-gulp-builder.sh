@@ -20,8 +20,8 @@ init-config() {
 prepare-docker-gulp-builder-dirs() {
     init-config
 
-    build_dir=$root/build
-    [ -d $build_dir ] || mkdir $build_dir
+    # build_dir=$root/build
+    # [ -d $build_dir ] || mkdir $build_dir
 
     staff_dir=$root/staff
     [ -d $staff_dir ] || mkdir $staff_dir
@@ -60,8 +60,8 @@ prepare-docker-gulp-builder-dirs() {
 docker-run-gulp-builder() {
     prepare-docker-gulp-builder-dirs
 
-    local entrypoint=$through_point/${appimage_gulp_builder_entrypoint_script_name}
-    local mnt_entrypoint="--volume $appimage_gulp_builder_entrypoint_script_external:$entrypoint:ro"
+    local entrypoint=$through_point/${appimage_builder_entrypoint_script_name}
+    local mnt_entrypoint="--volume $appimage_builder_entrypoint_script_external:$entrypoint:ro"
     local args=""
 
     while [[ $# -gt 0 ]]
@@ -94,9 +94,7 @@ docker-run-gulp-builder() {
            --volume $root/staff/builder/nvm/alias:/env/nvm/alias \
            --volume $root/staff/builder/nvm/.cache:/env/nvm/.cache \
            --volume $root/staff/builder/node_modules:/builder/node_modules \
-           --volume $root/appimage-builder-recipe.yml:$through_point/recipe.yml:ro \
            --volume $root/scripts/AppRun.sh:$through_point/AppRun:ro \
-           --volume $root/scripts/lib/incremental_tags_generation.sh:$through_point/incremental_tags_generation.sh:ro \
            --volume $root/src:$through_point/src:ro \
            --volume $root/config:$through_point/config:ro \
            --volume $root/scripts/lib:$through_point/scripts:ro \
@@ -108,5 +106,5 @@ docker-run-gulp-builder() {
            $args \
            --rm \
            --entrypoint $entrypoint \
-           $appimage_gulp_builder_image_tag
+           $appimage_builder_image_tag
 }

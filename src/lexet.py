@@ -8,7 +8,6 @@ from string import Template
 from lib import LexetArgumentParser
 from lib import LexetConfig
 from lib import LexetProject
-from lib import LexetBuilder
 from lib import LexetStarter
 from lib import LexetHome
 from lib import LexetEnv
@@ -23,7 +22,7 @@ class Lexet():
     self.configure()
     self.home()
 
-  def env(self):
+  def init_env(self):
     self.env = LexetEnv(self.config, self.project)
     self.env.set()
 
@@ -53,7 +52,7 @@ class Lexet():
   def run(self):
     project_path = self.args.project.pop()
     self.project = LexetProject(self.config, project_path)
-    self.env()
+    self.init_env()
     starter = LexetStarter(self.config, self.project)
     mode = self.args.mode.pop()
     starter.start(mode)
@@ -76,9 +75,7 @@ def main():
     lexet = Lexet(args)
     lexet.runAction()
   except Exception as ex:
-    logging.error('ERROR: '.format(exception=ex.to))
-    logging.error('ERROR: stacktrace'.format0(stacktrace=traceback.format_exc()))
-    # import pdb; pdb.set_trace()
+    logging.exception(ex)
 
 if __name__ == "__main__":
     # execute only if run as a script

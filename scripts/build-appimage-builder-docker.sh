@@ -12,17 +12,17 @@ get_script_dir () {
 }
 
 
-build_appimage_gulp_builder_image() {
+build_appimage_builder_image() {
   local dir=$(get_script_dir)
   source $dir/../config/config.sh
 
   docker build \
     --build-arg build_root=$build_root \
-    --build-arg build_script=$appimage_gulp_builder_build_script \
-    --build-arg entrypoint_script=$appimage_gulp_builder_entrypoint_script \
-    --tag $appimage_gulp_builder_image_tag \
-    --file $appimage_gulp_builder_docker_file \
+    --build-arg build_script=$appimage_builder_build_script \
+    --build-arg entrypoint_script=$appimage_builder_entrypoint_script \
+    --tag $appimage_builder_image_tag \
+    --file $appimage_builder_docker_file \
     $root
 }
 
-build_appimage_gulp_builder_image
+build_appimage_builder_image

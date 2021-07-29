@@ -5,16 +5,10 @@ const { pipeOutput } = require('@lib');
 const config = require('@config');
 const appRunScriptSrc = get(config, 'lexet.appRunScriptSrc');
 const appRunScriptDest = get(config, 'lexet.appRunScriptDest');
+const fs = require('fs-extra')
 
 gulp.task('prepare-apprun', async () => {
-  await pipeOutput(execa(
-    'cp',
-    [
-      '-r',
-      appRunScriptSrc,
-      appRunScriptDest
-    ]
-  ));
+  await fs.copy(appRunScriptSrc, appRunScriptDest);
 
   await pipeOutput(execa(
     'chmod',
