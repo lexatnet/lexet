@@ -10,7 +10,7 @@ gulp.task('prepare-python-executables-packages', async () => {
 
   const content = [
     '#!/usr/bin/env bash',
-    'python3 -m pylint $@',
+    'python3 -m pylint "$@"',
   ].join('\n');
 
   const scriptPath = `${destination}/bin/pylint`;

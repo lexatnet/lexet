@@ -1,6 +1,7 @@
 const buildRoot = '/staff/build';
 const appDir = `${buildRoot}/workspace/AppDir`;
 
+
 const python3 = {
   srcUrl: 'https://www.python.org/ftp/python/3.9.5/Python-3.9.5.tgz',
   srcTar: 'python-src.tgz',
@@ -22,6 +23,21 @@ const ctags = {
   destination: `${appDir}/usr/ctags`,
 };
 ctags.srcCache = `${ctags.cachePath}/src`;
+
+const ruby = {
+  srcUrl: 'https://github.com/ruby/ruby.git',
+  cachePath: `${buildRoot}/.cache/ruby`,
+  localRepo: `${buildRoot}/workspace/ruby/src`,
+  // destination: `${appDir}/usr/ruby`,
+  libDest: `${appDir}/usr/ruby/lib`,
+  binDest: `${appDir}/usr/ruby/bin`,
+  packages: [
+      'rubocop',
+      'rubocop-rspec',
+      'ruby-lint',
+  ],
+};
+ruby.srcCache = `${ruby.cachePath}/src`;
 
 const hunspell = {
   srcUrl: 'https://github.com/hunspell/hunspell.git',
@@ -72,7 +88,8 @@ const atom = {
   binZip: 'atom.tar.gz',
   binCache: `${buildRoot}/.cache/atom/bin`,
   dest: `${appDir}/atom`,
-  atomHome: `${appDir}/atom-home-template`,
+  atomHomeTemplate: `${appDir}/atom-home-template`,
+  atomHomeCache: `${buildRoot}/.cache/atom/home`,
   packages: [
     'git-blame',
     'git-diff',
@@ -109,11 +126,13 @@ atom.binsPath = `${atom.binCache}/${atom.binZip}`;
 
 module.exports = {
   buildRoot,
+  appDir,
   python3,
   appimage,
   lexet,
   nvm,
   atom,
   ctags,
+  ruby,
   hunspell,
 };

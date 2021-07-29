@@ -8,7 +8,6 @@ lexet_configs = Path(os.environ['LEXET_CONFIGS'])
 home = Path(os.environ['HOME'])
 
 
-
 class LexetConfig():
   def __init__(self, config):
     self.conf = configparser.ConfigParser()

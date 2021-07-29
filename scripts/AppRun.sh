@@ -3,12 +3,22 @@ HERE="$(dirname "$(readlink -f "${0}")")"
 export LD_LIBRARY_PATH=${HERE}/usr/lib/x86_64-linux-gnu/:$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH=${HERE}/lib/x86_64-linux-gnu/:$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH=${HERE}/usr/lib/:${HERE}/lib/:$LD_LIBRARY_PATH
+export PATH=${HERE}/bin:$PATH
 export PATH=${HERE}/usr/sbin:$PATH
 export PATH=${HERE}/usr/bin:$PATH
 export INFOPATH=./local/share/info
-export DICPATH=${HERE}/usr/share/hunspell
+export DICPATH=${HERE}/usr/share/hunspell:$DICPATH
 
-export RUBYLIB=${HERE}/usr/lib/ruby/2.8.0/x86_64-linux/:${HERE}/usr/lib/ruby/2.8.0/
+# ruby env
+# Search path for dynamically loaded modules.
+# DLN_LIBRARY_PATH=
+# export RUBYLIB=${HERE}/usr/lib/ruby/2.8.0/x86_64-linux/:${HERE}/usr/lib/ruby/2.8.0/
+export RUBYLIB=${HERE}/usr/ruby/bin/lib/ruby/3.1.0:${HERE}/usr/ruby/bin/lib/ruby/3.1.0/x86_64-linux
+export GEM_PATH=${HERE}/usr/ruby/bin/lib/ruby/gems/3.1.0
+export PATH="${HERE}"/usr/ruby/bin/bin:$PATH
+# export RUBYLIB=${HERE}/usr/ruby/bin/lib/ruby/3.1.0:${RUBYLIB}
+# RUBYPATH=
+
 
 export LEXET_MOUNT_POINT="${HERE}"
 export LEXET_PATH="${HERE}/lexet"
