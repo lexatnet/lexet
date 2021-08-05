@@ -10,20 +10,20 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "del": "^6.0.0",
-    "execa": "^5.0.0",
-    "fs-extra": "^10.0.0",
-    "gulp": "^4.0.2",
-    "lodash": "^4.17.21",
-    "module-alias": "^2.2.2",
-    "replace-in-file": "^6.2.0"
+    "del": ">=6.0.0",
+    "execa": ">=5.0.0",
+    "fs-extra": ">=10.0.0",
+    "gulp": ">=4.0.2",
+    "lodash": ">=4.17.21",
+    "module-alias": ">=2.2.2",
+    "replace-in-file": ">=6.2.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.14.3",
-    "@babel/preset-env": "^7.14.2",
-    "@babel/register": "^7.13.16",
-    "eslint": "^7.26.0",
-    "eslint-plugin-import": "^2.23.2"
+    "@babel/core": ">=7.14.3",
+    "@babel/preset-env": ">=7.14.2",
+    "@babel/register": ">=7.13.16",
+    "eslint": ">=7.26.0",
+    "eslint-plugin-import": ">=2.23.2"
   },
   "_moduleAliases": {
     "@src": "./src",

@@ -2,14 +2,14 @@ const gulp = require('gulp');
 const { get } = require('lodash');
 const config = require('@config');
 const { ensureDir, mapSeries, symlink } = require('@lib');
-const appDir = get(config, 'appimageBuilder.appDir');
+const appDir = get(config, 'appDir');
 
 const dirTree = [
   `${appDir}/env`,
   `${appDir}/init`,
   `${appDir}/bin`,
   `${appDir}/lib`,
-  `${appDir}/usr/share`
+  `${appDir}/usr`
 ];
 
 gulp.task('prepare-appdir-tree', async () => {

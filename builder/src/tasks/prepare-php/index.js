@@ -5,9 +5,10 @@ require('./buildconf-php');
 require('./configure-php');
 require('./make-php');
 require('./install-php');
-// require('./prepare-php-packages');
+require('./prepare-php-packages');
 require('./patch-php-interpreter');
 require('./prepare-php-symlinks');
+require('./prepare-php-ini');
 
 gulp.task('prepare-php', gulp.series(
   'get-php-sources',
@@ -16,7 +17,8 @@ gulp.task('prepare-php', gulp.series(
   'configure-php',
   'make-php',
   'install-php',
-  // 'prepare-php-packages',
+  'prepare-php-packages',
   'patch-php-interpreter',
   'prepare-php-symlinks',
+  'prepare-php-ini',
 ));

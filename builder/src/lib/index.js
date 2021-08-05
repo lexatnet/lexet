@@ -86,6 +86,16 @@ const ensureRelativeSymlink = async (destPath, linkPath) => {
   }
 };
 
+const makeExecutable = async (path) => {
+  await pipeOutput(execa(
+    'chmod',
+    [
+      '+x',
+      path
+    ]
+  ));
+};
+
 module.exports = {
   mapSeries,
   ensureDir,
@@ -93,5 +103,6 @@ module.exports = {
   symlink,
   ensureRelativeSymlink,
   relativeSymlink,
-  pipeOutput
-}
+  pipeOutput,
+  makeExecutable,
+};
