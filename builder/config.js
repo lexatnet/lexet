@@ -48,14 +48,32 @@ const php = {
   cachePath: `${buildRoot}/.cache/php`,
   localRepo: `${buildRoot}/workspace/php/src`,
   // destination: `${appDir}/usr/php`,
+  iniDir: `${appDir}/usr/php/config`,
   libDest: `${appDir}/usr/php/lib`,
   binDest: `${appDir}/usr/php/bin`,
+  extDir: `${appDir}/usr/php/extensions`,
   packages: [
-      'rubocop',
-      'rubocop-rspec',
-      'php-lint',
+    {
+      type: 'phar',
+      name: 'composer.phar',
+      url: 'https://getcomposer.org/composer.phar',
+      aliases: ['composer']
+    },
+    {
+      type: 'phar',
+      name: 'phpcs.phar',
+      url: 'https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar',
+      aliases: ['phpcs']
+    },
+    {
+      type: 'phar',
+      name: 'phpcbf.phar',
+      url: 'https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar',
+      aliases: ['phpcbf']
+    },
   ],
 };
+php.iniDest = `${php.iniDir}/php.ini`;
 php.srcCache = `${php.cachePath}/src`;
 
 const hunspell = {
@@ -111,11 +129,12 @@ const atom = {
   atomHomeCache: `${buildRoot}/.cache/atom/home`,
   packages: [
     'git-blame',
-    'git-diff',
+    // 'git-diff', // part of core
     'linter',
     'linter-ui-default',
     'linter-eslint',
     'linter-pylint',
+    'linter-rubocop',
     // 'linter-spell', // (?)
     'intentions',
     'highlight-selected',
@@ -133,10 +152,12 @@ const atom = {
     'file-icons',
 
     'symbols-tree-view',
-    'autocomplete-plus',
+    // 'autocomplete-plus',  // part of core
     'atom-ctags',
     'change-case',
     'advanced-open-file',
+    'atom-beautify',
+    'linter-phpcs',
   ],
   configTemplateSrc: '/lexet/config/atom.config.template.cson',
   configTemplateDest: `${appDir}/atom-home-template/config.cson`

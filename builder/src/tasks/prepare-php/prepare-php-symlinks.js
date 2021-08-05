@@ -9,6 +9,10 @@ const appDir = get(config, 'appDir');
 
 const bins = [
   'php',
+  'phar',
+  'composer',
+  'phpcs',
+  'phpcbf',
 ];
 
 const preparePHPBinSymlink = async (bin) => {

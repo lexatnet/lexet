@@ -1,5 +1,10 @@
 require('module-alias/register');
 
+const { get } = require('lodash');
+const config = require('@config');
+const appDir = get(config, 'appDir');
+process.env['APPDIR'] = appDir;
+
 const gulp = require('gulp');
 
 require('@tasks/clean');
@@ -19,6 +24,8 @@ gulp.task('build', gulp.series(
   'prepare-appdir',
   'prepare-node',
   'prepare-python',
+  'prepare-ruby',
+  'prepare-php',
   'prepare-ctags',
   'prepare-hunspell',
   'prepare-atom',

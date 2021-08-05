@@ -15,7 +15,7 @@ export DICPATH=${HERE}/usr/share/hunspell:$DICPATH
 # export RUBYLIB=${HERE}/usr/lib/ruby/2.8.0/x86_64-linux/:${HERE}/usr/lib/ruby/2.8.0/
 export RUBYLIB=${HERE}/usr/ruby/bin/lib/ruby/3.1.0:${HERE}/usr/ruby/bin/lib/ruby/3.1.0/x86_64-linux
 export GEM_PATH=${HERE}/usr/ruby/bin/lib/ruby/gems/3.1.0
-export PATH="${HERE}"/usr/ruby/bin/bin:$PATH
+# export PATH="${HERE}"/usr/ruby/bin/bin:$PATH
 # export RUBYLIB=${HERE}/usr/ruby/bin/lib/ruby/3.1.0:${RUBYLIB}
 # RUBYPATH=
 
@@ -24,7 +24,7 @@ export LEXET_MOUNT_POINT="${HERE}"
 export LEXET_PATH="${HERE}/lexet"
 export LEXET_CONFIGS="${HERE}/config"
 
-export PHP_INI_SCAN_DIR="${HERE}/etc/php/7.2/cli/conf.d/"
+export PHP_INI_SCAN_DIR="${HERE}/usr/php/config/"
 
 # appimage_python3="${HERE}"/usr/python3/bin/python3
 
