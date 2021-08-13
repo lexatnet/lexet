@@ -1,21 +1,22 @@
 const execa = require('execa');
 const gulp = require('gulp');
 const fs = require('fs-extra');
+
 const { ensureDir, pipeOutput } = require('@lib');
 const { get } = require('lodash');
 const config = require('@config');
-const cachePath = get(config, 'ctags.cachePath');
-const srcCache = get(config, 'ctags.srcCache');
-const srcUrl = get(config, 'ctags.srcUrl');
+const cachePath = get(config, 'meld.cachePath');
+const srcCache = get(config, 'meld.srcCache');
+const srcUrl = get(config, 'meld.srcUrl');
 
-gulp.task('get-ctags-sources', async () => {
+gulp.task('get-meld-sources', async () => {
 
-  const shouldDownloadSources = !(await fs.pathExists(srcCache));
+  let shouldDownloadSources = !(await fs.pathExists(srcCache));
 
   if (shouldDownloadSources) {
     await ensureDir(cachePath);
     // eslint-disable-next-line no-console
-    console.log('downloading ctags sources');
+    console.log('downloading meld sources');
     await pipeOutput(execa(
       'git',
       [

@@ -8,3 +8,4 @@ build
 *.log
 .tags*
 staff
+build_context.tar

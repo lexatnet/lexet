@@ -1,12 +1,13 @@
 FROM ubuntu:focal
 
+ARG context_root=
 ARG build_root=/build
 ARG build_script=$build_root/appimage-builder-build-script.sh
 ARG entrypoint_script=$build_root/appimage-builder-entrypoint.sh
 
-COPY ./docker $build_root/docker
-COPY ./config/config.sh $build_root/config/config.sh
-COPY ./scripts/lib $build_root/scripts/lib
+COPY $context_root/docker $build_root/docker
+COPY $context_root/config/config.sh $build_root/config/config.sh
+COPY $context_root/scripts/lib $build_root/scripts/lib
 
 RUN chmod -R 777 $build_root
 

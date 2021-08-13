@@ -26,3 +26,4 @@
 # TODO: Create prompt mode ( translation commands to bash )
 # TODO: move from pkg2appimage to custom script
 # TODO: add symlinks in appimage bin dir on apm, atom, python etc.
+# TODO: add meld util to merge.

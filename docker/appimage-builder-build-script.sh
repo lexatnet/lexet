@@ -74,14 +74,21 @@ install_utils(){
     --init-script $nvm_init_script \
     --init-nvm-root $app_run_nvm_dir
 
-  apt-get install -y \
-    python3-pip \
-    python3-setuptools \
-    patchelf \
-    desktop-file-utils \
-    libgdk-pixbuf2.0-dev \
-    fakeroot \
-    strace
+  apt-get install -y python3-pip
+  apt-get install -y python3-setuptools
+  apt-get install -y patchelf
+  apt-get install -y desktop-file-utils
+  apt-get install -y libgdk-pixbuf2.0-dev
+  apt-get install -y fakeroot
+  apt-get install -y strace
+
+  #for meld
+  apt-get install -y meson
+  apt-get install -y ninja-build
+  apt-get install -y libgtk-3-dev
+  apt-get install -y cmake
+  apt-get install -y gtksourceview4
+
   install_appimage-builder
 
   rm -rf /var/lib/apt/lists/*

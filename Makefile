@@ -12,3 +12,6 @@ builder-bash:
 
 build-appimage-with-log:
 	./scripts/build-appimage.sh |& tee build.log
+
+test-appimage:
+	./scripts/test-appimage.sh

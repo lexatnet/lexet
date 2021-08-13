@@ -57,8 +57,8 @@ Download new AppImage and override old one by it.
 
 # CLI arguments
 
-`<path-to-AppImage>` [-h] [-H HOME] [-c CONFIG] [-a {install,build,run}]
-                [-m {text,ui}] [-p PROJECT]
+`<path-to-AppImage>` [-h] [-H HOME] [-c CONFIG] [-a {run, test}]
+                [-m {atom, python}]
 
 optional arguments:
 
@@ -68,11 +68,9 @@ optional arguments:
 
 -c `<CONFIG>`, --config `<CONFIG>` Path to config. Default: `~/.lexet/config`
 
--a {run}, --action {run} For future extensions of functionality. Default: `run`
+-a {run, test}, --action {run} For future extensions of functionality. Default: `run`
 
 -m {atom, python}, --mode {atom, python} Allows to run application in console mode. Default: `atom`
-
--p `<PROJECT>`, --project `<PROJECT>` Path to working directory which you want to open. Default: `current working directory`.
 
 # Development
 this section for developers

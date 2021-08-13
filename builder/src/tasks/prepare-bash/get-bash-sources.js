@@ -4,18 +4,18 @@ const fs = require('fs-extra');
 const { ensureDir, pipeOutput } = require('@lib');
 const { get } = require('lodash');
 const config = require('@config');
-const cachePath = get(config, 'ctags.cachePath');
-const srcCache = get(config, 'ctags.srcCache');
-const srcUrl = get(config, 'ctags.srcUrl');
+const cachePath = get(config, 'bash.cachePath');
+const srcCache = get(config, 'bash.srcCache');
+const srcUrl = get(config, 'bash.srcUrl');
 
-gulp.task('get-ctags-sources', async () => {
+gulp.task('get-bash-sources', async () => {
 
   const shouldDownloadSources = !(await fs.pathExists(srcCache));
 
   if (shouldDownloadSources) {
     await ensureDir(cachePath);
     // eslint-disable-next-line no-console
-    console.log('downloading ctags sources');
+    console.log('downloading bash sources');
     await pipeOutput(execa(
       'git',
       [

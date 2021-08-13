@@ -8,7 +8,7 @@ const packages = get(config, 'python3.packages');
 const packagesDest = get(config, 'python3.packagesDest');
 
 
-const preparePythonPackage = async () => {
+const preparePythonPackage = async (package) => {
   try {
 
     await ensureDir(packagesDest);
@@ -17,7 +17,7 @@ const preparePythonPackage = async () => {
       '-m pip',
       'install',
       `--target ${packagesDest}`,
-      'pylint',
+      package,
     ]);
   } catch (e) {
     // eslint-disable-next-line no-console

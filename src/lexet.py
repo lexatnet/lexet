@@ -7,8 +7,8 @@ from string import Template
 
 from lib import LexetArgumentParser
 from lib import LexetConfig
-from lib import LexetProject
 from lib import LexetStarter
+from lib import LexetTester
 from lib import LexetHome
 from lib import LexetEnv
 
@@ -18,12 +18,13 @@ logging.basicConfig(level=logging.DEBUG)
 
 class Lexet():
   def __init__(self, args):
+    logging.info(f'args = {args}')
     self.parseArgs(args[1:])
     self.configure()
     self.home()
 
   def init_env(self):
-    self.env = LexetEnv(self.config, self.project)
+    self.env = LexetEnv(self.config)
     self.env.set()
 
   def parseArgs(self, args):
@@ -48,14 +49,17 @@ class Lexet():
     )
     self.config = LexetConfig(config_path).get_config()
 
-
   def run(self):
-    project_path = self.args.project.pop()
-    self.project = LexetProject(self.config, project_path)
     self.init_env()
-    starter = LexetStarter(self.config, self.project)
+    starter = LexetStarter(self.config)
     mode = self.args.mode.pop()
     starter.start(mode)
+
+  def test(self):
+    self.init_env()
+    tester = LexetTester(self.config)
+    tester.test()
+
 
   def get_config_path(self):
     root_config = Path(lexet_path, 'config')
@@ -66,6 +70,7 @@ class Lexet():
 
   def runAction(self):
     action = self.args.action.pop()
+    logging.info(f'action= {action}')
     getattr(self, action)()
 
 

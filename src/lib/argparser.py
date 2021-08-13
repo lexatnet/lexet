@@ -11,6 +11,7 @@ configured for speed and comfortable writing code
 from console or UI versions of emacs.
 '''
     )
+
     parser.add_argument(
       '-H', '--home',
       action='store',
@@ -21,6 +22,7 @@ from console or UI versions of emacs.
 Path to lexet local files. Default: ~/.lexet
 '''
     )
+
     parser.add_argument(
       '-c', '--config',
       action='store',
@@ -31,16 +33,18 @@ Path to lexet local files. Default: ~/.lexet
 Path to config. Default: ~/.lexet/config
 '''
     )
+
     parser.add_argument(
       '-a', '--action',
       action='store',
       dest='action',
       nargs=1,
-      choices=['run'],
+      choices=['run', 'test'],
       default=['run'],
       help='''
 For future extensions of functionality. Default: run
 '''
+
     )
     parser.add_argument(
       '-m', '--mode',
@@ -53,24 +57,5 @@ For future extensions of functionality. Default: run
 Allows to run application in console mode. Default: atom
 '''
     )
-    parser.add_argument(
-      '-p', '--project',
-      action='store',
-      dest='project',
-      nargs=1,
-      default=[os.getcwd()],
-      help='''
-Path to working directory which you want to open. Default: current working directory
-'''
-    )
-    parser.add_argument(
-      '-w', '--workspace',
-      action='store',
-      dest='workspace',
-      nargs=1,
-      default=['default'],
-      help='''
-Name of workspace. Default: default
-'''
-    )
+
     return parser.parse_args(argsList)

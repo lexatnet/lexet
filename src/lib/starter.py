@@ -10,12 +10,10 @@ from pathlib import Path
 
 
 class LexetStarter():
-  def __init__(self, config, project):
+  def __init__(self, config):
     self.config = config
-    self.project = project
 
   def start(self, mode):
-    self.project.go_to_project_dir()
     if mode == 'atom':
       self.run_atom()
     elif mode == 'python3':

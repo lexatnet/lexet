@@ -16,9 +16,18 @@ const python3 = {
   packagesExecPrefix: `${appDir}/usr/python3/lib/python3.9`,
   packages: [
       'pylint',
+      'pytest',
   ],
 };
 python3.pythonSrc = `${python3.localRepoCache}/${python3.srcTar}`;
+
+const bash = {
+  srcUrl: 'https://git.savannah.gnu.org/git/bash.git',
+  cachePath: `${buildRoot}/.cache/bash`,
+  localRepo: `${buildRoot}/workspace/bash/src`,
+  destination: `${appDir}/usr/bash`,
+};
+bash.srcCache = `${bash.cachePath}/src`;
 
 const ctags = {
   srcUrl: 'https://github.com/universal-ctags/ctags.git',
@@ -76,6 +85,34 @@ const php = {
 php.iniDest = `${php.iniDir}/php.ini`;
 php.srcCache = `${php.cachePath}/src`;
 
+
+const glib = {
+  srcUrl: 'https://gitlab.gnome.org/GNOME/glib.git',
+  cachePath: `${buildRoot}/.cache/glib`,
+  localRepo: `${buildRoot}/workspace/glib/src`,
+  buildDir: '_build',
+  dest: `${appDir}/usr/glib`,
+};
+glib.srcCache = `${glib.cachePath}/src`;
+
+const gtksourceview = {
+  srcUrl: 'https://gitlab.gnome.org/GNOME/gtksourceview.git',
+  cachePath: `${buildRoot}/.cache/gtksourceview`,
+  localRepo: `${buildRoot}/workspace/gtksourceview/src`,
+  buildDir: '_build',
+  dest: `${appDir}/usr/gtksourceview`,
+};
+gtksourceview.srcCache = `${gtksourceview.cachePath}/src`;
+
+const meld = {
+  srcUrl: 'https://gitlab.gnome.org/GNOME/meld.git',
+  cachePath: `${buildRoot}/.cache/meld`,
+  localRepo: `${buildRoot}/workspace/meld/src`,
+  buildDir: '_build',
+  dest: `${appDir}/usr/meld`,
+};
+meld.srcCache = `${meld.cachePath}/src`;
+
 const hunspell = {
   srcUrl: 'https://github.com/hunspell/hunspell.git',
   cachePath: `${buildRoot}/.cache/hunspell`,
@@ -94,7 +131,6 @@ const lexet = {
   src: '/lexet/src',
   dest: `${appDir}/lexet`,
   iconSrc: '/builder/icons/lex.svg',
-  // iconDest: `${appDir}/usr/share/icons/hicolor/scalable/apps/lex.svg`,
   iconDest: `${appDir}/lexet.svg`,
   appRunScriptSrc: '/lexet/AppRun',
   appRunScriptDest: `${appDir}/AppRun`,
@@ -167,13 +203,17 @@ atom.binsPath = `${atom.binCache}/${atom.binZip}`;
 module.exports = {
   buildRoot,
   appDir,
-  python3,
   appimage,
-  lexet,
+  python3,
+  bash,
   nvm,
+  php,
+  ruby,
   atom,
   ctags,
-  ruby,
-  php,
   hunspell,
+  lexet,
+  glib,
+  gtksourceview,
+  meld,
 };
