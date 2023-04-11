@@ -24,6 +24,6 @@
 # TODO: add libgtk-3.so.0 in appimage
 # TODO: add project level settings for indentation readme
 # TODO: Create prompt mode ( translation commands to bash )
-# TODO: move from pkg2appimage to custom script
 # TODO: add symlinks in appimage bin dir on apm, atom, python etc.
 # TODO: add meld util to merge.
+# TODO: add pyenv.

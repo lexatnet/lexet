@@ -2,6 +2,36 @@ const buildRoot = '/staff/build';
 const appDir = `${buildRoot}/workspace/AppDir`;
 
 
+const pyenv = {
+  srcUrl: 'https://github.com/pyenv/pyenv.git',
+  cachePath: `${buildRoot}/.cache/pyenv`,
+  destination: `${appDir}/usr/pyenv`,
+  versions: [
+    '3.9.5'
+  ],
+  packages: [
+    {
+      name: 'pylint',
+      versions: [
+        '3.9.5',
+      ],
+    },
+    {
+      name: 'pytest',
+      versions: [
+        '3.9.5',
+      ],
+    },
+    {
+      name: 'black',
+      versions: [
+        '3.9.5',
+      ],
+    },
+  ],
+};
+pyenv.srcCache = `${pyenv.cachePath}/src`;
+
 const python3 = {
   srcUrl: 'https://www.python.org/ftp/python/3.9.5/Python-3.9.5.tgz',
   srcTar: 'python-src.tgz',
@@ -17,6 +47,7 @@ const python3 = {
   packages: [
       'pylint',
       'pytest',
+      'black'
   ],
 };
 python3.pythonSrc = `${python3.localRepoCache}/${python3.srcTar}`;
@@ -95,6 +126,80 @@ const glib = {
 };
 glib.srcCache = `${glib.cachePath}/src`;
 
+const xcbproto = {
+  srcUrl: 'https://gitlab.freedesktop.org/xorg/proto/xcbproto.git',
+  cachePath: `${buildRoot}/.cache/xcbproto`,
+  localRepo: `${buildRoot}/workspace/xcbproto/src`,
+  buildDir: '_build',
+  dest: `${appDir}/usr/xcbproto`,
+};
+xcbproto.srcCache = `${xcbproto.cachePath}/src`;
+
+
+const xorgMacros = {
+  srcUrl: 'https://github.com/freedesktop/xorg-macros.git',
+  cachePath: `${buildRoot}/.cache/xorgMacros`,
+  localRepo: `${buildRoot}/workspace/xorgMacros/src`,
+  buildDir: '_build',
+  dest: `${appDir}/usr/xorgMacros`,
+};
+xorgMacros.srcCache = `${xorgMacros.cachePath}/src`;
+
+const xcbLibxcb = {
+  srcUrl: 'https://github.com/freedesktop/xcb-libxcb.git',
+  cachePath: `${buildRoot}/.cache/xcb-libxcb`,
+  localRepo: `${buildRoot}/workspace/xcb-libxcb/src`,
+  buildDir: '_build',
+  dest: `${appDir}/usr/xcb-libxcb`,
+};
+xcbLibxcb.srcCache = `${xcbLibxcb.cachePath}/src`;
+
+const doxygen = {
+  srcUrl: 'https://github.com/doxygen/doxygen.git',
+  cachePath: `${buildRoot}/.cache/doxygen`,
+  localRepo: `${buildRoot}/workspace/doxygen/src`,
+  buildDir: '_build',
+  dest: `${appDir}/usr/doxygen`,
+};
+doxygen.srcCache = `${doxygen.cachePath}/src`;
+
+const xkbcommon = {
+  srcUrl: 'https://github.com/xkbcommon/libxkbcommon.git',
+  cachePath: `${buildRoot}/.cache/xkbcommon`,
+  localRepo: `${buildRoot}/workspace/xkbcommon/src`,
+  buildDir: '_build',
+  dest: `${appDir}/usr/xkbcommon`,
+};
+xkbcommon.srcCache = `${xkbcommon.cachePath}/src`;
+
+const pixman = {
+  srcUrl: 'https://github.com/freedesktop/pixman.git',
+  branch: '--branch pixman-0.36.0',
+  cachePath: `${buildRoot}/.cache/pixman`,
+  localRepo: `${buildRoot}/workspace/pixman/src`,
+  buildDir: '_build',
+  dest: `${appDir}/usr/pixman`,
+};
+pixman.srcCache = `${pixman.cachePath}/src`;
+
+const cairo = {
+  srcUrl: 'git://git.cairographics.org/git/cairo',
+  cachePath: `${buildRoot}/.cache/cairo`,
+  localRepo: `${buildRoot}/workspace/cairo/src`,
+  buildDir: '_build',
+  dest: `${appDir}/usr/cairo`,
+};
+cairo.srcCache = `${cairo.cachePath}/src`;
+
+const gtk = {
+  srcUrl: 'https://gitlab.gnome.org/GNOME/gtk.git',
+  cachePath: `${buildRoot}/.cache/gtk`,
+  localRepo: `${buildRoot}/workspace/gtk/src`,
+  buildDir: '_build',
+  dest: `${appDir}/usr/gtk`,
+};
+gtk.srcCache = `${gtk.cachePath}/src`;
+
 const gtksourceview = {
   srcUrl: 'https://gitlab.gnome.org/GNOME/gtksourceview.git',
   cachePath: `${buildRoot}/.cache/gtksourceview`,
@@ -165,7 +270,6 @@ const atom = {
   atomHomeCache: `${buildRoot}/.cache/atom/home`,
   packages: [
     'git-blame',
-    // 'git-diff', // part of core
     'linter',
     'linter-ui-default',
     'linter-eslint',
@@ -186,9 +290,9 @@ const atom = {
     'platformio-ide-terminal',
     'color-picker',
     'file-icons',
+    'python-black',
 
     'symbols-tree-view',
-    // 'autocomplete-plus',  // part of core
     'atom-ctags',
     'change-case',
     'advanced-open-file',
@@ -204,6 +308,7 @@ module.exports = {
   buildRoot,
   appDir,
   appimage,
+  pyenv,
   python3,
   bash,
   nvm,
@@ -214,6 +319,14 @@ module.exports = {
   hunspell,
   lexet,
   glib,
+  xcbproto,
+  xorgMacros,
+  xcbLibxcb,
+  doxygen,
+  xkbcommon,
+  pixman,
+  cairo,
+  gtk,
   gtksourceview,
   meld,
 };

@@ -5,10 +5,7 @@ const { pipeOutput, mapSeries } = require('@lib');
 const { get } = require('lodash');
 const config = require('@config');
 const destination = get(config, 'python3.destination');
-
-const packages = [
-  'pylint'
-];
+const packages = get(config, 'python3.packages');
 
 const preparePythonPackageExecutable = async (package) => {
   const content = [

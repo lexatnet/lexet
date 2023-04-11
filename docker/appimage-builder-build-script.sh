@@ -83,11 +83,17 @@ install_utils(){
   apt-get install -y strace
 
   #for meld
-  apt-get install -y meson
-  apt-get install -y ninja-build
-  apt-get install -y libgtk-3-dev
+  python3 -m pip install meson
+  # apt-get install -y meson
+  python3 -m pip install ninja
+  # apt-get install -y ninja-build
+  # apt-get install -y libgtk-3-dev
   apt-get install -y cmake
-  apt-get install -y gtksourceview4
+  apt-get install -y flex
+  apt-get install -y xutils-dev
+  apt-get install -y check
+
+  apt-get install -y mc
 
   install_appimage-builder
 

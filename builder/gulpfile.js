@@ -11,12 +11,11 @@ require('@tasks/clean');
 // require('@tasks/experiment');
 require('@tasks/prepare-appdir');
 require('@tasks/prepare-node');
+require('@tasks/prepare-pyenv');
 require('@tasks/prepare-python');
 require('@tasks/prepare-bash');
 require('@tasks/prepare-ruby');
 require('@tasks/prepare-php');
-require('@tasks/prepare-glib');
-require('@tasks/prepare-gtksourceview');
 require('@tasks/prepare-meld');
 require('@tasks/prepare-ctags');
 require('@tasks/prepare-hunspell');
@@ -31,8 +30,6 @@ gulp.task('build', gulp.series(
   'prepare-bash',
   'prepare-ruby',
   'prepare-php',
-  'prepare-glib',
-  'prepare-gtksourceview',
   'prepare-meld',
   'prepare-ctags',
   'prepare-hunspell',

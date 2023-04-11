@@ -3,19 +3,20 @@ const gulp = require('gulp');
 const { pipeOutput } = require('@lib');
 const { get } = require('lodash');
 const config = require('@config');
-const localRepo = get(config, 'meld.localRepo');
-const buildDir = get(config, 'meld.buildDir');
+const localRepo = get(config, 'doxygen.localRepo');
+const buildDir = get(config, 'doxygen.buildDir');
 
-gulp.task('ninja-meld', async () => {
+gulp.task('build-doxygen', async () => {
   try {
+    const build = `${localRepo}/${buildDir}`;
     await pipeOutput(execa(
-      'ninja',
+      'make',
       [
-        '-j 8'
+        '-j8'
       ],
       {
         // shell: true,
-        cwd: `${localRepo}/${buildDir}`
+        cwd: build
       }
     ));
   } catch (e) {

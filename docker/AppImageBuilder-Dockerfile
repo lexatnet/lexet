@@ -12,6 +12,9 @@ COPY $context_root/scripts/lib $build_root/scripts/lib
 RUN chmod -R 777 $build_root
 
 RUN $build_script
+RUN apt-get install -y apt-transport-https ca-certificates
+RUN update-ca-certificates
+RUN rm -rf /var/lib/apt/lists/
 
 EXPOSE 2222
 

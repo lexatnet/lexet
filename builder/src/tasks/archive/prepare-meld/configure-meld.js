@@ -8,7 +8,7 @@ const buildDir = get(config, 'meld.buildDir');
 const dest = get(config, 'meld.dest');
 
 
-gulp.task('meson-meld', async () => {
+gulp.task('configure-meld', async () => {
   await pipeOutput(execa(
     'meson',[
       buildDir,

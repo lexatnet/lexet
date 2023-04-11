@@ -14,9 +14,11 @@ get_script_dir () {
 
 
 images=(
-  alpine
+  alpine:latest
+  archlinux:latest
+  fedora:latest
   debian:latest
-  ubuntu:20.04
+  ubuntu:latest
 )
 
 session=$(echo ${DBUS_SESSION_BUS_ADDRESS} | sed -e 's/\(unix:path=\)//g')

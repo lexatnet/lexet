@@ -28,10 +28,16 @@ export PHP_INI_SCAN_DIR="${HERE}/usr/php/config/"
 
 # appimage_python3="${HERE}"/usr/python3/bin/python3
 
+# using PYENV
+export PYENV_ROOT="$HERE/pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init --path)"
+eval "$(pyenv init -)"
+
 # export PATH=${HERE}/usr/python3/bin:$PATH
-export PATH="${HERE}"/usr/python3/bin:$PATH
-export PYTHONHOME="${HERE}"/usr/python3/lib/python3.9
-export PYTHONPATH=$PYTHONHOME:"${HERE}"/usr/python3/lib/python3.9/lib-dynload:"${HERE}"/usr/python3/packages
+# export PATH="${HERE}"/usr/python3/bin:$PATH
+# export PYTHONHOME="${HERE}"/usr/python3/lib/python3.9
+# export PYTHONPATH=$PYTHONHOME:"${HERE}"/usr/python3/lib/python3.9/lib-dynload:"${HERE}"/usr/python3/packages
 # source "${HERE}"/usr/python3/venv/bin/activate
 
 # export ATOM_HOME="${HOME}/.lexet/atom"

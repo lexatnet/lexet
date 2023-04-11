@@ -63,6 +63,9 @@ docker-run-gulp-builder() {
     local entrypoint=$through_point/${appimage_builder_entrypoint_script_name}
     local mnt_entrypoint="--volume $appimage_builder_entrypoint_script_external:$entrypoint:ro"
     local args=""
+    local user_id=$(id -u ${USER})
+    local group_id=$(id -g ${USER})
+    local user="--user ${user_id}:${group_id}"
 
     while [[ $# -gt 0 ]]
     do
@@ -86,25 +89,38 @@ docker-run-gulp-builder() {
     done
     set -- "${args[@]}" # restore positional parameters
 
-    docker run \
-           --volume $root/builder:/builder \
-           --volume $root/staff/build:/staff/build \
-           --volume $root/staff/builder/home:/home \
-           --volume $root/staff/builder/nvm/versions:/env/nvm/versions \
-           --volume $root/staff/builder/nvm/alias:/env/nvm/alias \
-           --volume $root/staff/builder/nvm/.cache:/env/nvm/.cache \
-           --volume $root/staff/builder/node_modules:/builder/node_modules \
-           --volume $root/scripts/AppRun.sh:$through_point/AppRun:ro \
-           --volume $root/src:$through_point/src:ro \
-           --volume $root/config:$through_point/config:ro \
-           --volume $root/scripts/lib:$through_point/scripts:ro \
-           $mnt_entrypoint \
-           -e through_point=$through_point \
-           -e LEXET_MOUNT_POINT=$through_point \
-           -e HOME=/home \
-           --user $(id -u ${USER}):$(id -g ${USER}) \
-           $args \
-           --rm \
-           --entrypoint $entrypoint \
-           $appimage_builder_image_tag
+    volumes=(
+      --volume $root/builder:/builder
+      --volume $root/staff/build:/staff/build
+      --volume $root/staff/builder/home:/home
+      --volume $root/staff/builder/nvm/versions:/env/nvm/versions
+      --volume $root/staff/builder/nvm/alias:/env/nvm/alias
+      --volume $root/staff/builder/nvm/.cache:/env/nvm/.cache
+      --volume $root/staff/builder/node_modules:/builder/node_modules
+      --volume $root/scripts/AppRun.sh:$through_point/AppRun:ro
+      --volume $root/src:$through_point/src:ro
+      --volume $root/config:$through_point/config:ro
+      --volume $root/scripts/lib:$through_point/scripts:ro
+      $mnt_entrypoint
+    )
+
+    variables=(
+      -e through_point=$through_point
+      -e LEXET_MOUNT_POINT=$through_point
+      -e HOME=/home
+    )
+
+    docker_run_args=(
+      "${volumes[@]}"
+      "${variables[@]}"
+      $user
+      $args
+      --rm
+      --entrypoint $entrypoint
+      $appimage_builder_image_tag
+    )
+
+    # [[ ! -z "$user" ]] && echo "Not empty" || echo "Empty"
+
+    docker run "${docker_run_args[@]}"
 }
